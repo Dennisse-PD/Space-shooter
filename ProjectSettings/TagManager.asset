@@ -4,9 +4,9 @@
 TagManager:
   serializedVersion: 2
   tags:
+  - PoweUp
   - Enemy
   - Laser
-  - PoweUp
   layers:
   - Default
   - TransparentFX
@@ -45,8 +45,8 @@ TagManager:
     uniqueID: 0
     locked: 0
   - name: Background
-    uniqueID: 2609498665
+    uniqueID: 3114652093
     locked: 0
   - name: Foreground
-    uniqueID: 1984327655
+    uniqueID: 1344379407
     locked: 0

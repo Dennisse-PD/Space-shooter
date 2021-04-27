@@ -14,8 +14,9 @@ GameObject:
   - component: {fileID: 7863903100718283951}
   - component: {fileID: 7863903100718283939}
   - component: {fileID: 7863903100718283938}
+  - component: {fileID: -2297653638688101558}
   m_Layer: 0
-  m_Name: TripleShot 1
+  m_Name: TripleShotPowerUp
   m_TagString: PoweUp
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -49,6 +50,8 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -70,7 +73,7 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 1984327655
+  m_SortingLayerID: 1344379407
   m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: ed6681d697652144a913093bf7ad1d43, type: 3}
@@ -113,6 +116,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 3
+  powerUpID: 0
 --- !u!50 &7863903100718283939
 Rigidbody2D:
   serializedVersion: 4
@@ -153,3 +157,17 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &-2297653638688101558
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7863903100718283944}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c242def40ea695c47814ba8da87a1670, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _speed: 3
+  powerUpID: 0
