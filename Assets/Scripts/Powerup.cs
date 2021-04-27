@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Powerup : MonoBehaviour
 {
+    //must make sure I remove unnessary searialized fields
     [SerializeField]
     private float _speed = 3.0f;
     private Player _player;
