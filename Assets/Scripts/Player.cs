@@ -14,14 +14,20 @@ public class Player : MonoBehaviour
     private float _nextShot = 0.5f;
     [SerializeField]
     private int _lives = 3;
+
     private SpawnManager _spawnManager;
+    private UIManager _UIManager;
+
     private bool _isTripleShotEnabled = false;
     private bool _isSpeedBoostEnabled = false;
     private bool _isShieldsEnabled = false;
+
     [SerializeField]
     private GameObject _tripleShot;
     [SerializeField]
     private GameObject shieldVisualizer;
+
+    public int addScore;
 
 
 
@@ -32,10 +38,15 @@ public class Player : MonoBehaviour
     {
         transform.position = new Vector3(0, 0, 0);
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
-       
+        _UIManager = GameObject.Find("Canvas").GetComponent<UIManager>();
+
         if (_spawnManager == null)
         {
             Debug.LogError("The Spawn manager is NULL!");
+        }
+        if (_UIManager == null)
+        {
+            Debug.LogError("The UI manager is NULL!");
         }
     }
 
@@ -107,9 +118,8 @@ public class Player : MonoBehaviour
             return;
            
         }
-
-        
         _lives--;
+        _UIManager.updateLives(_lives);
        
 
         if(_lives < 1)
@@ -151,6 +161,11 @@ public class Player : MonoBehaviour
         _speed /= _speedMultiplier;
 
 
+    }
+    public void AddScore(int points)
+    {
+        addScore += points;
+        _UIManager.updateScore(addScore);
     }
 
 }

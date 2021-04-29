@@ -33,28 +33,29 @@ public class Powerup : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
-            Player player = other.transform.GetComponent<Player>();
-            if (player != null)
+        Player player = other.transform.GetComponent<Player>();
+        if (player != null)
+        {
+            if (other.gameObject.CompareTag("Player"))
             {
-                if (other.gameObject.CompareTag("Player"))
+                switch (powerUpID)
                 {
-                    switch (powerUpID)
-                    {
-                        case 0:
-                            player.TripleShotEnabled();
-                            break;
-                        case 1:
-                            player.SpeedBoostEnabled();
-                            break;
-                        case 2:
-                            player.ShieldsEnabled();
-                            break;
-                    }
+                    case 0:
+                        player.TripleShotEnabled();
+                        break;
+                    case 1:
+                        player.SpeedBoostEnabled();
+                        break;
+                    case 2:
+                        player.ShieldsEnabled();
+                        break;
                 }
+                Destroy(gameObject);
             }
-            Destroy(gameObject);
         }
+
     }
+}
 
    
 
