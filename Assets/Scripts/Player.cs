@@ -37,7 +37,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         transform.position = new Vector3(0, 0, 0);
-        _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
+        _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
         _UIManager = GameObject.Find("Canvas").GetComponent<UIManager>();
 
         if (_spawnManager == null)
@@ -60,7 +60,6 @@ public class Player : MonoBehaviour
         {
             FireLaser();
         }
-
     }
 
     void calculateMovement()
@@ -133,12 +132,14 @@ public class Player : MonoBehaviour
         _isTripleShotEnabled = true;
         StartCoroutine(TripleShotPowerDownRoutine());
     }
+
     public void SpeedBoostEnabled()
     {
         _isSpeedBoostEnabled = true;
         _speed *= _speedMultiplier;
         StartCoroutine(SpeedBoostPowerDownRoutine());
     }
+
     public void ShieldsEnabled()
     {
         
@@ -154,6 +155,7 @@ public class Player : MonoBehaviour
         
 
     }
+
     IEnumerator SpeedBoostPowerDownRoutine() 
     {
         yield return new WaitForSeconds(5.0f);
