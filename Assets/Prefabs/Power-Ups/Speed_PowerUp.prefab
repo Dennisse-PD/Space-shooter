@@ -10,11 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 944789801465371502}
   - component: {fileID: 944789801465371503}
-  - component: {fileID: 944789801465371473}
   - component: {fileID: 944789801465371475}
   - component: {fileID: 944789801465371472}
   - component: {fileID: 7723496261603190850}
-  - component: {fileID: 5956309944827323461}
+  - component: {fileID: 3959696094352887586}
   m_Layer: 0
   m_Name: Speed_PowerUp
   m_TagString: PoweUp
@@ -87,20 +86,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &944789801465371473
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 944789801465371500}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c242def40ea695c47814ba8da87a1670, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _speed: 3
-  powerUpID: 1
 --- !u!61 &944789801465371475
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -158,7 +143,7 @@ Animator:
   m_GameObject: {fileID: 944789801465371500}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: ddf2f13b96dbfb54db591488cb9ace7c, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -167,7 +152,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &5956309944827323461
+--- !u!114 &3959696094352887586
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -176,8 +161,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 944789801465371500}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c242def40ea695c47814ba8da87a1670, type: 3}
+  m_Script: {fileID: 11500000, guid: 0928316260564b546b4e3131ffc1704e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 3
-  powerUpID: 0
+  powerUpID: 1

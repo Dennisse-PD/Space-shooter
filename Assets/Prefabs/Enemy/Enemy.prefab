@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2889808401657852623}
   - component: {fileID: 1950034421920119881}
   - component: {fileID: -3634623312332193440}
+  - component: {fileID: 1242556294}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -43,7 +44,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8140381941795382254}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8108c579e56e2da4db915bb17ddf1c65, type: 3}
+  m_Script: {fileID: 11500000, guid: 2b74130c4550bd14aa57719e136478c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 4
@@ -112,7 +113,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.017422676, y: -0.00000047683716}
+  m_Offset: {x: 0.017422676, y: 0.014280915}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -123,7 +124,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2.297655, y: 2.8220024}
+  m_Size: {x: 2.297655, y: 2.7934396}
   m_EdgeRadius: 0
 --- !u!50 &-3634623312332193440
 Rigidbody2D:
@@ -146,3 +147,22 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!95 &1242556294
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8140381941795382254}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 7ce79f02c5e79fe418ccbf0734639b08, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

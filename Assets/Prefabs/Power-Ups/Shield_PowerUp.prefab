@@ -11,10 +11,9 @@ GameObject:
   - component: {fileID: 6641311603078767626}
   - component: {fileID: 3613880197276749540}
   - component: {fileID: 7111624892535302529}
-  - component: {fileID: 3309822185030498826}
   - component: {fileID: 4751157908758684159}
   - component: {fileID: 5514135132622405795}
-  - component: {fileID: 8852091378208597035}
+  - component: {fileID: 6608112338807565416}
   m_Layer: 0
   m_Name: Shield_PowerUp
   m_TagString: PoweUp
@@ -97,7 +96,7 @@ Animator:
   m_GameObject: {fileID: 1282528865220892057}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: e42f2d4448888f04d87f0905449fdd36, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -106,20 +105,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &3309822185030498826
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1282528865220892057}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c242def40ea695c47814ba8da87a1670, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _speed: 3
-  powerUpID: 2
 --- !u!50 &4751157908758684159
 Rigidbody2D:
   serializedVersion: 4
@@ -167,7 +152,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2.8266602, y: 4.224822}
   m_EdgeRadius: 0
---- !u!114 &8852091378208597035
+--- !u!114 &6608112338807565416
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -176,8 +161,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 1282528865220892057}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c242def40ea695c47814ba8da87a1670, type: 3}
+  m_Script: {fileID: 11500000, guid: 0928316260564b546b4e3131ffc1704e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 3
-  powerUpID: 0
+  powerUpID: 2
