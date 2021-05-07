@@ -7,20 +7,36 @@ public class Asteroids : MonoBehaviour
     [SerializeField]
     private float _speed = 3.0f;
 
+    [SerializeField]
+    private GameObject _explosion;
+
+    private SpawnManager _spawnManager;
+
     
     // Start is called before the first frame update
     void Start()
     {
-        
+        _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        // Quaternion zRotation = Quaternion.Euler(0, 0, 3);
+        
         transform.Rotate(Vector3.forward* _speed * Time.deltaTime);
+    }
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if(other.gameObject.CompareTag("Laser"))
+        {
+            Instantiate(_explosion, transform.position, Quaternion.identity);
+            Destroy(other.gameObject);
+            _spawnManager.StartSpawnRoutines();
+            Destroy(this.gameObject,.50f);
 
-
+        }
+        
 
     }
+   
 }
