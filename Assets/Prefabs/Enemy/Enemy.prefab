@@ -48,7 +48,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 4
-  _enemyPrefab: {fileID: 0}
+  _enemyPrefab: {fileID: 8140381941795382254}
+  _explosionSound: {fileID: 8300000, guid: a885c043fab7e46438bba03ba9dab6bc, type: 3}
 --- !u!212 &2889808401657852623
 SpriteRenderer:
   m_ObjectHideFlags: 0

@@ -12,7 +12,10 @@ public class Enemy : MonoBehaviour
     private GameObject _enemyPrefab;
 
     private Player _player;
-    private Animator _animator; 
+    private Animator _animator;
+
+    [SerializeField]
+    AudioClip _explosionSound;
 
 
     // Start is called before the first frame update
@@ -53,12 +56,14 @@ public class Enemy : MonoBehaviour
             }
             
             _animator.SetTrigger("OnEnemyDeath");
+           AudioSource.PlayClipAtPoint(_explosionSound, transform.position);
             _speed = 0;
             Destroy(this.gameObject, 2.6f);
         }
 
       if(other.gameObject.CompareTag("Laser"))
         {
+
             Destroy(other.gameObject);
 
             if(_player != null)
@@ -66,6 +71,7 @@ public class Enemy : MonoBehaviour
                 _player.AddScore(10); 
             }
             _animator.SetTrigger("OnEnemyDeath");
+            AudioSource.PlayClipAtPoint(_explosionSound, transform.position);
             _speed = 0;
             Destroy(this.gameObject, 2.6f);
         }

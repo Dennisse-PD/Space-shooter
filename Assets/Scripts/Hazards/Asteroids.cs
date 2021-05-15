@@ -12,6 +12,9 @@ public class Asteroids : MonoBehaviour
 
     private SpawnManager _spawnManager;
 
+  //  [SerializeField]
+   // AudioClip _explosionSound;
+
     
     // Start is called before the first frame update
     void Start()
@@ -30,6 +33,7 @@ public class Asteroids : MonoBehaviour
         if(other.gameObject.CompareTag("Laser"))
         {
             Instantiate(_explosion, transform.position, Quaternion.identity);
+            //AudioSource.PlayClipAtPoint(_explosionSound, transform.position);
             Destroy(other.gameObject);
             _spawnManager.StartSpawnRoutines();
             Destroy(this.gameObject,.50f);
