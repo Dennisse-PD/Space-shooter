@@ -10,18 +10,22 @@ public class Enemy : MonoBehaviour
 
     [SerializeField]
     private GameObject _enemyPrefab;
-
+    [SerializeField]
+    private GameObject _laserPrefab;
     private Player _player;
     private Animator _animator;
+    private float _fireRate = 3.0f;
+    private float _canfire = -1;
+    
+    AudioSource _explosionSound;
+    AudioSource _laserSound;
 
-    [SerializeField]
-    AudioClip _explosionSound;
+
 
 
     // Start is called before the first frame update
     void Start()
     {
-        
         _player = GameObject.Find("Player").GetComponent<Player>();
 
         if(_player == null)
@@ -30,14 +34,48 @@ public class Enemy : MonoBehaviour
         }
 
         _animator = GetComponent<Animator>();
+       if(_animator == null)
+        {
+            Debug.LogError("The Animator Component is NULL!");
+        }
+
+        _explosionSound = GetComponent<AudioSource>();
+       if(_explosionSound == null)
+        {
+            Debug.LogError("The Explosion Audio Source is NULL!");
+        }
+
+        _laserSound = GetComponent<AudioSource>();
+        if(_laserSound == null)
+        {
+            Debug.LogError("The Laser Audio Source is NULL!");
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        transform.position += Vector3.down * (_speed* Time.deltaTime);
+        calculateMovement();
 
-        if(transform.position.y <=-5f)
+        if (Time.time > _canfire)
+        {
+            _fireRate = Random.Range(3f, 7f);
+            _canfire = Time.time + _fireRate;
+            GameObject enemeyLaser = Instantiate(_laserPrefab, transform.position, Quaternion.identity);
+            Laser[] lasers = enemeyLaser.GetComponentsInChildren<Laser>();
+
+            for (int i = 0; i < lasers.Length; i++)
+            {
+                lasers[i].AssignEnemyLaser();
+            }
+        }
+
+    }
+    void calculateMovement()
+    {
+        transform.position += Vector3.down * (_speed * Time.deltaTime);
+
+        if (transform.position.y <= -5f)
         {
             float _randX = Random.Range(-9.3f, 9.3f);
             transform.position = new Vector3(_randX, 7f, 0f);
@@ -56,8 +94,8 @@ public class Enemy : MonoBehaviour
             }
             
             _animator.SetTrigger("OnEnemyDeath");
-           AudioSource.PlayClipAtPoint(_explosionSound, transform.position);
             _speed = 0;
+            _explosionSound.Play();
             Destroy(this.gameObject, 2.6f);
         }
 
@@ -71,10 +109,10 @@ public class Enemy : MonoBehaviour
                 _player.AddScore(10); 
             }
             _animator.SetTrigger("OnEnemyDeath");
-            AudioSource.PlayClipAtPoint(_explosionSound, transform.position);
             _speed = 0;
+            _explosionSound.Play();
+            Destroy(GetComponent<Collider2D>());
             Destroy(this.gameObject, 2.6f);
         }
-
     }
 }

@@ -12,14 +12,14 @@ public class Asteroids : MonoBehaviour
 
     private SpawnManager _spawnManager;
 
-  //  [SerializeField]
-   // AudioClip _explosionSound;
-
+     
     
     // Start is called before the first frame update
     void Start()
     {
         _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
+
+        
     }
 
     // Update is called once per frame
@@ -33,7 +33,7 @@ public class Asteroids : MonoBehaviour
         if(other.gameObject.CompareTag("Laser"))
         {
             Instantiate(_explosion, transform.position, Quaternion.identity);
-            //AudioSource.PlayClipAtPoint(_explosionSound, transform.position);
+            Destroy(GetComponent<Collider2D>());
             Destroy(other.gameObject);
             _spawnManager.StartSpawnRoutines();
             Destroy(this.gameObject,.50f);

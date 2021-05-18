@@ -116,7 +116,7 @@ public class Player : MonoBehaviour
             transform.position = new Vector3(11.3f, transform.position.y, 0);
         }
     }
-    void FireLaser()
+    public void FireLaser()
     {
         _nextShot = Time.time + _fireRate;
         Vector3 _laserOffset = new Vector3(0, 1.04f, 0);
