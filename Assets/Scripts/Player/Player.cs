@@ -17,10 +17,13 @@ public class Player : MonoBehaviour
 
     private SpawnManager _spawnManager;
     private UIManager _UIManager;
+    private ThrustController _thrustController;
 
     private bool _isTripleShotEnabled = false;
     private bool _isSpeedBoostEnabled = false;
     private bool _isShieldsEnabled = false;
+    [SerializeField]
+    private bool _isThrusting = false;
 
     [SerializeField]
     private GameObject _tripleShot;
@@ -39,6 +42,8 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     AudioClip _explosionSound;
+    
+
 
 
 
@@ -47,12 +52,14 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
         transform.position = new Vector3(0, 0, 0);
 
         _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
         _UIManager = GameObject.Find("Canvas").GetComponent<UIManager>();
-
         _audioSource = GetComponent<AudioSource>();
+        _thrustController = GameObject.Find("thrusterGaugeSlider").GetComponent<ThrustController>();
+        
       
 
         if (_spawnManager == null)
@@ -62,6 +69,10 @@ public class Player : MonoBehaviour
         if (_UIManager == null)
         {
             Debug.LogError("The UI manager is NULL!");
+        }
+        if(_thrustController == null)
+        {
+            Debug.LogError("The Thrust Controller Component is NULL!");
         }
         if (_audioSource == null)
         {
@@ -79,11 +90,31 @@ public class Player : MonoBehaviour
     {
         calculateMovement();
 
+        
 
         if (Input.GetKeyDown(KeyCode.Space) && Time.time > _nextShot)
         {
             FireLaser();
         }
+        if(Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            Thrusting();
+            StartCoroutine(ThrustRoutine());
+
+            //Move at an increase rate
+            //I can do this with a slider to represent it visually 
+            //stop it once the slider runs out
+            //refill the slider when it runs out
+            //be able to thrust again
+            //Cooldown system? or courutine to keep player from abusing it
+            //_thrustController.updateThrustGauge();
+        }
+        else if(Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            stopThrusting();
+            StartCoroutine(ThrustRegenRoutine());
+        }
+       
     }
 
     void calculateMovement()
@@ -201,10 +232,39 @@ public class Player : MonoBehaviour
 
 
     }
+    IEnumerator ThrustRoutine()
+    {
+        while(_isThrusting == true)
+        {
+            _thrustController.updateThrustGauge(-20);
+            yield return new WaitForSeconds(1.0f);
+            
+
+        }
+    }
+    IEnumerator ThrustRegenRoutine()
+    {
+        while (_isThrusting == false)
+        {
+            _thrustController.updateThrustGauge(+20);
+            yield return new WaitForSeconds(1.0f);
+        }
+        Thrusting();
+    }
+        
+    
     public void AddScore(int points)
     {
         addScore += points;
         _UIManager.updateScore(addScore);
+    }
+    public void Thrusting()
+    {
+        _isThrusting = true;
+    }
+    public void stopThrusting()
+    {
+        _isThrusting = false;
     }
 
 }
