@@ -11,9 +11,9 @@ public class Player : MonoBehaviour
     float _thrustForce = 2;
     [SerializeField]
     private GameObject _laserPrefab;
-    private float _fireRate = 0.15f;
+    private float _fireRate = 0.5f;
     [SerializeField]
-    private float _nextShot = 0.5f;
+    private float _nextShot = 0.15f;
     [SerializeField]
     private int _lives = 3;
     [SerializeField]
@@ -26,8 +26,6 @@ public class Player : MonoBehaviour
     private bool _isTripleShotEnabled = false;
     private bool _isSpeedBoostEnabled = false;
     private bool _isShieldsEnabled = false;
-    [SerializeField]
-    private bool _isThrusting = false;
 
     [SerializeField]
     private GameObject _tripleShot;
@@ -48,15 +46,21 @@ public class Player : MonoBehaviour
     [SerializeField]
     AudioClip _explosionSound;
 
-    //thrust
+    //THRUST
     [SerializeField]
     private Slider _thrustGauge;
 
     [SerializeField]
     private SpriteRenderer _shieldRender;
 
-    private int _totalFuel = 100;
-    //private int _currentFuel;
+    private float _totalFuel = 100;
+    [SerializeField]
+    private float _canThrust = 0.15f;
+   
+    private float _thurstDelay = 0.5f;
+
+    private bool _isThrusting = false;
+
 
 
     // Start is called before the first frame update
@@ -69,9 +73,6 @@ public class Player : MonoBehaviour
         _UIManager = GameObject.Find("Canvas").GetComponent<UIManager>();
         _thrustGauge = GameObject.Find("Thruster_Slider").GetComponent<Slider>();
         _audioSource = GetComponent<AudioSource>();
-
-   
-
 
 
         if (_spawnManager == null)
@@ -102,31 +103,48 @@ public class Player : MonoBehaviour
     void Update()
     {
         calculateMovement();
-
-        _thrustGauge.value = _totalFuel;
-
+        _thrustGauge.value = _totalFuel;// Time.deltaTime;
 
         if (Input.GetKeyDown(KeyCode.Space) && Time.time > _nextShot)
         {
             FireLaser();
         }
-        if (Input.GetKeyDown(KeyCode.LeftShift))
-        {
-            Thrusting();
-            StartCoroutine(ThrustRoutine());
-            Debug.Log("key press  is registered");
 
-            //NEED TO MAKE THE SPEED RETURN TO NORMAL ONCE THE SLIDER IS DEPLETED
+        //THURSTING LOGIC
+        if (Input.GetKey(KeyCode.LeftShift) && Time.time > _canThrust)
+        {
+
+            isThrusting();
+            _speed = 8;
+            updateThrustGauge(-2);
+            
+
+
         }
-        else if (Input.GetKeyUp(KeyCode.LeftShift))
+        //REGENERATE
+
+       else  if( Input.GetKeyUp(KeyCode.LeftShift) && Time.time > _canThrust )
         {
             stopThrusting();
-            StartCoroutine(ThrustRegenRoutine());
-            Debug.Log("key release  is registered");
+            _speed = 4;
+            
+            _canThrust = Time.time + _thurstDelay;
+           
+
         }
+        regenFuel();
+
 
     }
-
+    void regenFuel()
+    {
+        
+        if (_isThrusting == false)
+        {
+            updateThrustGauge(+1);
+        }
+        
+    }
     void calculateMovement()
 
     {
@@ -249,27 +267,24 @@ public class Player : MonoBehaviour
         addScore += points;
         _UIManager.updateScore(addScore);
     }
-    //thrust
-    public void Thrusting()
+    private void isThrusting()
     {
         _isThrusting = true;
     }
-    public void stopThrusting()
+    private void stopThrusting()
     {
         _isThrusting = false;
     }
-    public void updateThrustGauge(int currentFuel)
+    //THRUST METHOD
+    public void updateThrustGauge(float currentFuel)
     {
-
         _totalFuel += currentFuel;
-
         if (_totalFuel - currentFuel < 0)
         {
-            _totalFuel += currentFuel;
+            _speed = 4;
+            _totalFuel += currentFuel * Time.time;
             Debug.Log("Not Enough Fuel");
-            _speed =4;
-
-            
+           
         }
 
     }
@@ -290,36 +305,30 @@ public class Player : MonoBehaviour
 
 
     }
-    //thrust
     IEnumerator ThrustRoutine()
     {
-        _speed *= _thrustForce;
-        _isThrusting = true;
-
-        while (_isThrusting == true)
+       while(_isThrusting == true)
         {
-            yield return new WaitForSeconds(0.001f);
-            updateThrustGauge(-3);
-            yield return new WaitForSeconds(0.001f);
-            Debug.Log("Thurstcouroutine is running");
-            //updateThrustGauge(-3);
+
+            updateThrustGauge(-20);
+            yield return new WaitForSeconds(1.0f);
         }
+        
     }
     IEnumerator ThrustRegenRoutine()
     {
-        _speed /= _thrustForce;
-        _isThrusting = false;
 
         while (_isThrusting == false)
         {
-            yield return new WaitForSeconds(0.001f);
-            updateThrustGauge(+3);
-            yield return new WaitForSeconds(0.001f);
-            Debug.Log("ThurstRegen couroutine is running");
-           // updateThrustGauge(+3);
+            updateThrustGauge(+20);
+            yield return new WaitForSeconds(1.0f);
+
         }
 
+
+
     }
+
 
 }
 
