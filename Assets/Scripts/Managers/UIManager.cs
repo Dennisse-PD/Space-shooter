@@ -11,6 +11,10 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Text _gameOverText;
 
+
+    [SerializeField]
+    private Text _ammoText;
+
     [SerializeField]
     private Sprite[] _livesSprites;
 
@@ -27,15 +31,16 @@ public class UIManager : MonoBehaviour
     void Start()
     {
         _gameManager = GameObject.Find("Game_Manager").GetComponent<GameManager>();
-        _scoreText.text = "Score: " + 0;
 
-        if(_gameManager == null)
+        //get the text here from the player ammo thing, update the text here
+        _scoreText.text = "Score: " + 0;
+        _ammoText.text = 15.ToString();
+
+        if (_gameManager == null)
         {
             Debug.LogError("The Game_Manager is NULL!");
         }
 
-  
-      
     }
     void Update()
     {
@@ -45,6 +50,10 @@ public class UIManager : MonoBehaviour
     public void updateScore(int playerScore)
     {
         _scoreText.text = "Score: " + playerScore.ToString();
+    }
+    public void updateAmmoCount(int playerAmmo)
+    {
+        _ammoText.text =  playerAmmo.ToString();
     }
 
     public void updateLives(int currentLives)

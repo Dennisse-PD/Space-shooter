@@ -46,12 +46,14 @@ public class Player : MonoBehaviour
     [SerializeField]
     AudioClip _explosionSound;
 
-    //THRUST
-    [SerializeField]
-    private Slider _thrustGauge;
 
     [SerializeField]
     private SpriteRenderer _shieldRender;
+
+
+    //THRUST
+    [SerializeField]
+    private Slider _thrustGauge;
 
     private float _totalFuel = 100;
     [SerializeField]
@@ -60,6 +62,12 @@ public class Player : MonoBehaviour
     private float _thurstDelay = 0.5f;
 
     private bool _isThrusting = false;
+
+    //AMMO COUNT VARIABLES
+    [SerializeField]
+    public int _maxAmmo = 15;
+    [SerializeField]
+    AudioClip _noAmmoSound;
 
 
 
@@ -103,42 +111,48 @@ public class Player : MonoBehaviour
     void Update()
     {
         calculateMovement();
-        _thrustGauge.value = _totalFuel;// Time.deltaTime;
+        _thrustGauge.value = _totalFuel;
 
         if (Input.GetKeyDown(KeyCode.Space) && Time.time > _nextShot)
         {
+            
+            if (_maxAmmo == 0)
+            {
+                AudioSource.PlayClipAtPoint(_noAmmoSound, transform.position);
+                return;
+            }
             FireLaser();
+
         }
 
         //THURSTING LOGIC
         if (Input.GetKey(KeyCode.LeftShift) && Time.time > _canThrust)
         {
 
-            isThrusting();
+           
             _speed = 8;
-            updateThrustGauge(-2);
+            isThrusting();
+            updateThrustGauge(-1);
             
 
 
         }
         //REGENERATE
 
-       else  if( Input.GetKeyUp(KeyCode.LeftShift) && Time.time > _canThrust )
+       else  if( Input.GetKeyUp(KeyCode.LeftShift))
         {
-            stopThrusting();
-            _speed = 4;
             
+            _speed = 4;
+            stopThrusting();
             _canThrust = Time.time + _thurstDelay;
-           
+            
 
         }
         regenFuel();
-
-
     }
     void regenFuel()
     {
-        
+
         if (_isThrusting == false)
         {
             updateThrustGauge(+1);
@@ -177,6 +191,8 @@ public class Player : MonoBehaviour
     }
     public void FireLaser()
     {
+        //CALLING AMMO COUNT
+        AmmoCount(-1);
         _nextShot = Time.time + _fireRate;
         Vector3 _laserOffset = new Vector3(0, 1.04f, 0);
 
@@ -189,7 +205,6 @@ public class Player : MonoBehaviour
             Instantiate(_laserPrefab, transform.position + _laserOffset, Quaternion.identity);
         }
         _audioSource.Play();
-
     }
     public void damagePlayer()
     {
@@ -267,6 +282,24 @@ public class Player : MonoBehaviour
         addScore += points;
         _UIManager.updateScore(addScore);
     }
+    //AMMO COUNT METHOD
+    public void AmmoCount(int bullets)
+    {
+
+        if( bullets >= _maxAmmo)
+        {
+            _maxAmmo = 15;
+           
+        }
+        else
+        {
+            _maxAmmo += bullets;
+            
+        }
+        _UIManager.updateAmmoCount(_maxAmmo);
+
+    }
+
     private void isThrusting()
     {
         _isThrusting = true;
@@ -282,11 +315,16 @@ public class Player : MonoBehaviour
         if (_totalFuel - currentFuel < 0)
         {
             _speed = 4;
-            _totalFuel += currentFuel * Time.time;
             Debug.Log("Not Enough Fuel");
            
         }
 
+    }
+    //replenish ammo
+    public void replenishAmmo()
+    {     
+      AmmoCount(15);
+ 
     }
 
     IEnumerator TripleShotPowerDownRoutine()
