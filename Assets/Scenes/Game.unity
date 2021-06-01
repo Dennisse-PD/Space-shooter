@@ -1155,6 +1155,7 @@ GameObject:
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
   - component: {fileID: 963194229}
+  - component: {fileID: 963194230}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1287,6 +1288,18 @@ MonoBehaviour:
   m_BeforeTransparentBundles: []
   m_BeforeStackBundles: []
   m_AfterStackBundles: []
+--- !u!114 &963194230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10dc0a6f81992734bb60d8de9d9655d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &976904933
 GameObject:
   m_ObjectHideFlags: 0
@@ -1856,6 +1869,7 @@ MonoBehaviour:
   - {fileID: 944789801465371500, guid: 33a45176c8d750b4688a022e894c58c1, type: 3}
   - {fileID: 1282528865220892057, guid: 8b3e9d8ed0e2b6b4da8824e3c299ba8a, type: 3}
   - {fileID: 5405562592377226161, guid: 1a1a068e3abbeae45bdf2cd68d34e1fd, type: 3}
+  - {fileID: 3550633067743409814, guid: 2f7592b6d06c7fd4ea66d7c779daada7, type: 3}
 --- !u!4 &1495672899
 Transform:
   m_ObjectHideFlags: 0
@@ -2361,7 +2375,7 @@ MonoBehaviour:
   _explosionSound: {fileID: 8300000, guid: a885c043fab7e46438bba03ba9dab6bc, type: 3}
   _shieldRender: {fileID: 1555553722}
   _thrustGauge: {fileID: 202494045}
-  _canThrust: 0.15
+  _canThrust: 0.1
   _maxAmmo: 15
   _noAmmoSound: {fileID: 8300000, guid: fd0f798e839783e4eb02217e897f2b92, type: 3}
 --- !u!212 &1601580439
@@ -2555,75 +2569,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!1001 &1671754468
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4588406861068484375, guid: 1a1a068e3abbeae45bdf2cd68d34e1fd,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 13
-      objectReference: {fileID: 0}
-    - target: {fileID: 4588406861068484375, guid: 1a1a068e3abbeae45bdf2cd68d34e1fd,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4588406861068484375, guid: 1a1a068e3abbeae45bdf2cd68d34e1fd,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 8.02
-      objectReference: {fileID: 0}
-    - target: {fileID: 4588406861068484375, guid: 1a1a068e3abbeae45bdf2cd68d34e1fd,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4588406861068484375, guid: 1a1a068e3abbeae45bdf2cd68d34e1fd,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4588406861068484375, guid: 1a1a068e3abbeae45bdf2cd68d34e1fd,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4588406861068484375, guid: 1a1a068e3abbeae45bdf2cd68d34e1fd,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4588406861068484375, guid: 1a1a068e3abbeae45bdf2cd68d34e1fd,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4588406861068484375, guid: 1a1a068e3abbeae45bdf2cd68d34e1fd,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4588406861068484375, guid: 1a1a068e3abbeae45bdf2cd68d34e1fd,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4588406861068484375, guid: 1a1a068e3abbeae45bdf2cd68d34e1fd,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5405562592377226161, guid: 1a1a068e3abbeae45bdf2cd68d34e1fd,
-        type: 3}
-      propertyPath: m_Name
-      value: Ammo_PowerUp
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 1a1a068e3abbeae45bdf2cd68d34e1fd, type: 3}
 --- !u!1 &1698915331
 GameObject:
   m_ObjectHideFlags: 0
@@ -2642,7 +2587,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1698915332
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2859,10 +2804,10 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 5b17a0088dcdf924fa92da5af1e1be07, type: 3}
-  m_PlayOnAwake: 1
-  m_Volume: 0.35
+  m_PlayOnAwake: 0
+  m_Volume: 1
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0

@@ -21,11 +21,13 @@ public class Player : MonoBehaviour
 
     private SpawnManager _spawnManager;
     private UIManager _UIManager;
-   
+    private Camera_shake _cameraShake;
+
 
     private bool _isTripleShotEnabled = false;
     private bool _isSpeedBoostEnabled = false;
     private bool _isShieldsEnabled = false;
+
 
     [SerializeField]
     private GameObject _tripleShot;
@@ -59,7 +61,7 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float _canThrust = 0.15f;
    
-    private float _thurstDelay = 0.5f;
+    private float _thurstDelay = 1f;
 
     private bool _isThrusting = false;
 
@@ -68,6 +70,9 @@ public class Player : MonoBehaviour
     public int _maxAmmo = 15;
     [SerializeField]
     AudioClip _noAmmoSound;
+
+    //SHAKE VARIABLES 
+    private float shakeAmmount;
 
 
 
@@ -79,6 +84,7 @@ public class Player : MonoBehaviour
 
         _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
         _UIManager = GameObject.Find("Canvas").GetComponent<UIManager>();
+        _cameraShake = GameObject.Find("Main Camera").GetComponent<Camera_shake>();
         _thrustGauge = GameObject.Find("Thruster_Slider").GetComponent<Slider>();
         _audioSource = GetComponent<AudioSource>();
 
@@ -102,7 +108,6 @@ public class Player : MonoBehaviour
      
         else
         {
-
             _audioSource.clip = _laserClip;
         }
     }
@@ -113,6 +118,7 @@ public class Player : MonoBehaviour
         calculateMovement();
         _thrustGauge.value = _totalFuel;
 
+      
         if (Input.GetKeyDown(KeyCode.Space) && Time.time > _nextShot)
         {
             
@@ -125,37 +131,43 @@ public class Player : MonoBehaviour
 
         }
 
-        //THURSTING LOGIC
-        if (Input.GetKey(KeyCode.LeftShift) && Time.time > _canThrust)
+        //THURSTING  INPUT LOGIC
+        if (Input.GetKeyDown(KeyCode.LeftShift) && Time.time > _canThrust)
         {
-
-           
-            _speed = 8;
+            Debug.Log("shift is being pressed");
             isThrusting();
-            updateThrustGauge(-1);
-            
-
+            _canThrust = Time.time + _thurstDelay;
+          
 
         }
         //REGENERATE
 
-       else  if( Input.GetKeyUp(KeyCode.LeftShift))
+        else if (Input.GetKeyUp(KeyCode.LeftShift))
         {
-            
-            _speed = 4;
-            stopThrusting();
-            _canThrust = Time.time + _thurstDelay;
-            
-
+             stopThrusting();
         }
+
+        thrust();
+
         regenFuel();
+       
     }
     void regenFuel()
     {
-
         if (_isThrusting == false)
         {
-            updateThrustGauge(+1);
+           
+            updateThrustGauge(+1 * Time.deltaTime * 50);
+            //_speed = 4;
+        }
+
+    }
+    void thrust()
+    {
+        if (_isThrusting == true)
+        {
+            updateThrustGauge(-2 * Time.deltaTime * 50);
+           // _speed = 8;
         }
         
     }
@@ -236,6 +248,7 @@ public class Player : MonoBehaviour
         }
         _shieldStrengh = 3;
         _lives--;
+        _cameraShake.startShaking();
 
         if (_lives == 2)
         {
@@ -285,7 +298,7 @@ public class Player : MonoBehaviour
     //AMMO COUNT METHOD
     public void AmmoCount(int bullets)
     {
-
+        
         if( bullets >= _maxAmmo)
         {
             _maxAmmo = 15;
@@ -299,25 +312,58 @@ public class Player : MonoBehaviour
         _UIManager.updateAmmoCount(_maxAmmo);
 
     }
+    public void restoreHealth()
+    {
+        _lives = 3;
+        _UIManager.updateLives(_lives);
+        _rightEngine.SetActive(false);
+        _leftEngine.SetActive(false);
 
-    private void isThrusting()
+    }
+    public void restoreLives(int healingPoints)
+    {
+        
+        if(healingPoints >= _lives)
+        {
+            _lives = 3;
+            
+        }
+        else
+        {
+            _lives += healingPoints;
+        }
+        
+        _UIManager.updateLives(_lives);
+        _rightEngine.SetActive(false);
+        _leftEngine.SetActive(false);
+    }
+    //THRUST BOOL METHODS
+   private void isThrusting()
     {
         _isThrusting = true;
+        _speed = 8;
     }
     private void stopThrusting()
     {
         _isThrusting = false;
+        _speed = 4;
+        
     }
     //THRUST METHOD
     public void updateThrustGauge(float currentFuel)
     {
-        _totalFuel += currentFuel;
-        if (_totalFuel - currentFuel < 0)
+        
+        if (_totalFuel - currentFuel < 1 )
         {
+            Debug.Log("Not Enough Fuel " + _speed);
+            stopThrusting();
             _speed = 4;
-            Debug.Log("Not Enough Fuel");
+            
+            //stopThrusting();
            
         }
+        
+        _totalFuel += currentFuel;
 
     }
     //replenish ammo
@@ -343,30 +389,6 @@ public class Player : MonoBehaviour
 
 
     }
-    IEnumerator ThrustRoutine()
-    {
-       while(_isThrusting == true)
-        {
-
-            updateThrustGauge(-20);
-            yield return new WaitForSeconds(1.0f);
-        }
-        
-    }
-    IEnumerator ThrustRegenRoutine()
-    {
-
-        while (_isThrusting == false)
-        {
-            updateThrustGauge(+20);
-            yield return new WaitForSeconds(1.0f);
-
-        }
-
-
-
-    }
-
 
 }
 

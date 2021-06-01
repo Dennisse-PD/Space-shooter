@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class ThrustController : MonoBehaviour
 {
-    [SerializeField]
+  /*  [SerializeField]
     private Slider _thrustGauge;
 
     private int _totalFuel = 100;
@@ -34,6 +34,6 @@ public class ThrustController : MonoBehaviour
     void Update()
     { 
         _thrustGauge.value = _totalFuel;
-    }
+    }*/
 
 }

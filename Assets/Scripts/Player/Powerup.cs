@@ -50,8 +50,11 @@ public class Powerup : MonoBehaviour
                         player.ShieldsEnabled();
                         break;
                     case 3:
-                        player.AmmoCount(15);
+                        player.replenishAmmo();
                         break;
+                    case 4:
+                        player.restoreLives(3);
+                            break;
                       
                 }
                 Destroy(gameObject);
