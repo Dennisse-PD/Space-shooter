@@ -8,6 +8,7 @@ TagManager:
   - Enemy
   - Laser
   - enemyLaser
+  - Projectile
   layers:
   - Default
   - TransparentFX
@@ -16,7 +17,7 @@ TagManager:
   - Water
   - UI
   - Post-Processing
-  - 
+  - AoE
   - 
   - 
   - 

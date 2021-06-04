@@ -106,13 +106,20 @@ public class Enemy : MonoBehaviour
 
             if(_player != null)
             {
-                _player.AddScore(10); 
+                EnemyDeath();
             }
-            _animator.SetTrigger("OnEnemyDeath");
-            _speed = 0;
-            _explosionSound.Play();
-            Destroy(GetComponent<Collider2D>());
-            Destroy(this.gameObject, 2.6f);
+            
         }
+      
+        }
+    public void EnemyDeath()
+    {
+        
+        _animator.SetTrigger("OnEnemyDeath");
+        _speed = 0;
+        _explosionSound.Play();
+        Destroy(GetComponent<Collider2D>());
+        Destroy(this.gameObject, 2.6f);
+        _player.AddScore(10);
     }
 }

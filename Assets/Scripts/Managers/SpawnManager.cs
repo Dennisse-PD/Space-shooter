@@ -45,10 +45,21 @@ public class SpawnManager : MonoBehaviour
         while (_stopSpawning == false)
         {
             Vector3 spawnPos = new Vector3(Random.Range(-8f, 8f), 7f, 0f);
-            int randomPowerUp = Random.Range(0, 5);
+            int randomPowerUp = Random.Range(0, 6);
             Instantiate(powerups[randomPowerUp], spawnPos, Quaternion.identity);
-            yield return new WaitForSeconds(Random.Range(5, 8));
 
+            if(randomPowerUp == 5)
+            {
+                yield return new WaitForSeconds(Random.Range(10, 20));
+                Debug.Log("The Omnishot power-up has spawned");
+            }
+            
+            
+                Debug.Log("Any other power up was spawned");
+                yield return new WaitForSeconds(Random.Range(5, 8));
+            
+            
+            //MAKE THE OMNISHOT POWER UP SPAWN RARELY
         }
 
     }

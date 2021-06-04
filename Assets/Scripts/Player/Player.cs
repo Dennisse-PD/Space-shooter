@@ -52,6 +52,9 @@ public class Player : MonoBehaviour
     [SerializeField]
     private SpriteRenderer _shieldRender;
 
+    [SerializeField]
+    LayerMask AoE;
+
 
     //THRUST
     [SerializeField]
@@ -74,6 +77,10 @@ public class Player : MonoBehaviour
     //SHAKE VARIABLES 
     private float shakeAmmount;
 
+    //OMNI-SHOT VARIABLES
+    private bool _isShockWaveEnabled = false;
+    [SerializeField]
+    private GameObject shockWaveVisulizer;
 
 
     // Start is called before the first frame update
@@ -118,6 +125,11 @@ public class Player : MonoBehaviour
         calculateMovement();
         _thrustGauge.value = _totalFuel;
 
+        if(Input.GetKeyDown(KeyCode.K))
+        {
+            AreaOfEffectDamage();
+            Debug.Log("You pressed K");
+        }
       
         if (Input.GetKeyDown(KeyCode.Space) && Time.time > _nextShot)
         {
@@ -127,7 +139,14 @@ public class Player : MonoBehaviour
                 AudioSource.PlayClipAtPoint(_noAmmoSound, transform.position);
                 return;
             }
-            FireLaser();
+            else
+            {
+                FireLaser();
+            }
+          
+                
+            
+            
 
         }
 
@@ -204,20 +223,27 @@ public class Player : MonoBehaviour
     public void FireLaser()
     {
         //CALLING AMMO COUNT
-        AmmoCount(-1);
+        
         _nextShot = Time.time + _fireRate;
         Vector3 _laserOffset = new Vector3(0, 1.04f, 0);
 
-        if (_isTripleShotEnabled == true)
+       if (_isTripleShotEnabled == true)
         {
             Instantiate(_tripleShot, transform.position, Quaternion.identity);
+            _audioSource.Play();
+        }
+        else if (_isShockWaveEnabled == true)
+        {
+            StartCoroutine(ShockwaveRoutine());
         }
         else
         {
             Instantiate(_laserPrefab, transform.position + _laserOffset, Quaternion.identity);
+            _audioSource.Play();
         }
-        _audioSource.Play();
+        AmmoCount(-1);
     }
+   
     public void damagePlayer()
     {
         if (_isShieldsEnabled == true && _shieldStrengh >= 1)
@@ -349,6 +375,7 @@ public class Player : MonoBehaviour
         _speed = 4;
         
     }
+   
     //THRUST METHOD
     public void updateThrustGauge(float currentFuel)
     {
@@ -372,7 +399,36 @@ public class Player : MonoBehaviour
       AmmoCount(15);
  
     }
+    
+    void OnDrawGizmosSelected()
+    {
+        Vector3 origin2 = new Vector2(0f, 0f); //HERE FOR TESTING 
+        // Draw a yellow sphere at the transform's position
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawSphere(origin2, 5.0f);
+    }
 
+    //AOE LOGIC PHYSICS.SPHEREOVERLAP
+    private void AreaOfEffectDamage()
+    {
+        
+        Vector2 origin = new Vector2(0f,0f);
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(origin, 20f, AoE);
+         foreach(Collider2D c in colliders)
+        {
+            if(c.GetComponent<Enemy>())
+            {
+                Debug.Log("I found some colliders");
+                c.GetComponent<Enemy>().EnemyDeath();
+            }
+        }
+    }
+
+    public void ShockWaveEnabled()
+    {
+        _isShockWaveEnabled = true;
+        
+    }
     IEnumerator TripleShotPowerDownRoutine()
     {
         yield return new WaitForSeconds(5.0f);
@@ -388,6 +444,15 @@ public class Player : MonoBehaviour
         _speed /= _speedMultiplier;
 
 
+    }
+    IEnumerator ShockwaveRoutine()
+    {  
+        shockWaveVisulizer.SetActive(true); 
+        yield return new WaitForSeconds(0.5f);
+        AreaOfEffectDamage();
+        yield return new WaitForSeconds(1.0f);
+        shockWaveVisulizer.SetActive(false);
+        _isShockWaveEnabled = false;
     }
 
 }

@@ -8,9 +8,7 @@ public class Powerup : MonoBehaviour
     [SerializeField]
     private float _speed = 3.0f;
     private Player _player;
-    private int _tripleshotPowerUp = 0;
-    private int _speedPowerUp = 1;
-    private int _shieldsPowerUp = 2;
+  
     [SerializeField]
     private int powerUpID;
 
@@ -55,7 +53,9 @@ public class Powerup : MonoBehaviour
                     case 4:
                         player.restoreLives(3);
                             break;
-                      
+                    case 5:
+                        player.ShockWaveEnabled();
+                        break;
                 }
                 Destroy(gameObject);
             }
