@@ -10,6 +10,8 @@ public class SpawnManager : MonoBehaviour
     GameObject _enemyContainer;
     [SerializeField]
     private GameObject[] powerups;
+    [SerializeField]
+    private GameObject[] enemies; //added for new enemy logic movement
 
 
     private bool _stopSpawning = false;
@@ -32,12 +34,18 @@ public class SpawnManager : MonoBehaviour
         while (_stopSpawning == false)
         {
             Vector3 spawnPos = new Vector3(Random.Range(-9.3f, 9.3f), 7f, 0f);
-            GameObject newEnemy = Instantiate(_enemyPrefab, spawnPos, Quaternion.identity);
+            //Add ranomizer here 4
+            int randomEnemy = Random.Range(0, 2);
+            GameObject newEnemy = Instantiate(enemies[randomEnemy], spawnPos, Quaternion.identity); //Change this to instantiate with randomizer
             newEnemy.transform.parent = _enemyContainer.transform;
             yield return new WaitForSeconds(5.0f);
 
         }
     }
+
+    //NEW ENEMY MOVEMENT LOGIC
+    //Randomize the odds of spawning an enemy with a diffrent move-set
+    //spawn it with an array that had a randomize index value, the array is the two+ enemy types since I have to creat an aggressive enemy too
 
     IEnumerator SpawnPowerUpRoutine()
     {

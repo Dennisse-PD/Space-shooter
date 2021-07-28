@@ -20,12 +20,23 @@ public class Enemy : MonoBehaviour
     AudioSource _explosionSound;
     AudioSource _laserSound;
 
+    [SerializeField]
+    private int enemyID;
 
+    private float _frequency = 1.0f;
+    private float _amplitude = 5.0f;
+    private float _cycleSpeed = 1.0f;
+
+    private Vector3 pos;
+    private Vector3 xAxis;
 
 
     // Start is called before the first frame update
     void Start()
     {
+        pos = transform.position;
+        xAxis = transform.right;
+
         _player = GameObject.Find("Player").GetComponent<Player>();
 
         if(_player == null)
@@ -55,7 +66,23 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //NEW ENEMY MOVEMENT LOGIC 
+        //make a case to swtich between enemy movements depending on which spawned
+        //I can use a bool that becomes true when they spawn and this will help me activate the case statments 
+        //***See Modular power-up script for references***
+
         calculateMovement();
+        switch (enemyID)
+        {
+            case 0:
+                SidetoSideMovement();
+                Debug.Log("Regular Enemy Spawned");
+                break;
+            case 1:
+                ZigzagMovement();
+                Debug.Log("Alternate Enemy Spawned");
+                break;
+        }
 
         if (Time.time > _canfire)
         {
@@ -82,6 +109,20 @@ public class Enemy : MonoBehaviour
 
         }
     }
+
+    void ZigzagMovement()
+    {
+        pos += Vector3.down * Time.deltaTime * _cycleSpeed;
+        transform.position = pos + xAxis * Mathf.Sin(Time.time * _frequency) * _amplitude;
+    }
+    void SidetoSideMovement()
+    {
+       
+        transform.position = pos + xAxis * Mathf.Sin(Time.time * _frequency) * _amplitude;
+    }
+
+
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         if(other.gameObject.CompareTag("Player"))
