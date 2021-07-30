@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8967394379007574722}
   - component: {fileID: 4870233302806994654}
   - component: {fileID: 5449822756812939656}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Health_PowerUp
   m_TagString: PoweUp
   m_Icon: {fileID: 0}
@@ -167,3 +167,4 @@ MonoBehaviour:
   _speed: 3
   powerUpID: 4
   _PowerUpSound: {fileID: 8300000, guid: 5ee343246919d2b4bba63ae629e95494, type: 3}
+  _magnetspeed: 5

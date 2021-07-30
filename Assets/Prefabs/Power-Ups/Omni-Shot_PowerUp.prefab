@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7291857818660062987}
   - component: {fileID: 7291857818660062986}
   - component: {fileID: 7291857818660062989}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Omni-Shot_PowerUp
   m_TagString: Untagged
   m_Icon: {fileID: 0}

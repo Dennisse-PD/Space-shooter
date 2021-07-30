@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4264921387765017972}
   - component: {fileID: 6034842347315314485}
   - component: {fileID: -4916505294683326304}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Ammo_PowerUp
   m_TagString: PoweUp
   m_Icon: {fileID: 0}
@@ -120,6 +120,7 @@ MonoBehaviour:
   _speed: 3
   powerUpID: 3
   _PowerUpSound: {fileID: 8300000, guid: 5ee343246919d2b4bba63ae629e95494, type: 3}
+  _magnetspeed: 5
 --- !u!50 &6034842347315314485
 Rigidbody2D:
   serializedVersion: 4

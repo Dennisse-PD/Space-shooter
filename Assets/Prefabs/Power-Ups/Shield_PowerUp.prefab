@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4751157908758684159}
   - component: {fileID: 5514135132622405795}
   - component: {fileID: 6608112338807565416}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Shield_PowerUp
   m_TagString: PoweUp
   m_Icon: {fileID: 0}
@@ -167,3 +167,4 @@ MonoBehaviour:
   _speed: 3
   powerUpID: 2
   _PowerUpSound: {fileID: 8300000, guid: 5ee343246919d2b4bba63ae629e95494, type: 3}
+  _magnetspeed: 5

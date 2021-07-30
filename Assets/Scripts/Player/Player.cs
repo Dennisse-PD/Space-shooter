@@ -52,9 +52,6 @@ public class Player : MonoBehaviour
     [SerializeField]
     private SpriteRenderer _shieldRender;
 
-    [SerializeField]
-    LayerMask AoE;
-
 
     //THRUST
     [SerializeField]
@@ -78,10 +75,15 @@ public class Player : MonoBehaviour
     private float shakeAmmount;
 
     //OMNI-SHOT VARIABLES
+
+    [SerializeField]
+    LayerMask AoE;
     private bool _isShockWaveEnabled = false;
     [SerializeField]
     private GameObject shockWaveVisulizer;
 
+    //HAZARD VARIABLES
+    private bool _isHazardEnabled = false;
 
     // Start is called before the first frame update
     void Start()
@@ -125,11 +127,7 @@ public class Player : MonoBehaviour
         calculateMovement();
         _thrustGauge.value = _totalFuel;
 
-        if(Input.GetKeyDown(KeyCode.K))
-        {
-            AreaOfEffectDamage();
-            Debug.Log("You pressed K");
-        }
+       
       
         if (Input.GetKeyDown(KeyCode.Space) && Time.time > _nextShot)
         {
@@ -142,12 +140,14 @@ public class Player : MonoBehaviour
             else
             {
                 FireLaser();
-            }
-          
-                
-            
-            
+            }   
 
+        }
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            
+            //Debug.Log("The C Key is working");
+           // place attraction or movetowards here
         }
 
         //THURSTING  INPUT LOGIC
@@ -169,7 +169,8 @@ public class Player : MonoBehaviour
         thrust();
 
         regenFuel();
-       
+        
+
     }
     void regenFuel()
     {
@@ -424,10 +425,18 @@ public class Player : MonoBehaviour
         }
     }
 
+
     public void ShockWaveEnabled()
     {
         _isShockWaveEnabled = true;
         
+    }
+
+    public void HazardEnabled()
+    {
+        _isHazardEnabled = true;
+        _speed /= _speed;
+        StartCoroutine(HazardPowerDownRoutine());
     }
     IEnumerator TripleShotPowerDownRoutine()
     {
@@ -444,6 +453,12 @@ public class Player : MonoBehaviour
         _speed /= _speedMultiplier;
 
 
+    }
+    IEnumerator HazardPowerDownRoutine()
+    {
+        yield return new WaitForSeconds(5.0f);
+        _isHazardEnabled = false;
+        _speed = 3.5f;
     }
     IEnumerator ShockwaveRoutine()
     {  
