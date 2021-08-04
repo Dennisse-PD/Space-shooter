@@ -30,10 +30,20 @@ public class Enemy : MonoBehaviour
     private Vector3 pos;
     private Vector3 xAxis;
 
+    //Snield Enemy Variables
+    [SerializeField]
+    private SpriteRenderer _shieldRenderer;
+    private int _shieldStrengh = 1;
+    [SerializeField]
+    private GameObject shieldVisualizer;
+    
+
+
 
     // Start is called before the first frame update
     void Start()
     {
+        _shieldRenderer.color = Color.red;
         pos = transform.position;
         xAxis = transform.right;
 
@@ -75,7 +85,7 @@ public class Enemy : MonoBehaviour
         switch (enemyID)
         {
             case 0:
-                SidetoSideMovement();
+                //SidetoSideMovement();
                 Debug.Log("Regular Enemy Spawned");
                 break;
             case 1:
@@ -125,7 +135,10 @@ public class Enemy : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.gameObject.CompareTag("Player"))
+        _shieldStrengh--;
+        shieldVisualizer.SetActive(false);
+
+        if (other.gameObject.CompareTag("Player"))
         {
             Player player = other.GetComponent<Player>();
             
@@ -143,19 +156,25 @@ public class Enemy : MonoBehaviour
       if(other.gameObject.CompareTag("Laser"))
         {
 
+
             Destroy(other.gameObject);
 
             if(_player != null)
             {
+                
                 EnemyDeath();
             }
             
         }
       
-        }
+    }
     public void EnemyDeath()
     {
-        
+       if(_shieldStrengh == 0 )
+        {
+            return;
+        }
+
         _animator.SetTrigger("OnEnemyDeath");
         _speed = 0;
         _explosionSound.Play();
@@ -163,4 +182,12 @@ public class Enemy : MonoBehaviour
         Destroy(this.gameObject, 2.6f);
         _player.AddScore(10);
     }
+   /* private void DeactivateShield()
+    {
+        if (forceFieldStrengh >= 1)
+        {
+            shieldVisualizer.SetActive(false);
+        }
+
+    }*/
 }
