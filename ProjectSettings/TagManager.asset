@@ -59,3 +59,9 @@ TagManager:
   - name: UI
     uniqueID: 2271525985
     locked: 0
+  - name: Cover_Objects
+    uniqueID: 2444398343
+    locked: 0
+  - name: Effects
+    uniqueID: 1441602995
+    locked: 0

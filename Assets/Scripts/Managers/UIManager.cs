@@ -75,7 +75,7 @@ public class UIManager : MonoBehaviour
 
         IEnumerator GameOverFlicker()
         {
-            while (currentLives == 0)
+            while (currentLives < 1)
                 {
                 
                 _gameOverText.enabled = false;
