@@ -44,10 +44,10 @@ public class SpawnManager : MonoBehaviour
             Vector3 spawnPos = new Vector3(Random.Range(-9.3f, 9.3f), 7f, 0f);
             //Add ranomizer here 4
             
-            int randomEnemy = Random.Range(0, 3);
+            int randomEnemy = Random.Range(0, 4);
             GameObject newEnemy = Instantiate(enemies[randomEnemy], spawnPos, Quaternion.identity); //Change this to instantiate with randomizer
             newEnemy.transform.parent = _enemyContainer.transform;
-            _currentEnemies--;
+          ///  _currentEnemies--;
             yield return new WaitForSeconds(5.0f);
 
         }

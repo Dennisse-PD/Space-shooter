@@ -250,6 +250,9 @@ MonoBehaviour:
   enemyID: 1
   _shieldRenderer: {fileID: 8078210090117695239}
   shieldVisualizer: {fileID: 8509667477456984202}
+  Player: {fileID: 0}
+  _ramSpeed: 3
+  spriteRenderer: {fileID: 0}
 --- !u!95 &3964577884905632695
 Animator:
   serializedVersion: 3
@@ -338,8 +341,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 1344379407
-  m_SortingLayer: 2
+  m_SortingLayerID: 1441602995
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 333b0196b7a764df5a7768ead9b69dbc, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

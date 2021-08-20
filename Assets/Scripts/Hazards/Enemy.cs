@@ -41,9 +41,28 @@ public class Enemy : MonoBehaviour
     private bool _isShieldActive = false;
     private int _randomizeShield;
 
+    //Aggressive Enemy Variables
+    
+    private float _distance;
+    [SerializeField]
+    private float _ramSpeed = 2.5f;
+    private float _attackRange = 4.0f;
+    private float _ramMultiplier = 2.0f;
+
+    [SerializeField]
+    private SpriteRenderer spriteRenderer;
+    private bool isFlickerEnabled = false;
+
+    //Dodge variables
+    private bool isDodgeEnabled = false;
+    private float _laserDistance;
+    
+
     // Start is called before the first frame update
     void Start()
     {
+
+
         //randomizez shiled here 0-5
         _randomizeShield = Random.Range(0, 5);
 
@@ -54,6 +73,8 @@ public class Enemy : MonoBehaviour
 
             _shieldRenderer.color = Color.yellow; //set this only when shield is active
         }
+     
+
         //Variables for Sine Wave Zig-Zag move 
         pos = transform.position;
         xAxis = transform.right;
@@ -82,17 +103,20 @@ public class Enemy : MonoBehaviour
         {
             Debug.LogError("The Laser Audio Source is NULL!");
         }
+        
     }
 
     // Update is called once per frame
     void Update()
-        {
-            //NEW ENEMY MOVEMENT LOGIC 
-            //make a case to swtich between enemy movements depending on which spawned
-            //I can use a bool that becomes true when they spawn and this will help me activate the case statments 
-            //***See Modular power-up script for references***
 
-            calculateMovement();
+        {
+        
+        //NEW ENEMY MOVEMENT LOGIC 
+        //make a case to swtich between enemy movements depending on which spawned
+        //I can use a bool that becomes true when they spawn and this will help me activate the case statments 
+        //***See Modular power-up script for references***
+
+        calculateMovement();
             switch (enemyID)
             {
                 case 0:
@@ -103,9 +127,13 @@ public class Enemy : MonoBehaviour
                     ZigzagMovement();
                     Debug.Log("Alternate Enemy Spawned");
                     break;
-                    /*case 2:
-                        ActivateShield();
-                        break; */
+               case 2:
+
+                     RamPlayer();
+                     break;
+            case 3:
+                Dodge();
+                break;
 
             }
 
@@ -141,15 +169,59 @@ public class Enemy : MonoBehaviour
         pos += Vector3.down * Time.deltaTime * _cycleSpeed;
         transform.position = pos + xAxis * Mathf.Sin(Time.time * _frequency) * _amplitude;
     }
-    void SidetoSideMovement()
+    private void RamPlayer()
     {
-        //try this with mathf.Pi instead 
-        //add downwards movement here 
-        pos += Vector3.down * Time.deltaTime;
-
-        transform.position = pos + xAxis  * Mathf.Sin(Time.time * _frequency) * _amplitude;
         
+        _distance = Vector3.Distance(_player.transform.position, this.transform.position);
+        Debug.Log("The distance between the Player and the Enemy is  " + _distance);
+        if (_distance <= _attackRange)
+        {
+
+            EnableFlicker();
+            StartCoroutine(colorFlickerRoutine());
+
+
+
+            Vector3 direction = this.transform.position - _player.transform.position;
+            direction = direction.normalized;
+            this.transform.position -= direction * Time.deltaTime * (_ramSpeed * _ramMultiplier);
+
+        }
+         if (_distance <= 1.1f)
+        {
+
+            Destroy(GetComponent<Collider2D>());
+            Destroy(this.gameObject);
+        }
+       
+
     }
+    private void Dodge()
+    {
+        _laserDistance = Vector3.Distance(_laserPrefab.transform.position, this.transform.position);
+        if (_laserDistance <= _attackRange)
+        {
+            //enabled true
+           // Start coroutine somwehre?
+           //make it like the powerdown routines
+            GetComponent<Renderer>().enabled = false;
+
+        }
+    }
+    
+    IEnumerator colorFlickerRoutine()
+    {
+        while (isFlickerEnabled == true)
+        {
+
+            spriteRenderer.color = Color.red;
+            yield return new WaitForSeconds(0.5f);
+            spriteRenderer.color = Color.white;
+            yield return new WaitForSeconds(0.5f);
+            isFlickerEnabled = false;
+        }
+    }
+
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -179,8 +251,12 @@ public class Enemy : MonoBehaviour
         {
           
             Destroy(other.gameObject);
-          
-            
+
+            if(isDodgeEnabled == true)
+            {
+                Debug.Log("Dodge is Enabled");
+              
+            }
 
             if (_player != null)
             {
@@ -224,15 +300,11 @@ public class Enemy : MonoBehaviour
             return;
         }
     }
+    void EnableFlicker()
+    {
+        isFlickerEnabled = true;
+    }
+  
 }
-
-
-    //set the shield false as default --> this is a global bool variable 
-    //make a bool to track the activation
-    //make it active in the activate shield method, this will happen randomly
-
-    //if the shield is acive(the bool) --> return ;
-    //that's it?
-
 
 
