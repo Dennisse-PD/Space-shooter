@@ -401,13 +401,7 @@ public class Player : MonoBehaviour
  
     }
     
-    void OnDrawGizmosSelected()
-    {
-        Vector3 origin2 = new Vector2(0f, 0f); //HERE FOR TESTING 
-        // Draw a yellow sphere at the transform's position
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawSphere(origin2, 5.0f);
-    }
+    
 
     //AOE LOGIC PHYSICS.SPHEREOVERLAP
     private void AreaOfEffectDamage()
@@ -428,8 +422,7 @@ public class Player : MonoBehaviour
 
     public void ShockWaveEnabled()
     {
-        _isShockWaveEnabled = true;
-        
+        _isShockWaveEnabled = true; 
     }
 
     public void HazardEnabled()

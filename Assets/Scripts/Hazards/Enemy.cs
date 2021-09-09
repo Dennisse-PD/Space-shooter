@@ -54,14 +54,19 @@ public class Enemy : MonoBehaviour
     private bool isFlickerEnabled = false;
 
     //Dodge variables
-    private bool isDodgeEnabled = false;
-    private float _laserDistance;
+    float _rayDistance = 8.0f;
+    [SerializeField]
+    float _rayCastRad = 0.5f;
+   
     
+    
+
+
 
     // Start is called before the first frame update
     void Start()
     {
-
+        
 
         //randomizez shiled here 0-5
         _randomizeShield = Random.Range(0, 5);
@@ -117,27 +122,28 @@ public class Enemy : MonoBehaviour
         //***See Modular power-up script for references***
 
         calculateMovement();
-            switch (enemyID)
-            {
-                case 0:
-                    //SidetoSideMovement();
-                    Debug.Log("Regular Enemy Spawned");
-                    break;
-                case 1:
-                    ZigzagMovement();
-                    Debug.Log("Alternate Enemy Spawned");
-                    break;
-               case 2:
-
-                     RamPlayer();
-                     break;
+        switch (enemyID)
+        {
+            case 0:
+                //SidetoSideMovement(); or can add code for them to appear from the sides here
+                
+                break;
+            case 1:
+                ZigzagMovement();
+             
+                break;
+            case 2:
+                RamPlayer();
+                break;
             case 3:
                 Dodge();
                 break;
+           
 
-            }
 
-            if (Time.time > _canfire)
+        }
+
+        if (Time.time > _canfire)
             {
                 _fireRate = Random.Range(3f, 7f);
                 _canfire = Time.time + _fireRate;
@@ -171,43 +177,52 @@ public class Enemy : MonoBehaviour
     }
     private void RamPlayer()
     {
-        
-        _distance = Vector3.Distance(_player.transform.position, this.transform.position);
-        Debug.Log("The distance between the Player and the Enemy is  " + _distance);
-        if (_distance <= _attackRange)
+        StartCoroutine(colorFlickerRoutine());
+        if(_player != null)
         {
+            _distance = Vector3.Distance(_player.transform.position, this.transform.position);
 
-            EnableFlicker();
-            StartCoroutine(colorFlickerRoutine());
+            if (_distance <= _attackRange)
+            {
+                EnableFlicker();
+                Vector3 direction = this.transform.position - _player.transform.position;
+                direction = direction.normalized;
+                this.transform.position -= direction * Time.deltaTime * (_ramSpeed * _ramMultiplier);
+            }
+            if (_distance <= 1.1f)
+            {
 
-
-
-            Vector3 direction = this.transform.position - _player.transform.position;
-            direction = direction.normalized;
-            this.transform.position -= direction * Time.deltaTime * (_ramSpeed * _ramMultiplier);
-
+                Destroy(GetComponent<Collider2D>());
+                Destroy(this.gameObject);
+            }
         }
-         if (_distance <= 1.1f)
-        {
-
-            Destroy(GetComponent<Collider2D>());
-            Destroy(this.gameObject);
-        }
+      
        
 
     }
-    private void Dodge()
+    private void Dodge()//ENEMY AVOID LASER
     {
-        _laserDistance = Vector3.Distance(_laserPrefab.transform.position, this.transform.position);
-        if (_laserDistance <= _attackRange)
-        {
-            //enabled true
-           // Start coroutine somwehre?
-           //make it like the powerdown routines
-            GetComponent<Renderer>().enabled = false;
+        //make another dodge method instead using colliders and if the right tag(s) hit, I will do the dodge thing. 
+        //I might need to do this from a new script that inherits the Enemy class so I can call this dodge method wpthin it.
+        float x = Random.Range(-5.0f, 5.0f);
+        float y = Random.Range(-5.0f, 5.0f);
+        //raycast hit code here
+        RaycastHit2D hit = Physics2D.CircleCast(transform.position, _rayCastRad , Vector2.down, _rayDistance);
+        Debug.DrawRay(transform.position, Vector3.down * _rayCastRad *  _rayDistance, Color.red);
 
+        if(hit.collider !=null)
+        {
+            if (hit.collider.CompareTag("Laser"))
+            {
+                //dodge
+                Debug.Log("Laser Detected");
+                transform.position = new Vector2(x, y);
+            }
         }
+       
     }
+    //SMART ENEMY CODE HERE USING THE SAME LOGIC AS ABOVE BUT THE VECTOR IS FORWARD AND THE LASER GETS CALLED
+    
     
     IEnumerator colorFlickerRoutine()
     {
@@ -222,10 +237,12 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    private void CollidedWithPlayer()
+    {
 
+    }
     private void OnTriggerEnter2D(Collider2D other)
     {
-       
 
         if (other.gameObject.CompareTag("Player"))
         {
@@ -248,15 +265,8 @@ public class Enemy : MonoBehaviour
         }
 
       if(other.gameObject.CompareTag("Laser"))
-        {
-          
+        {   
             Destroy(other.gameObject);
-
-            if(isDodgeEnabled == true)
-            {
-                Debug.Log("Dodge is Enabled");
-              
-            }
 
             if (_player != null)
             {
@@ -267,7 +277,7 @@ public class Enemy : MonoBehaviour
         }
       
     }
-    public void EnemyDeath()
+    public void EnemyDeath() //MAKE AN IF SOMWHERE TO MANAGE THE DEATH TIMING FOR THE OTHER ENEMYES just needs to be an else for all the others
     {
         if (_isShieldActive == true)
         {
@@ -303,8 +313,10 @@ public class Enemy : MonoBehaviour
     void EnableFlicker()
     {
         isFlickerEnabled = true;
+       
     }
   
+   
 }
 
 

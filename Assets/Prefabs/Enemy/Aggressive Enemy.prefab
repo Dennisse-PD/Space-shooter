@@ -117,9 +117,9 @@ GameObject:
   - component: {fileID: 2097658873362807652}
   - component: {fileID: 457476972326719223}
   - component: {fileID: 293120363}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Aggressive Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -327,6 +327,7 @@ MonoBehaviour:
   shieldVisualizer: {fileID: 1216546987}
   _ramSpeed: 2
   spriteRenderer: {fileID: 5043188484993166442}
+  _rayCastRad: 0.3
 --- !u!50 &457476972326719223
 Rigidbody2D:
   serializedVersion: 4
@@ -375,7 +376,7 @@ GameObject:
   - component: {fileID: 5043188486374379205}
   - component: {fileID: 5043188486374379207}
   - component: {fileID: 5043188486374379204}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Explosion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
