@@ -6,7 +6,7 @@ using UnityEngine;
 public class Camera_shake : MonoBehaviour
 {
 
-    private bool _isShaking = false;
+    private bool _isShaking = false; //THIS COULD BE THE PROBLEM WITH THE SHAKE NOT GOING BACK DEFAULT POSITION. THIS IS NEVER USED.
     private float duration = 0.5f;
     private float magnitude = 0.5f;
 

@@ -56,7 +56,7 @@ public class Powerup : MonoBehaviour
         if (player != null)
         {
             
-            if (other.gameObject.CompareTag("Player"))
+            if (other.gameObject.CompareTag("Player")) //add another compare tag for the laser no that won't do 'cause then any laser can destroy a powerup
             {
 
                 AudioSource.PlayClipAtPoint(_PowerUpSound, transform.position);

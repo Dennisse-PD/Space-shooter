@@ -53,15 +53,17 @@ public class Enemy : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private bool isFlickerEnabled = false;
 
-    //Dodge variables
+    //CircleCast Variables
     float _rayDistance = 8.0f;
     [SerializeField]
     float _rayCastRad = 0.5f;
-   
-    
-    
 
+    //Power Up Destroyaer prefab
+    [SerializeField]
+    private GameObject _puDestroyerPrefab;
 
+    //Enemy Pick up
+    private Laser _laserScript;
 
     // Start is called before the first frame update
     void Start()
@@ -102,20 +104,26 @@ public class Enemy : MonoBehaviour
         {
             Debug.LogError("The Explosion Audio Source is NULL!");
         }
-
         _laserSound = GetComponent<AudioSource>();
+
         if(_laserSound == null)
         {
             Debug.LogError("The Laser Audio Source is NULL!");
         }
-        
+
+        _laserScript = GameObject.Find("Big Projectile").GetComponent<Laser>();
+
+        if (_laserScript == null)
+        {
+            Debug.LogError("The Laser Script Source is NULL!");
+        }
     }
 
     // Update is called once per frame
     void Update()
 
-        {
-        
+    {
+
         //NEW ENEMY MOVEMENT LOGIC 
         //make a case to swtich between enemy movements depending on which spawned
         //I can use a bool that becomes true when they spawn and this will help me activate the case statments 
@@ -126,11 +134,11 @@ public class Enemy : MonoBehaviour
         {
             case 0:
                 //SidetoSideMovement(); or can add code for them to appear from the sides here
-                
+
                 break;
             case 1:
                 ZigzagMovement();
-             
+
                 break;
             case 2:
                 RamPlayer();
@@ -138,26 +146,67 @@ public class Enemy : MonoBehaviour
             case 3:
                 Dodge();
                 break;
-           
+            case 4:
+                backAttack();
+                break;
+            case 5:
+                destroyPowerUp();
+                break;
+
 
 
         }
+        if(Time.time > _canfire)
+        {
+          FireLaser();
+        }
 
-        if (Time.time > _canfire)
-            {
-                _fireRate = Random.Range(3f, 7f);
-                _canfire = Time.time + _fireRate;
-                GameObject enemeyLaser = Instantiate(_laserPrefab, transform.position, Quaternion.identity);
-                Laser[] lasers = enemeyLaser.GetComponentsInChildren<Laser>();
-
-                for (int i = 0; i < lasers.Length; i++)
-                {
-                    lasers[i].AssignEnemyLaser();
-                }
-            }
     }
+   
+        private void FireLaser()
+        {
+        _fireRate = Random.Range(3f, 7f);
+        _canfire = Time.time + _fireRate;
+        GameObject enemeyLaser = Instantiate(_laserPrefab, transform.position, Quaternion.identity);
+        Laser[] lasers = enemeyLaser.GetComponentsInChildren<Laser>();
+
+        for (int i = 0; i < lasers.Length; i++)
+        {
+            lasers[i].AssignEnemyLaser();
+        }
         
-    
+        }
+    //The following firing methods may be changed into >>>>> Coroutines <<<<<<
+    private void fireLaserBack()
+    {
+        _fireRate = 3f;
+        _canfire = Time.time + _fireRate;
+        GameObject enemeyLaser = Instantiate(_laserPrefab, transform.position, Quaternion.Euler(transform.rotation.x, transform.rotation.y, 180.0f));
+        Laser[] lasers = enemeyLaser.GetComponentsInChildren<Laser>();
+
+        for (int i = 0; i < lasers.Length; i++)
+        {
+            lasers[i].AssignEnemyLaser();
+        }
+
+    }
+    private void fireAtPowerUp() //tunrining this into a corutine
+    {
+
+        //can this help destroy the laser? need to revise laser code
+
+      GameObject enemeyLaser = Instantiate(_puDestroyerPrefab, transform.position, Quaternion.Euler(transform.rotation.x, transform.rotation.y, 180.0f));
+        _laserScript.AssignEnemyLaser();
+
+
+
+
+    }
+
+
+
+
+
     void calculateMovement()
     {
         transform.position += Vector3.down * (_speed * Time.deltaTime);
@@ -189,7 +238,7 @@ public class Enemy : MonoBehaviour
                 direction = direction.normalized;
                 this.transform.position -= direction * Time.deltaTime * (_ramSpeed * _ramMultiplier);
             }
-            if (_distance <= 1.1f)
+            if (_distance <= 1.1f) //is this what destroyes the enemy when they are out of bounds? If so,I might need to turn this into a function to call for all enemies
             {
 
                 Destroy(GetComponent<Collider2D>());
@@ -200,14 +249,15 @@ public class Enemy : MonoBehaviour
        
 
     }
-    private void Dodge()//ENEMY AVOID LASER
+    private void Dodge()//ENEMY AVOID LASER. MUST REVISE LATER
     {
         //make another dodge method instead using colliders and if the right tag(s) hit, I will do the dodge thing. 
         //I might need to do this from a new script that inherits the Enemy class so I can call this dodge method wpthin it.
         float x = Random.Range(-5.0f, 5.0f);
         float y = Random.Range(-5.0f, 5.0f);
         //raycast hit code here
-        RaycastHit2D hit = Physics2D.CircleCast(transform.position, _rayCastRad , Vector2.down, _rayDistance);
+        RaycastHit2D hit = Physics2D.CircleCast(transform.position, _rayCastRad , Vector2.down, _rayDistance); //should add layer mask for laser later<<<IMPORTANT>>>
+        // CircleCast(Vector2 origin, float radius, Vector2 direction, ContactFilter2D contactFilter, RaycastHit2D[] results, float distance = Mathf.Infinity);
         Debug.DrawRay(transform.position, Vector3.down * _rayCastRad *  _rayDistance, Color.red);
 
         if(hit.collider !=null)
@@ -221,9 +271,50 @@ public class Enemy : MonoBehaviour
         }
        
     }
+    private void backAttack()
+    {
+        
+        RaycastHit2D hit = Physics2D.CircleCast(transform.position, _rayCastRad, Vector2.up, _rayDistance, LayerMask.GetMask("Player"));
+        
+        Debug.DrawRay(transform.position, Vector3.up * _rayCastRad * _rayDistance, Color.red);
+
+        if (hit.collider != null)
+        {
+            if (hit.collider.CompareTag("Player") && Time.time > _canfire)
+            {
+                Debug.Log("Player Detected");
+                fireLaserBack();
+              
+            }
+        }
+    }
+    private void destroyPowerUp()
+    {
+
+        RaycastHit2D hit = Physics2D.CircleCast(transform.position, _rayCastRad, Vector2.down, _rayDistance, LayerMask.GetMask("collectible"));
+
+        Debug.DrawRay(transform.position, Vector3.down * _rayCastRad * _rayDistance, Color.red);
+
+        if (hit.collider != null)
+        {
+            if (hit.collider.CompareTag("PowerUp"))//&& Time.time > _canfire)
+            {
+                Debug.Log("PowerUp Detected");
+                fireAtPowerUp(); //start coroutine instead??? or do it in the case statement?
+                //might need to add a bool here that is set to true when the powerup is detectect
+                //That way, the coroutine will run while the powerup detection is true 
+                //Disregard the prior note, the method already runs only when the detection is active. I just tested it
+                //leaving these notes here just in case I need them later. I'll clean everything up after the coroutine is finished.
+                //I might still need the bool to control the corutine
+               
+
+            }
+        }
+    }
+
     //SMART ENEMY CODE HERE USING THE SAME LOGIC AS ABOVE BUT THE VECTOR IS FORWARD AND THE LASER GETS CALLED
-    
-    
+
+
     IEnumerator colorFlickerRoutine()
     {
         while (isFlickerEnabled == true)
@@ -237,10 +328,6 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    private void CollidedWithPlayer()
-    {
-
-    }
     private void OnTriggerEnter2D(Collider2D other)
     {
 

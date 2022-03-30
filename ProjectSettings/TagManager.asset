@@ -10,6 +10,8 @@ TagManager:
   - enemyLaser
   - Projectile
   - Magnet
+  - PowerUp
+  - puDestroyerLaser
   layers:
   - Default
   - TransparentFX
@@ -21,7 +23,7 @@ TagManager:
   - AoE
   - collectible
   - Laser
-  - 
+  - Player
   - 
   - 
   - 

@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 7291857818660062989}
   m_Layer: 8
   m_Name: Omni-Shot_PowerUp
-  m_TagString: Untagged
+  m_TagString: PowerUp
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -167,3 +167,4 @@ MonoBehaviour:
   _speed: 3
   powerUpID: 5
   _PowerUpSound: {fileID: 8300000, guid: 5ee343246919d2b4bba63ae629e95494, type: 3}
+  _magnetspeed: 5
