@@ -84,6 +84,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: enemy_PowerUpLaser 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6455117977347328754, guid: 9fb265b2c6e5b6944915e4f078fa3fdf,
+        type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 6455117977347328765, guid: 9fb265b2c6e5b6944915e4f078fa3fdf,
         type: 3}
       propertyPath: m_RootOrder

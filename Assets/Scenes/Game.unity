@@ -572,28 +572,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PowerupDestroyer_Enemy Variant
       objectReference: {fileID: 0}
-    - target: {fileID: 3703067032468881005, guid: b166efe3d4d452542916dad2e53708f4,
-        type: 3}
-      propertyPath: _enemyPrefab
-      value: 
-      objectReference: {fileID: 6455117977347328754, guid: 9fb265b2c6e5b6944915e4f078fa3fdf,
-        type: 3}
-    - target: {fileID: 3703067032468881005, guid: b166efe3d4d452542916dad2e53708f4,
-        type: 3}
-      propertyPath: _laserPrefab
-      value: 
-      objectReference: {fileID: 6455117977347328754, guid: 9fb265b2c6e5b6944915e4f078fa3fdf,
-        type: 3}
-    - target: {fileID: 3703067032468881005, guid: b166efe3d4d452542916dad2e53708f4,
-        type: 3}
-      propertyPath: _puDestroyerPrefab
-      value: 
-      objectReference: {fileID: 3832757677833340961, guid: ca06ce8b5ff755f4498271577661b67f,
-        type: 3}
     - target: {fileID: 3703067032468881007, guid: b166efe3d4d452542916dad2e53708f4,
         type: 3}
       propertyPath: m_RootOrder
-      value: 11
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 3703067032468881007, guid: b166efe3d4d452542916dad2e53708f4,
         type: 3}
@@ -1486,7 +1468,7 @@ Transform:
   m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1425379594
 GameObject:
@@ -2156,7 +2138,7 @@ PrefabInstance:
     - target: {fileID: 5449822756812939656, guid: 2f7592b6d06c7fd4ea66d7c779daada7,
         type: 3}
       propertyPath: _speed
-      value: 0
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7484347234487392292, guid: 2f7592b6d06c7fd4ea66d7c779daada7,
         type: 3}
@@ -2166,7 +2148,7 @@ PrefabInstance:
     - target: {fileID: 7484347234487392292, guid: 2f7592b6d06c7fd4ea66d7c779daada7,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.8348122
+      value: 4.09
       objectReference: {fileID: 0}
     - target: {fileID: 7484347234487392292, guid: 2f7592b6d06c7fd4ea66d7c779daada7,
         type: 3}

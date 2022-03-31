@@ -10,12 +10,12 @@ GameObject:
   m_Component:
   - component: {fileID: 3832757677833340991}
   - component: {fileID: 3832757677833340990}
-  - component: {fileID: -7357874631603105878}
   - component: {fileID: 1940449103887713696}
-  - component: {fileID: 3987742728616645358}
+  - component: {fileID: 7231553880719711767}
+  - component: {fileID: -9152452029490074336}
   m_Layer: 0
   m_Name: Big Projectile
-  m_TagString: enemyLaser
+  m_TagString: puDestroyerLaser
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -85,27 +85,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!50 &-7357874631603105878
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3832757677833340961}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 0.0001
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!61 &1940449103887713696
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -132,7 +111,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.23, y: 1.96}
   m_EdgeRadius: 0
---- !u!114 &3987742728616645358
+--- !u!114 &7231553880719711767
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -141,7 +120,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 3832757677833340961}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6e8f436592f38ba4cb3b10cd33416c0a, type: 3}
+  m_Script: {fileID: 11500000, guid: eeebf58392b66a54692e93956927ce4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 8
+--- !u!50 &-9152452029490074336
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3832757677833340961}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0

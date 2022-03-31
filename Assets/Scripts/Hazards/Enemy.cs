@@ -16,7 +16,7 @@ public class Enemy : MonoBehaviour
     private Animator _animator;
     private float _fireRate = 3.0f;
     private float _canfire = -1;
-    
+
     AudioSource _explosionSound;
     AudioSource _laserSound;
 
@@ -42,7 +42,7 @@ public class Enemy : MonoBehaviour
     private int _randomizeShield;
 
     //Aggressive Enemy Variables
-    
+
     private float _distance;
     [SerializeField]
     private float _ramSpeed = 2.5f;
@@ -63,24 +63,19 @@ public class Enemy : MonoBehaviour
     private GameObject _puDestroyerPrefab;
 
     //Enemy Pick up
-    private Laser _laserScript;
+    private bool isPowerUpInRange = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        
-
         //randomizez shiled here 0-5
         _randomizeShield = Random.Range(0, 5);
 
         if (_randomizeShield == 1)
         {
             ActivateShield();
-
-
             _shieldRenderer.color = Color.yellow; //set this only when shield is active
         }
-     
 
         //Variables for Sine Wave Zig-Zag move 
         pos = transform.position;
@@ -88,35 +83,31 @@ public class Enemy : MonoBehaviour
 
         _player = GameObject.Find("Player").GetComponent<Player>();
 
-        if(_player == null)
+        if (_player == null)
         {
             Debug.LogError("The Player is NULL!");
         }
 
         _animator = GetComponent<Animator>();
-       if(_animator == null)
+        if (_animator == null)
         {
             Debug.LogError("The Animator Component is NULL!");
         }
 
         _explosionSound = GetComponent<AudioSource>();
-       if(_explosionSound == null)
+        if (_explosionSound == null)
         {
             Debug.LogError("The Explosion Audio Source is NULL!");
         }
         _laserSound = GetComponent<AudioSource>();
 
-        if(_laserSound == null)
+        if (_laserSound == null)
         {
             Debug.LogError("The Laser Audio Source is NULL!");
         }
 
-        _laserScript = GameObject.Find("Big Projectile").GetComponent<Laser>();
 
-        if (_laserScript == null)
-        {
-            Debug.LogError("The Laser Script Source is NULL!");
-        }
+
     }
 
     // Update is called once per frame
@@ -152,19 +143,17 @@ public class Enemy : MonoBehaviour
             case 5:
                 destroyPowerUp();
                 break;
-
-
-
         }
-        if(Time.time > _canfire)
+        if (Time.time > _canfire)
         {
-          FireLaser();
+            FireLaser();
+
         }
 
     }
-   
-        private void FireLaser()
-        {
+
+    private void FireLaser()
+    {
         _fireRate = Random.Range(3f, 7f);
         _canfire = Time.time + _fireRate;
         GameObject enemeyLaser = Instantiate(_laserPrefab, transform.position, Quaternion.identity);
@@ -174,8 +163,8 @@ public class Enemy : MonoBehaviour
         {
             lasers[i].AssignEnemyLaser();
         }
-        
-        }
+
+    }
     //The following firing methods may be changed into >>>>> Coroutines <<<<<<
     private void fireLaserBack()
     {
@@ -190,22 +179,12 @@ public class Enemy : MonoBehaviour
         }
 
     }
-    private void fireAtPowerUp() //tunrining this into a corutine
-    {
-
-        //can this help destroy the laser? need to revise laser code
-
-      GameObject enemeyLaser = Instantiate(_puDestroyerPrefab, transform.position, Quaternion.Euler(transform.rotation.x, transform.rotation.y, 180.0f));
-        _laserScript.AssignEnemyLaser();
-
-
-
-
-    }
-
-
-
-
+    private void fireAtPowerUp()
+     {
+     _fireRate = 2f;
+     _canfire = Time.time + _fireRate;
+     GameObject enemeyLaser = Instantiate(_puDestroyerPrefab, transform.position, Quaternion.Euler(transform.rotation.x, transform.rotation.y, 180.0f));
+     }
 
     void calculateMovement()
     {
@@ -227,7 +206,7 @@ public class Enemy : MonoBehaviour
     private void RamPlayer()
     {
         StartCoroutine(colorFlickerRoutine());
-        if(_player != null)
+        if (_player != null)
         {
             _distance = Vector3.Distance(_player.transform.position, this.transform.position);
 
@@ -245,8 +224,8 @@ public class Enemy : MonoBehaviour
                 Destroy(this.gameObject);
             }
         }
-      
-       
+
+
 
     }
     private void Dodge()//ENEMY AVOID LASER. MUST REVISE LATER
@@ -256,11 +235,11 @@ public class Enemy : MonoBehaviour
         float x = Random.Range(-5.0f, 5.0f);
         float y = Random.Range(-5.0f, 5.0f);
         //raycast hit code here
-        RaycastHit2D hit = Physics2D.CircleCast(transform.position, _rayCastRad , Vector2.down, _rayDistance); //should add layer mask for laser later<<<IMPORTANT>>>
+        RaycastHit2D hit = Physics2D.CircleCast(transform.position, _rayCastRad, Vector2.down, _rayDistance); //should add layer mask for laser later<<<IMPORTANT>>>
         // CircleCast(Vector2 origin, float radius, Vector2 direction, ContactFilter2D contactFilter, RaycastHit2D[] results, float distance = Mathf.Infinity);
-        Debug.DrawRay(transform.position, Vector3.down * _rayCastRad *  _rayDistance, Color.red);
+        Debug.DrawRay(transform.position, Vector3.down * _rayCastRad * _rayDistance, Color.red);
 
-        if(hit.collider !=null)
+        if (hit.collider != null)
         {
             if (hit.collider.CompareTag("Laser"))
             {
@@ -269,13 +248,13 @@ public class Enemy : MonoBehaviour
                 transform.position = new Vector2(x, y);
             }
         }
-       
+
     }
     private void backAttack()
     {
-        
+
         RaycastHit2D hit = Physics2D.CircleCast(transform.position, _rayCastRad, Vector2.up, _rayDistance, LayerMask.GetMask("Player"));
-        
+
         Debug.DrawRay(transform.position, Vector3.up * _rayCastRad * _rayDistance, Color.red);
 
         if (hit.collider != null)
@@ -284,126 +263,126 @@ public class Enemy : MonoBehaviour
             {
                 Debug.Log("Player Detected");
                 fireLaserBack();
-              
+
             }
         }
     }
     private void destroyPowerUp()
     {
-
+        _rayCastRad = 2.5f;
         RaycastHit2D hit = Physics2D.CircleCast(transform.position, _rayCastRad, Vector2.down, _rayDistance, LayerMask.GetMask("collectible"));
 
         Debug.DrawRay(transform.position, Vector3.down * _rayCastRad * _rayDistance, Color.red);
 
         if (hit.collider != null)
         {
-            if (hit.collider.CompareTag("PowerUp"))//&& Time.time > _canfire)
+            if (hit.collider.CompareTag("PowerUp") && Time.time > _canfire)
             {
+
                 Debug.Log("PowerUp Detected");
-                fireAtPowerUp(); //start coroutine instead??? or do it in the case statement?
-                //might need to add a bool here that is set to true when the powerup is detectect
-                //That way, the coroutine will run while the powerup detection is true 
-                //Disregard the prior note, the method already runs only when the detection is active. I just tested it
-                //leaving these notes here just in case I need them later. I'll clean everything up after the coroutine is finished.
-                //I might still need the bool to control the corutine
-               
-
+                fireAtPowerUp();
             }
         }
     }
 
-    //SMART ENEMY CODE HERE USING THE SAME LOGIC AS ABOVE BUT THE VECTOR IS FORWARD AND THE LASER GETS CALLED
+        //SMART ENEMY CODE HERE USING THE SAME LOGIC AS ABOVE BUT THE VECTOR IS FORWARD AND THE LASER GETS CALLED
 
 
-    IEnumerator colorFlickerRoutine()
-    {
-        while (isFlickerEnabled == true)
+        IEnumerator colorFlickerRoutine()
         {
-
-            spriteRenderer.color = Color.red;
-            yield return new WaitForSeconds(0.5f);
-            spriteRenderer.color = Color.white;
-            yield return new WaitForSeconds(0.5f);
-            isFlickerEnabled = false;
-        }
-    }
-
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-
-        if (other.gameObject.CompareTag("Player"))
-        {
-            Player player = other.GetComponent<Player>();
-            
-            if(player != null)
+            while (isFlickerEnabled == true)
             {
-                player.damagePlayer();
+
+                spriteRenderer.color = Color.red;
+                yield return new WaitForSeconds(0.5f);
+                spriteRenderer.color = Color.white;
+                yield return new WaitForSeconds(0.5f);
+                isFlickerEnabled = false;
             }
+        }
+
+        private void PowerUpInRange()
+        {
+            isPowerUpInRange = true;
+        }
+
+        private void OnTriggerEnter2D(Collider2D other)
+        {
+
+            if (other.gameObject.CompareTag("Player"))
+            {
+                Player player = other.GetComponent<Player>();
+
+                if (player != null)
+                {
+                    player.damagePlayer();
+                }
+                if (_isShieldActive == true)
+                {
+                    _isShieldActive = false;
+                    shieldVisualizer.SetActive(false);//deatiaves shield after one hit so i don't need the strent variable
+                    return;
+                }
+                _animator.SetTrigger("OnEnemyDeath");
+                _speed = 0;
+                _explosionSound.Play();
+                Destroy(this.gameObject, 2.6f);
+            }
+
+            if (other.gameObject.CompareTag("Laser"))
+            {
+                Destroy(other.gameObject);
+
+                if (_player != null)
+                {
+
+                    EnemyDeath();
+                }
+
+            }
+
+        }
+        public void EnemyDeath() //MAKE AN IF SOMWHERE TO MANAGE THE DEATH TIMING FOR THE OTHER ENEMYES just needs to be an else for all the others
+        {
+            if (_isShieldActive == true)
+            {
+                _isShieldActive = false;
+                shieldVisualizer.SetActive(false);//deatiaves shield after one hit so i don't need the strent variable
+                return;
+
+            }
+
+            _animator.SetTrigger("OnEnemyDeath");
+            _speed = 0;
+            _cycleSpeed = 0f;
+            _explosionSound.Play();
+            Destroy(GetComponent<Collider2D>());
+            Destroy(this.gameObject, 2.6f);
+            _player.AddScore(10);
+        }
+        private void ActivateShield() //called on case 3
+        {
+            _isShieldActive = true;
+            shieldVisualizer.SetActive(true);
+
+        }
+        private void DeactivateShield()
+        {
             if (_isShieldActive == true)
             {
                 _isShieldActive = false;
                 shieldVisualizer.SetActive(false);//deatiaves shield after one hit so i don't need the strent variable
                 return;
             }
-            _animator.SetTrigger("OnEnemyDeath");
-            _speed = 0;
-            _explosionSound.Play();
-            Destroy(this.gameObject, 2.6f);
         }
-
-      if(other.gameObject.CompareTag("Laser"))
-        {   
-            Destroy(other.gameObject);
-
-            if (_player != null)
-            {
-                
-                EnemyDeath();
-            }
-            
-        }
-      
-    }
-    public void EnemyDeath() //MAKE AN IF SOMWHERE TO MANAGE THE DEATH TIMING FOR THE OTHER ENEMYES just needs to be an else for all the others
-    {
-        if (_isShieldActive == true)
+        void EnableFlicker()
         {
-            _isShieldActive = false;
-            shieldVisualizer.SetActive(false);//deatiaves shield after one hit so i don't need the strent variable
-            return;
+            isFlickerEnabled = true;
 
         }
 
-        _animator.SetTrigger("OnEnemyDeath");
-        _speed = 0;
-        _cycleSpeed = 0f;
-        _explosionSound.Play();
-        Destroy(GetComponent<Collider2D>());
-        Destroy(this.gameObject, 2.6f);
-        _player.AddScore(10);
-    }
-    private void ActivateShield() //called on case 3
-    {
-        _isShieldActive = true;
-        shieldVisualizer.SetActive(true);
 
-    }
-    private void DeactivateShield()
-    {
-        if (_isShieldActive == true)
-        {
-            _isShieldActive = false;
-            shieldVisualizer.SetActive(false);//deatiaves shield after one hit so i don't need the strent variable
-            return;
-        }
-    }
-    void EnableFlicker()
-    {
-        isFlickerEnabled = true;
-       
-    }
-  
-   
+    
 }
 
 
