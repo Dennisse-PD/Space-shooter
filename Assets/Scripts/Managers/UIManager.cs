@@ -26,10 +26,19 @@ public class UIManager : MonoBehaviour
 
     private GameManager _gameManager;
 
+    [SerializeField]
+    private Text _waveText; //will go up everytime an enemy wave starts, and display with the text
+    private int _currentWave = 0;
+
+    private bool _isAlive = true;
+
 
     // Start is called before the first frame update
     void Start()
     {
+        _waveText.text = "Wave " +  _currentWave; //sets the text value at the start. should I put this in update later?
+
+        // StartCoroutine(TickFiveSeconds());
         _gameManager = GameObject.Find("Game_Manager").GetComponent<GameManager>();
 
         //get the text here from the player ammo thing, update the text here
@@ -62,20 +71,25 @@ public class UIManager : MonoBehaviour
 
         if (currentLives < 1)
         {
+            onPlayerDeath();
             GameOverSequence();
         }
+    }
+    void onPlayerDeath()
+    {
+        _isAlive = false;
+    }
+    private void GameOverSequence()
+    {
+        _gameOverText.gameObject.SetActive(true);
+        _restartText.gameObject.SetActive(true);
+        StartCoroutine(GameOverFlicker());
+        _gameManager.GameOver();
+    }
 
-        void GameOverSequence()
+    IEnumerator GameOverFlicker()
         {
-            _gameOverText.gameObject.SetActive(true);
-            _restartText.gameObject.SetActive(true);
-            StartCoroutine(GameOverFlicker());
-            _gameManager.GameOver();
-        }
-
-        IEnumerator GameOverFlicker()
-        {
-            while (currentLives < 1)
+        while (_isAlive == false)
                 {
                 
                 _gameOverText.enabled = false;
@@ -83,11 +97,24 @@ public class UIManager : MonoBehaviour
                 _gameOverText.enabled = true;
                 yield return new WaitForSeconds(0.5f);
             }
-            
-        }
+        _gameOverText.enabled = false;
     }
-
+    //this [TEST] croutine plays for 5 seconds by controlling it with a counter.I can use it for the Wave Text Later
+    IEnumerator TickFiveSeconds()
+    {
+        var wait = new WaitForSeconds(1f);
+        int counter = 1;
+        while (counter < 5)
+        {
+            Debug.Log("Tick");
+            counter++;
+            yield return wait;
+        }
+        Debug.Log("I am done ticking");
+    }
 }
+
+
    
        
 

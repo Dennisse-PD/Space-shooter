@@ -26,18 +26,4 @@ public class AltLaser : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
-
-    //Used to test the damage, I need to switch this to damage the power up instead
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        
-        if (other.tag == "PowerUp")
-        {
-            
-            Destroy(other.gameObject);
-            
-        }
-    }
-   
-
 }

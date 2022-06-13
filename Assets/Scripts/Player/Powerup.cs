@@ -20,6 +20,9 @@ public class Powerup : MonoBehaviour
 
     private GameObject Player;
 
+    [SerializeField]
+    private GameObject _explosionAnim;
+
     void Start()
     {
         
@@ -52,13 +55,13 @@ public class Powerup : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
-        
+
         Player player = other.transform.GetComponent<Player>();
         if (player != null)
         {
-            
+
             if (other.gameObject.CompareTag("Player")) //add another compare tag for the laser || other.gameObject.CompareTag("puDestroyerLaser"))
-            { 
+            {
                 AudioSource.PlayClipAtPoint(_PowerUpSound, transform.position);
                 switch (powerUpID)
                 {
@@ -76,7 +79,7 @@ public class Powerup : MonoBehaviour
                         break;
                     case 4:
                         player.restoreLives(3);
-                            break;
+                        break;
                     case 5:
                         player.ShockWaveEnabled();
                         break;
@@ -85,13 +88,19 @@ public class Powerup : MonoBehaviour
                         break;
                 }
                 Destroy(gameObject);
+
             }
-            if (other.gameObject.CompareTag("puDestroyerLaser"))
-                {
-                Debug.Log("Impact Detected");
-            }
+
+
         }
 
+        if (other.gameObject.CompareTag("puDestroyerLaser"))
+        {
+            //instantiate the explosion animation here
+            Instantiate(_explosionAnim, transform.position, Quaternion.identity);
+            Destroy(other.gameObject);
+            Destroy(gameObject, .20f);
+        }
     }
 }
 

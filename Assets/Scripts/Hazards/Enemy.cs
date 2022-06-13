@@ -14,8 +14,8 @@ public class Enemy : MonoBehaviour
     private GameObject _laserPrefab;
     private Player _player;
     private Animator _animator;
-    private float _fireRate = 3.0f;
-    private float _canfire = -1;
+    private float _fireRate = 1.0f;
+    private float _canfire = -0.6f;
 
     AudioSource _explosionSound;
     AudioSource _laserSound;
@@ -62,6 +62,9 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private GameObject _puDestroyerPrefab;
 
+    private float _altFireRate = 3.0f;
+    private float _canFireAlt = -1f;
+
     //Enemy Pick up
     private bool isPowerUpInRange = false;
 
@@ -69,7 +72,7 @@ public class Enemy : MonoBehaviour
     void Start()
     {
         //randomizez shiled here 0-5
-        _randomizeShield = Random.Range(0, 5);
+        _randomizeShield = Random.Range(0, 10);
 
         if (_randomizeShield == 1)
         {
@@ -128,7 +131,7 @@ public class Enemy : MonoBehaviour
 
                 break;
             case 1:
-                ZigzagMovement();
+              //zigzgag enemy?
 
                 break;
             case 2:
@@ -168,7 +171,7 @@ public class Enemy : MonoBehaviour
     //The following firing methods may be changed into >>>>> Coroutines <<<<<<
     private void fireLaserBack()
     {
-        _fireRate = 3f;
+        _fireRate = 1f;
         _canfire = Time.time + _fireRate;
         GameObject enemeyLaser = Instantiate(_laserPrefab, transform.position, Quaternion.Euler(transform.rotation.x, transform.rotation.y, 180.0f));
         Laser[] lasers = enemeyLaser.GetComponentsInChildren<Laser>();
@@ -181,10 +184,10 @@ public class Enemy : MonoBehaviour
     }
     private void fireAtPowerUp()
      {
-     _fireRate = 2f;
-     _canfire = Time.time + _fireRate;
-     GameObject enemeyLaser = Instantiate(_puDestroyerPrefab, transform.position, Quaternion.Euler(transform.rotation.x, transform.rotation.y, 180.0f));
-     }
+          _altFireRate= 3f;
+        _canFireAlt = Time.time + _altFireRate;
+         GameObject enemeyLaser = Instantiate(_puDestroyerPrefab, transform.position, Quaternion.Euler(transform.rotation.x, transform.rotation.y, 180.0f));
+    }
 
     void calculateMovement()
     {
@@ -198,11 +201,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    void ZigzagMovement()
-    {
-        pos += Vector3.down * Time.deltaTime * _cycleSpeed;
-        transform.position = pos + xAxis * Mathf.Sin(Time.time * _frequency) * _amplitude;
-    }
+   
     private void RamPlayer()
     {
         StartCoroutine(colorFlickerRoutine());
@@ -269,18 +268,20 @@ public class Enemy : MonoBehaviour
     }
     private void destroyPowerUp()
     {
-        _rayCastRad = 2.5f;
+        _rayCastRad = 5.0f;
         RaycastHit2D hit = Physics2D.CircleCast(transform.position, _rayCastRad, Vector2.down, _rayDistance, LayerMask.GetMask("collectible"));
 
         Debug.DrawRay(transform.position, Vector3.down * _rayCastRad * _rayDistance, Color.red);
 
         if (hit.collider != null)
         {
-            if (hit.collider.CompareTag("PowerUp") && Time.time > _canfire)
+            Debug.Log("This is working");
+            if (hit.collider.CompareTag("PowerUp") && Time.time > _canFireAlt)
             {
 
                 Debug.Log("PowerUp Detected");
-                fireAtPowerUp();
+               
+                 fireAtPowerUp();
             }
         }
     }

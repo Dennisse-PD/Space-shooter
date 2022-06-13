@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class SpawnManager : MonoBehaviour
 {
@@ -14,11 +15,27 @@ public class SpawnManager : MonoBehaviour
     private GameObject[] enemies; //added for new enemy logic movement
 
     //Added for the Wave System Logic
-    private int _currentEnemies = 5;
-    
+    [SerializeField]
+    private TextMeshProUGUI waveCountText;
+    private int waveCount = 0;
+    [SerializeField]
+    private float spawnRate = 30.0f; 
+    [SerializeField]
+    private float timesBetweenWaves = 50.0f;
+    [SerializeField]
+    private int enemyCount;
+    bool isWaveDone = true;
+    [SerializeField]
+    private GameObject enemyForWave;
+    // to control how many enemies can spawn in total
+    [SerializeField]
+    private int enemyTotal = 3;
+    //to destroy all enemies and make way for the boss
+    private  GameObject[] catchEnemies;
 
-
+    private bool _canSpawn; //??? Old code residue 
     private bool _stopSpawning = false;
+
 
     // Start is called before the first frame update
     void Start()
@@ -27,30 +44,57 @@ public class SpawnManager : MonoBehaviour
     }
     public void StartSpawnRoutines()
     {
-        StartCoroutine(SpawnEnemyRoutine());
+       // StartCoroutine(SpawnEnemyRoutine());
         StartCoroutine(SpawnPowerUpRoutine());
     }
 
     // Update is called once per frame
     void Update()
     {
-
-    }
-    IEnumerator SpawnEnemyRoutine()
-    {
-        yield return new WaitForSeconds(3.0f);
-        while (_currentEnemies > 0 && _stopSpawning == false)
+        waveCountText.text = "Wave: " + waveCount.ToString();
+      if(isWaveDone == true)
         {
-            Vector3 spawnPos = new Vector3(Random.Range(-9.3f, 9.3f), 7f, 0f);
-            //Add ranomizer here 4
-            
-            int randomEnemy = Random.Range(0, 4);
-            GameObject newEnemy = Instantiate(enemies[randomEnemy], spawnPos, Quaternion.identity); //Change this to instantiate with randomizer
-            newEnemy.transform.parent = _enemyContainer.transform;
-          ///  _currentEnemies--;
-            yield return new WaitForSeconds(5.0f);
+         StartCoroutine(waveSpawner());
+        }
+      
+    }
+    IEnumerator waveSpawner()
+    {
+        Vector3 spawnPos = new Vector3(Random.Range(-9.3f, 9.3f), 7f, 0f);
+        int randomEnemy = Random.Range(0, 5);
+        isWaveDone = false; //create a method for this called waveIsActive or something like that
+        
+        for(int i = 0; i < enemyCount; i++)
+        {
+            if(enemyCount <= enemyTotal)
+            {
+                GameObject enemyClone = Instantiate(enemies[randomEnemy], spawnPos, Quaternion.identity); //add spawnPos and Quaternion to it after first test
+                yield return new WaitForSeconds(spawnRate);
+            }
+            if (waveCount >= 4)
+            {
+                endEnemyWaves();
+                //boss starts
+            }
 
         }
+        spawnRate -= 0.1f;
+        enemyCount += 1;
+        waveCount += 1;
+        yield return new WaitForSeconds(timesBetweenWaves);
+        isWaveDone = true;
+    }
+
+    void endEnemyWaves()
+    {
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        foreach (GameObject enemy in enemies)
+        {
+            GameObject.Destroy(enemy);
+        }
+
+       _stopSpawning = true;
+        isWaveDone = true;
     }
 
     //NEW ENEMY MOVEMENT LOGIC
@@ -66,8 +110,8 @@ public class SpawnManager : MonoBehaviour
             int randomPowerUp = Random.Range(0, 7); //make more and change the value 
             Instantiate(PowerUps[randomPowerUp], spawnPos, Quaternion.identity);
             yield return new WaitForSeconds(3.0f);
-            
-     
+
+
         }
 
     }
@@ -75,19 +119,4 @@ public class SpawnManager : MonoBehaviour
     {
         _stopSpawning = true;
     }
-    //I could create  range for random enemies and random powerup
-    //use the same condition as the Shield Enemy to determine rarity
-    //I should make it a switch statement since I need multiple cases
-    //since I am dealing with power-ups and enemies, I should probably have a switch statement for each of those
-    //Have seperate arrays for each power up set (rare and common)
-
-    //WAVE SYSTEM LOGIC
-/*    Modify the Spawn Manager Script:
-      Add a way to see how many enemies are currently in
-      Decrease enemy quantity everytime it runs? could also call enemy-- on enemy death
-      Don't spawn a new wave until all current enemies are defeated 
-      Delay the time that it takes for them to spawn so that I can display a warning text
-
-     I also need to find a way to diversify the enemy types per wave*/
-
 }

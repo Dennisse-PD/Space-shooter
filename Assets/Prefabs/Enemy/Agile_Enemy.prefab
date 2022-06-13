@@ -307,6 +307,7 @@ MonoBehaviour:
   _ramSpeed: 2.5
   spriteRenderer: {fileID: 8878158986202867488}
   _rayCastRad: 0.3
+  _puDestroyerPrefab: {fileID: 0}
 --- !u!82 &2452794828033092797
 AudioSource:
   m_ObjectHideFlags: 0
