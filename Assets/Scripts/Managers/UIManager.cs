@@ -26,9 +26,7 @@ public class UIManager : MonoBehaviour
 
     private GameManager _gameManager;
 
-    [SerializeField]
-    private Text _waveText; //will go up everytime an enemy wave starts, and display with the text
-    private int _currentWave = 0;
+   
 
     private bool _isAlive = true;
 
@@ -36,9 +34,6 @@ public class UIManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _waveText.text = "Wave " +  _currentWave; //sets the text value at the start. should I put this in update later?
-
-        // StartCoroutine(TickFiveSeconds());
         _gameManager = GameObject.Find("Game_Manager").GetComponent<GameManager>();
 
         //get the text here from the player ammo thing, update the text here
