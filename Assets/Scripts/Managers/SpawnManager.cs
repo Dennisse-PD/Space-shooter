@@ -121,18 +121,12 @@ public class SpawnManager : MonoBehaviour
             _waveCountTxt.enabled = true;
             yield return new WaitForSeconds(0.5f);  
         }
-        //isWaveDone = false;
+        
         _waveCountTxt.enabled = false;
 
 
     }
-   /* IEnumerator WaveCounterTextCoolDown()
-    {
-        ActivateWaveText();
-        //StartCoroutine(WaveCountFlicker());
-        yield return new WaitForSeconds(5.0f);
-        ActivateWaveText();
-    }*/
+  
     IEnumerator TickFiveSeconds()
     {
         var wait = new WaitForSeconds(1f);
@@ -153,6 +147,7 @@ public class SpawnManager : MonoBehaviour
 
     IEnumerator SpawnPowerUpRoutine()
     {
+        //set the rarity here so for the first few power ups set a random and then for the last few set another
         yield return new WaitForSeconds(5.0f);
         while (_stopSpawning == false)
         {

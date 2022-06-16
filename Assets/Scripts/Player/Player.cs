@@ -85,6 +85,11 @@ public class Player : MonoBehaviour
     //HAZARD VARIABLES
     private bool _isHazardEnabled = false;
 
+    //Homing Projectile Variables
+    public bool _isHomingProjectileEnabled = false;
+    [SerializeField]
+    private GameObject _homingProjectile;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -236,6 +241,12 @@ public class Player : MonoBehaviour
         else if (_isShockWaveEnabled == true)
         {
             StartCoroutine(ShockwaveRoutine());
+        }
+       else if (_isHomingProjectileEnabled == true)
+        {
+            Instantiate(_homingProjectile, transform.position, Quaternion.identity);
+            StartCoroutine(HomingProjectilePowerDownRoutine());
+            //Play audio source?
         }
         else
         {
@@ -431,6 +442,18 @@ public class Player : MonoBehaviour
         _speed /= _speed;
         StartCoroutine(HazardPowerDownRoutine());
     }
+
+    public void HomingProjectileEnabled()
+    {
+        _isHomingProjectileEnabled = true;
+        //StartCoroutine(HomingProjectilePowerDownRoutine());
+    }
+
+    //MIGHT DELETE LATER. Here to make it a one time shot power up only
+    public void HomingProjectileDisabled()
+    {
+        _isHomingProjectileEnabled = false;
+    }
     IEnumerator TripleShotPowerDownRoutine()
     {
         yield return new WaitForSeconds(5.0f);
@@ -438,6 +461,7 @@ public class Player : MonoBehaviour
 
 
     }
+
 
     IEnumerator SpeedBoostPowerDownRoutine()
     {
@@ -461,6 +485,13 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(1.0f);
         shockWaveVisulizer.SetActive(false);
         _isShockWaveEnabled = false;
+    }
+     IEnumerator HomingProjectilePowerDownRoutine()
+    {
+        yield return new WaitForSeconds(5.0f);
+        _isHomingProjectileEnabled = false;
+
+
     }
 
 }

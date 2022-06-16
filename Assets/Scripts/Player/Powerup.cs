@@ -86,6 +86,9 @@ public class Powerup : MonoBehaviour
                     case 6:
                         player.HazardEnabled();
                         break;
+                    case 7:
+                        player.HomingProjectileEnabled();
+                        break;
                 }
                 Destroy(gameObject);
 
