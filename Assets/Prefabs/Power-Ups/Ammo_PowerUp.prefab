@@ -74,7 +74,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1344379407
   m_SortingLayer: 2
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 82f0b84df80694144b9f502746e8fd71, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -121,6 +121,8 @@ MonoBehaviour:
   powerUpID: 3
   _PowerUpSound: {fileID: 8300000, guid: 5ee343246919d2b4bba63ae629e95494, type: 3}
   _magnetspeed: 5
+  _explosionAnim: {fileID: 5036604574257233973, guid: 453acf3f339a92148adce867788c1365,
+    type: 3}
 --- !u!50 &6034842347315314485
 Rigidbody2D:
   serializedVersion: 4

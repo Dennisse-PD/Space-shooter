@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3934953061432649054}
   - component: {fileID: 3934953061432649052}
   - component: {fileID: 3934953061432649053}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Thruster
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -113,7 +113,7 @@ GameObject:
   - component: {fileID: 3934953061874530456}
   - component: {fileID: 3934953061874530457}
   - component: {fileID: 3934953061874530455}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Damage_right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -217,7 +217,7 @@ GameObject:
   - component: {fileID: 3934953062356072425}
   - component: {fileID: 3934953062356072422}
   - component: {fileID: 3934953062356072421}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -330,6 +330,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   shockWaveVisulizer: {fileID: 3934953063146643422}
+  _isHomingProjectileEnabled: 0
+  _homingProjectile: {fileID: 3910870151901898583, guid: 6c5756703a6b5a14a907c00a771f614f,
+    type: 3}
 --- !u!61 &3934953062356072422
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -463,7 +466,7 @@ GameObject:
   - component: {fileID: 3934953062368561095}
   - component: {fileID: 3934953062368561093}
   - component: {fileID: 3934953062368561094}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Shields
   m_TagString: PoweUp
   m_Icon: {fileID: 0}
@@ -565,7 +568,7 @@ GameObject:
   - component: {fileID: 3934953062791326332}
   - component: {fileID: 3934953062791326333}
   - component: {fileID: 3934953062791326334}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: EventSystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -631,7 +634,7 @@ GameObject:
   - component: {fileID: 3934953063146643421}
   - component: {fileID: 3934953063146643419}
   - component: {fileID: 3934953063146643420}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Shockwave
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -733,7 +736,7 @@ GameObject:
   - component: {fileID: 3934953063241478888}
   - component: {fileID: 3934953063241478889}
   - component: {fileID: 3934953063241478887}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Damage_left
   m_TagString: Untagged
   m_Icon: {fileID: 0}

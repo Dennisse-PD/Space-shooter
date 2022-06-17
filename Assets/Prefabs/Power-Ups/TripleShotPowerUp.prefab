@@ -158,3 +158,5 @@ MonoBehaviour:
   powerUpID: 0
   _PowerUpSound: {fileID: 8300000, guid: 5ee343246919d2b4bba63ae629e95494, type: 3}
   _magnetspeed: 5
+  _explosionAnim: {fileID: 5036604574257233973, guid: 453acf3f339a92148adce867788c1365,
+    type: 3}

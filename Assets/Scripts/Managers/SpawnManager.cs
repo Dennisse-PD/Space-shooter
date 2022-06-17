@@ -72,12 +72,17 @@ public class SpawnManager : MonoBehaviour
                     ActivateWaveText();
                     yield return new WaitForSeconds(waveTextTimer);
                     _waveCountTxt.gameObject.SetActive(false);
+                   // GameObject _enemyPrefab = Instantiate(enemies[randomEnemy], spawnPos, Quaternion.identity);
+
                     GameObject enemyClone = Instantiate(enemies[randomEnemy], spawnPos, Quaternion.identity); //add spawnPos and Quaternion to it after first test
                     yield return new WaitForSeconds(spawnRate);
                 }
                 if (waveCount >= 5)
                 {
+
                     EndEnemyWaves();
+                    //StopCoroutine(waveSpawner());
+                    Debug.Log("Final Wave! Enter Boss Fight!");
                     //boss starts
                 }
             }
@@ -95,6 +100,9 @@ public class SpawnManager : MonoBehaviour
     {
         _stopSpawning = true;
         isWaveDone = true;
+        enemyCount = 0;
+        enemyCount = 0;
+        spawnRate = 0;
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
         foreach (GameObject enemy in enemies)
         {

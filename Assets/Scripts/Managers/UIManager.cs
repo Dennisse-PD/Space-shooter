@@ -38,7 +38,7 @@ public class UIManager : MonoBehaviour
 
         //get the text here from the player ammo thing, update the text here
         _scoreText.text = "Score: " + 0;
-        _ammoText.text = "15/"+ 15.ToString();
+        _ammoText.text = 15 .ToString();
 
         if (_gameManager == null)
         {
@@ -57,7 +57,7 @@ public class UIManager : MonoBehaviour
     }
     public void updateAmmoCount(int playerAmmo)
     {
-        _ammoText.text =  "15/" + playerAmmo.ToString();
+        _ammoText.text = playerAmmo +" /15".ToString();
     }
 
     public void updateLives(int currentLives)

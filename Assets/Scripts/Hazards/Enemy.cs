@@ -254,11 +254,12 @@ public class Enemy : MonoBehaviour
 
         RaycastHit2D hit = Physics2D.CircleCast(transform.position, _rayCastRad, Vector2.up, _rayDistance, LayerMask.GetMask("Player"));
 
-        Debug.DrawRay(transform.position, Vector3.up * _rayCastRad * _rayDistance, Color.red);
+        Debug.DrawRay(transform.position, Vector3.down * _rayCastRad * _rayDistance, Color.red);
 
         if (hit.collider != null)
         {
-            if (hit.collider.CompareTag("Player") && Time.time > _canfire)
+            Debug.Log("The Collider isn't null for the back Attack!");
+            if (hit.collider.CompareTag("Player")  && Time.time > _canfire)
             {
                 Debug.Log("Player Detected");
                 fireLaserBack();
@@ -275,7 +276,7 @@ public class Enemy : MonoBehaviour
 
         if (hit.collider != null)
         {
-            Debug.Log("This is working");
+            Debug.Log("The collision is not Null!");
             if (hit.collider.CompareTag("PowerUp") && Time.time > _canFireAlt)
             {
 

@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 7121120518601475342}
   - component: {fileID: 7121120518601475332}
   - component: {fileID: 7121120518601475333}
+  - component: {fileID: 1126262968}
   m_Layer: 7
   m_Name: Smart_Enemy
   m_TagString: Enemy
@@ -31,7 +32,7 @@ Transform:
   m_GameObject: {fileID: 7121120518601475343}
   m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_LocalScale: {x: 7, y: 7, z: 7}
   m_Children:
   - {fileID: 7121120518983615795}
   m_Father: {fileID: 0}
@@ -76,8 +77,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1344379407
   m_SortingLayer: 2
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 8d5f697c999643441bb417d834c597de, type: 3}
+  m_SortingOrder: 1
+  m_Sprite: {fileID: 21300000, guid: 71ef384979ff75f4990c1dde652054b4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -100,7 +101,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b74130c4550bd14aa57719e136478c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 0
+  _speed: 4
   _enemyPrefab: {fileID: 7121120518601475343}
   _laserPrefab: {fileID: 6455117977347328754, guid: 9fb265b2c6e5b6944915e4f078fa3fdf,
     type: 3}
@@ -110,6 +111,7 @@ MonoBehaviour:
   _ramSpeed: 2.5
   spriteRenderer: {fileID: 7121120518601475339}
   _rayCastRad: 0.5
+  _puDestroyerPrefab: {fileID: 0}
 --- !u!58 &7121120518601475337
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -262,6 +264,32 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!61 &1126262968
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7121120518601475343}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.09, y: 0.19}
+    newSize: {x: 0.31, y: 0.48}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.31, y: 0.48}
+  m_EdgeRadius: 0
 --- !u!1 &7121120518983615793
 GameObject:
   m_ObjectHideFlags: 0
