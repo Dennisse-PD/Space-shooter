@@ -26,6 +26,7 @@ public class SpawnManager : MonoBehaviour
     bool isWaveDone = true;
     [SerializeField]
     private GameObject enemyForWave;
+    private int finalWave = 5;
 
     // to control how many enemies can spawn in total
     [SerializeField]
@@ -58,7 +59,7 @@ public class SpawnManager : MonoBehaviour
     IEnumerator waveSpawner()
     {
 
-        while (isWaveDone == true)
+        while (isWaveDone == true && waveCount < 5 )
         {
             
             Vector3 spawnPos = new Vector3(Random.Range(-9.3f, 9.3f), 7f, 0f);
@@ -79,20 +80,23 @@ public class SpawnManager : MonoBehaviour
                 }
                 if (waveCount >= 5)
                 {
+                    //instantiate boss here! The boss will have its own script which will start on instantate
+                    //instantate in position 0,11.22,0
 
                     EndEnemyWaves();
-                    //StopCoroutine(waveSpawner());
+                    
                     Debug.Log("Final Wave! Enter Boss Fight!");
                     //boss starts
                 }
             }
-            spawnRate -= 1.0f;
-          //  waveTextTimer -= 1.0f;
-            enemyCount += 1;
-            enemyTotal += 1;
-            yield return new WaitForSeconds(timesBetweenWaves);
-            waveCount += 1;
-            isWaveDone = true;
+                spawnRate -= 1.0f;
+                enemyCount += 1;
+                enemyTotal += 1;
+                yield return new WaitForSeconds(timesBetweenWaves);
+                waveCount += 1;
+                isWaveDone = true;
+            
+           
         }
     }
 

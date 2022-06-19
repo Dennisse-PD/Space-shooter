@@ -169,6 +169,31 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Enemy
       objectReference: {fileID: 0}
+    - target: {fileID: 7121120518983615795, guid: 3c5e6a1bf5a406345b91adb31b349db9,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.059288032
+      objectReference: {fileID: 0}
+    - target: {fileID: 7121120518983615795, guid: 3c5e6a1bf5a406345b91adb31b349db9,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.058602873
+      objectReference: {fileID: 0}
+    - target: {fileID: 7121120518983615795, guid: 3c5e6a1bf5a406345b91adb31b349db9,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7121120518983615795, guid: 3c5e6a1bf5a406345b91adb31b349db9,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.0144
+      objectReference: {fileID: 0}
+    - target: {fileID: 7121120518983615795, guid: 3c5e6a1bf5a406345b91adb31b349db9,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.005
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 7121120518601475342, guid: 3c5e6a1bf5a406345b91adb31b349db9, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 3c5e6a1bf5a406345b91adb31b349db9, type: 3}

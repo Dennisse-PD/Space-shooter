@@ -98,7 +98,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0f9622a3c5a7764d825b9b71faf7a38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyTarget: {fileID: 0}
+  Target: {fileID: 0}
   HomingProjectileRB: {fileID: 861857188}
 --- !u!50 &861857188
 Rigidbody2D:
