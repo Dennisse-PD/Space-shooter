@@ -1,9 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BossFight : MonoBehaviour
 {
+    //HP Bar Variables
+    public int maxHealth = 100;
+    public int currentHealth;
+    public HealthBar healthBar;
+
+    //Boss entrance
+    private Vector3 endPosition = new Vector3(0, 3.95f, 0);
+
+    //Boss Phases
+    private bool _isPhase1Started = false; 
+    private bool _isPhase2Started = false;
+    private bool _isPhase3Started = false;
+
+
+
+
+
+    //Prefab
     [SerializeField]
     private GameObject _laserPrefab;
     private float _speed = 2;
@@ -11,6 +30,7 @@ public class BossFight : MonoBehaviour
     //Laser fire cooldown
     private float _fireRate = 0.5f;
     private float _canfire = -0.2f;
+   
 
     // Side to Side Movement Variables
     private float _distance = 5f;
@@ -25,21 +45,66 @@ public class BossFight : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
+        currentHealth = maxHealth;
+        healthBar.SetMaxHealth(maxHealth);
+
         StartingPos = transform.position;
+       
     }
 
     // Update is called once per frame
     void Update()
     {
-        MoveSideToSide();
-       /* if (transform.position != endPosition)
+        //Boss entrance
+        if (transform.position != endPosition)
         {
             transform.position = Vector3.MoveTowards(transform.position, endPosition, _speed * Time.deltaTime);
             //start boss phases here
-            
-        }*/
-       
 
+        }
+        CheckPhases();
+
+        //Switch Boss Phase depending on HP Levels
+
+
+    }
+     void DamageBoss(int damage)
+    {
+       
+        currentHealth -= damage;
+        healthBar.SetHealth(currentHealth);
+    }
+    public void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.tag == "Laser")
+        {
+       
+          DamageBoss(10);
+        }
+        if(other.tag == "AoE")
+        {
+            Player player = other.GetComponent<Player>();
+            if (player != null)
+            {
+                DamageBoss(20);
+            }
+        }
+    }
+    void CheckPhases()
+    {
+      if(currentHealth > 50)
+        {
+            Debug.Log("This is phase 1");
+        }
+      if(currentHealth <= 50)
+        {
+            Debug.Log("This is Phase 2");
+        }
+        if(currentHealth <= 30)
+        {
+            Debug.Log("This is the Final Phase");
+        }
     }
     void FireLongLaser()
     {
@@ -72,15 +137,17 @@ public class BossFight : MonoBehaviour
        //use same logic as Player to set it active
        //I could also instantiate it
     }
-    void healthBar()
-    {
-        //A healthbar or some way to keep track of the enemy health. This might be a good time to checkout the alt way to make progress bars
-    }
+   
     void ActivateLongLaser()
     {
         _isLongLaserActive = true;
     }
     
+    //HOW THE BOSS PHASES WILL WORK:
+    //Each phase will be a coroutine
+    //Each coroutine will be triggered by the HP % of the enemy
+    //I can do this with a switch statement that check how much HP the Boss has
+    //can set the coroutine condition to true on the switch statements? or just call the void methods? Need to experiment
 
 
     //The boss will have three types of attacks: Regular Lasers(tripple Shot Style), a bomb AoE Attack, and a laser that has the boss moving side to side

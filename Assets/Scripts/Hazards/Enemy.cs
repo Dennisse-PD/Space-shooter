@@ -276,7 +276,7 @@ public class Enemy : MonoBehaviour
 
         if (hit.collider != null)
         {
-            Debug.Log("The collision is not Null!");
+           
             if (hit.collider.CompareTag("PowerUp") && Time.time > _canFireAlt)
             {
 
