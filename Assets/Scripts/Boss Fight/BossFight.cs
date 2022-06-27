@@ -50,7 +50,9 @@ public class BossFight : MonoBehaviour
         healthBar.SetMaxHealth(maxHealth);
 
         StartingPos = transform.position;
-       
+        SpawnManager spawnManager = GetComponent<SpawnManager>();
+        spawnManager.EndEnemyWaves();
+
     }
 
     // Update is called once per frame

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class SpawnManager : MonoBehaviour
 {
@@ -42,6 +43,9 @@ public class SpawnManager : MonoBehaviour
     private Text _waveCountTxt;
     private float waveTextTimer = 1.0f;
 
+    //Boss
+    public bool _isFinalWaveStarted = false;
+
 
     // Start is called before the first frame update
     void Start()
@@ -59,7 +63,7 @@ public class SpawnManager : MonoBehaviour
     IEnumerator waveSpawner()
     {
 
-        while (isWaveDone == true && waveCount < 5 )
+        while (isWaveDone == true && _isFinalWaveStarted == false)// waveCount < 5 )
         {
             
             Vector3 spawnPos = new Vector3(Random.Range(-9.3f, 9.3f), 7f, 0f);
@@ -83,8 +87,9 @@ public class SpawnManager : MonoBehaviour
                     //instantiate boss here! The boss will have its own script which will start on instantate
                     //instantate in position 0,11.22,0
 
-                    EndEnemyWaves();
-                    
+                    EndEnemyWaves(); //might remove this from here since it's being called from the next scene where the boss is
+                   
+
                     Debug.Log("Final Wave! Enter Boss Fight!");
                     //boss starts
                 }
@@ -98,10 +103,12 @@ public class SpawnManager : MonoBehaviour
             
            
         }
+        SceneManager.LoadScene(2);
     }
 
-    void EndEnemyWaves()
+    public void EndEnemyWaves()
     {
+        _isFinalWaveStarted = true;
         _stopSpawning = true;
         isWaveDone = true;
         enemyCount = 0;
