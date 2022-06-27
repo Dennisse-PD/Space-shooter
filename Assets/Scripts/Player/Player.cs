@@ -424,7 +424,12 @@ public class Player : MonoBehaviour
         {
             if(c.GetComponent<Enemy>())
             {
-                Debug.Log("I found some colliders");
+                //get boss component and damage boss
+                BossFight bossFight = GetComponent<BossFight>();
+                if (bossFight != null)
+                {
+                    bossFight.DamageBoss(10);
+                }
                 c.GetComponent<Enemy>().EnemyDeath();
             }
         }

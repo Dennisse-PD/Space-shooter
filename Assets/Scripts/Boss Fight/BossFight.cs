@@ -19,18 +19,10 @@ public class BossFight : MonoBehaviour
     private bool _isPhase3Started = false;
 
 
-
-
-
     //Prefab
     [SerializeField]
     private GameObject _laserPrefab;
     private float _speed = 2;
-
-    //Laser fire cooldown
-    private float _fireRate = 0.5f;
-    private float _canfire = -0.2f;
-   
 
     // Side to Side Movement Variables
     private float _distance = 5f;
@@ -41,6 +33,12 @@ public class BossFight : MonoBehaviour
     //Long Laser Variables
     [SerializeField]
     private GameObject LaserVisualizer;
+
+    //Damage Effects
+    [SerializeField]
+    private GameObject DamageLeftVisualizer;
+    [SerializeField]
+    private GameObject DamageRightVisualizer;
 
     // Start is called before the first frame update
     void Start()
@@ -71,7 +69,7 @@ public class BossFight : MonoBehaviour
 
 
     }
-     void DamageBoss(int damage)
+     public void DamageBoss(int damage)
     {
        
         currentHealth -= damage;
@@ -82,16 +80,9 @@ public class BossFight : MonoBehaviour
         if (other.tag == "Laser")
         {
        
-          DamageBoss(10);
+          DamageBoss(5);
         }
-        if(other.tag == "AoE")
-        {
-            Player player = other.GetComponent<Player>();
-            if (player != null)
-            {
-                DamageBoss(20);
-            }
-        }
+      
     }
     void CheckPhases()
     {
@@ -102,10 +93,12 @@ public class BossFight : MonoBehaviour
       if(currentHealth <= 50)
         {
             Debug.Log("This is Phase 2");
+            DamageLeftVisualizer.SetActive(true);
         }
         if(currentHealth <= 30)
         {
             Debug.Log("This is the Final Phase");
+            DamageRightVisualizer.SetActive(true);
         }
     }
     void FireLongLaser()
@@ -128,11 +121,9 @@ public class BossFight : MonoBehaviour
     }
     void OmniShot()
     {
-        //fire lasers in multiple directions 
-        //I need to figure out how to fire in diffrent directions
-        //Want to fire a laser and then switch to a volley following the same logic
+      //Instantiate the projectile here. The actual object will hold the code
     }
-    void AreaOfEffectAttack()
+    void ExplosiveShot()
     {
        //Only fires when health is critical.
        //Here we have to use a logic that tracks health and if it's less or equal to a certain number, the AoE is activated once.
