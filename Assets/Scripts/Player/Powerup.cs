@@ -30,7 +30,7 @@ public class Powerup : MonoBehaviour
 
         if(Player == null)
         {
-            Debug.LogError("The Player is NULL!");
+          //  Debug.LogError("The Player is NULL!");
         }
     }
     // Update is called once per frame

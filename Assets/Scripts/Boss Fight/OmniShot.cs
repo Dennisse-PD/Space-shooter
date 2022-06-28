@@ -11,34 +11,42 @@ public class OmniShot : MonoBehaviour
 	[SerializeField]
 	GameObject projectile;
 
+	[SerializeField]
+	GameObject positionAnchor;
+
 	Vector2 startPoint;
 
 	float radius, moveSpeed;
 
-	//Laser fire cooldown
-	private float _fireRate = 0.5f;
-	private float _canfire = -0.2f;
+	//OmniShot Courtoutine Control
+	private bool _isOmniShotActive = false;
+
+	//omnishot cooldown
+	private float _fireRate = 10.0f;
+	private float _canfire = -0.6f;
 
 	// Use this for initialization
 	void Start()
 	{
+		StartCoroutine(OmniShotRoutine());
 		radius = 5f;
 		moveSpeed = 5f;
+
 	}
 
 	// Update is called once per frame
 	void Update()
-	{	
-			FireOmniShot();
-
-
+	{
+		//OnBecameInvisible();
 	}
 	void FireOmniShot()
     {
-		_fireRate = Random.Range(3f, 7f);
-		_canfire = Time.time + _fireRate;
-		startPoint = transform.position;
+
+		startPoint = positionAnchor.transform.position;
 		SpawnProjectiles(numberOfProjectiles);
+		
+
+
 	}
 	void SpawnProjectiles(int numberOfProjectiles)
 	{
@@ -56,9 +64,42 @@ public class OmniShot : MonoBehaviour
 
 			var proj = Instantiate(projectile, startPoint, Quaternion.identity);
 			proj.GetComponent<Rigidbody2D>().velocity =
-				new Vector2(projectileMoveDirection.x, projectileMoveDirection.y);
+		    new Vector2(projectileMoveDirection.x, projectileMoveDirection.y);
 
 			angle += angleStep;
 		}
 	}
+	IEnumerator OmniShotRoutine()
+	{
+		yield return new WaitForSeconds(2.0f);
+		FireOmniShot();
+	}
+	public void ActivateOmniShot()
+    {
+		_isOmniShotActive = true;
+    }
+	void OmniMovement()
+    {
+
+    }
+	private void OnTriggerEnter2D(Collider2D other)
+	{
+		if (other.tag == "Player")
+		{
+			Player player = other.GetComponent<Player>();
+			if (player != null)
+			{
+				player.damagePlayer();
+				Destroy(this.gameObject);//check if it really destroys this
+			}
+			
+
+		}
+		if (other.tag == "Deadzone")
+		{
+			Debug.Log("I hit a deadzone!");
+			Destroy(this.gameObject);
+		}
+	}
+	
 }

@@ -1,18 +1,19 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
 
-public class SpawnManager : MonoBehaviour
+
+public class EnemySpawner : MonoBehaviour
 {
     [SerializeField]
     GameObject _enemyPrefab;
     [SerializeField]
     GameObject _enemyContainer;
-    [SerializeField]
-    private GameObject[] PowerUps;
+
+
     [SerializeField]
     private GameObject[] enemies; //added for new enemy logic movement
 
@@ -20,7 +21,7 @@ public class SpawnManager : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI waveCountText;
     private int waveCount;
-    private float spawnRate = 1.0f; 
+    private float spawnRate = 1.0f;
     private float timesBetweenWaves = 5.0f;
     [SerializeField]
     private int enemyCount;
@@ -34,7 +35,7 @@ public class SpawnManager : MonoBehaviour
     private int enemyTotal = 3;
 
     //to destroy all enemies and make way for the boss
-    private  GameObject[] catchEnemies;
+    private GameObject[] catchEnemies;
 
     private bool _stopSpawning = false;
 
@@ -49,24 +50,22 @@ public class SpawnManager : MonoBehaviour
 
     // Start is called before the first frame update
     void Start()
-    {    
+    {
         StartCoroutine(waveSpawner());
-        //StartCoroutine(WaveCountFlicker());
-        StartCoroutine(SpawnPowerUpRoutine());
-        StartCoroutine(RarePowerUpRoutine());
+     
     }
 
     // Update is called once per frame
     void Update()
-    {   
-      
+    {
+
     }
     IEnumerator waveSpawner()
     {
 
         while (isWaveDone == true && _isFinalWaveStarted == false)// waveCount < 5 )
         {
-            
+
             Vector3 spawnPos = new Vector3(Random.Range(-9.3f, 9.3f), 7f, 0f);
             int randomEnemy = Random.Range(0, 5);
             isWaveDone = false; //create a method for this called waveIsActive or something like that
@@ -78,7 +77,7 @@ public class SpawnManager : MonoBehaviour
                     ActivateWaveText();
                     yield return new WaitForSeconds(waveTextTimer);
                     _waveCountTxt.gameObject.SetActive(false);
-                   // GameObject _enemyPrefab = Instantiate(enemies[randomEnemy], spawnPos, Quaternion.identity);
+                    // GameObject _enemyPrefab = Instantiate(enemies[randomEnemy], spawnPos, Quaternion.identity);
 
                     GameObject enemyClone = Instantiate(enemies[randomEnemy], spawnPos, Quaternion.identity); //add spawnPos and Quaternion to it after first test
                     yield return new WaitForSeconds(spawnRate);
@@ -89,20 +88,20 @@ public class SpawnManager : MonoBehaviour
                     //instantate in position 0,11.22,0
 
                     EndEnemyWaves(); //might remove this from here since it's being called from the next scene where the boss is
-                   
+
 
                     Debug.Log("Final Wave! Enter Boss Fight!");
                     //boss starts
                 }
             }
-                spawnRate -= 1.0f;
-                enemyCount += 1;
-                enemyTotal += 1;
-                yield return new WaitForSeconds(timesBetweenWaves);
-                waveCount += 1;
-                isWaveDone = true;
-            
-           
+            spawnRate -= 1.0f;
+            enemyCount += 1;
+            enemyTotal += 1;
+            yield return new WaitForSeconds(timesBetweenWaves);
+            waveCount += 1;
+            isWaveDone = true;
+
+
         }
         SceneManager.LoadScene(2);
     }
@@ -110,7 +109,7 @@ public class SpawnManager : MonoBehaviour
     public void EndEnemyWaves()
     {
         _isFinalWaveStarted = true;
-       // _stopSpawning = true;
+        // _stopSpawning = true;
         isWaveDone = true;
         _waveCountTxt.gameObject.SetActive(false);
         enemyCount = 0;
@@ -122,32 +121,32 @@ public class SpawnManager : MonoBehaviour
             GameObject.Destroy(enemy);
         }
 
-       
+
     }
     private void ActivateWaveText()
     {
         _waveCountTxt.text = "Wave: " + waveCount.ToString();
-        
+
         _waveCountTxt.gameObject.SetActive(true);
         // StartCoroutine(WaveCountFlicker());
-        
+
     }
     IEnumerator WaveCountFlicker()
     {
         while (isWaveDone == true) //check the condition 
         {
-            
+
             _waveCountTxt.enabled = false;
             yield return new WaitForSeconds(0.5f);
             _waveCountTxt.enabled = true;
-            yield return new WaitForSeconds(0.5f);  
+            yield return new WaitForSeconds(0.5f);
         }
-        
+
         _waveCountTxt.enabled = false;
 
 
     }
-  
+
     IEnumerator TickFiveSeconds()
     {
         var wait = new WaitForSeconds(1f);
@@ -162,42 +161,7 @@ public class SpawnManager : MonoBehaviour
         _waveCountTxt.enabled = false;
     }
 
- /// <su
- /// </summary>
- /// <returns></returns>
-
-    IEnumerator SpawnPowerUpRoutine()
-    {
-        //set the rarity here so for the first few power ups set a random and then for the last few set another
-        yield return new WaitForSeconds(5.0f);
-        while (_stopSpawning == false)
-        {
-            Vector3 spawnPos = new Vector3(Random.Range(-8f, 8f), 7f, 0f);
-            int randomPowerUp = Random.Range(0, 3); //make more and change the value 
-          //  int randomRarePowerUp = Random.Range(4, 6);
-            Instantiate(PowerUps[randomPowerUp], spawnPos, Quaternion.identity);
-            yield return new WaitForSeconds(3.0f);
-
-
-        }
-
-    }
-    IEnumerator RarePowerUpRoutine()
-    {
-        //set the rarity here so for the first few power ups set a random and then for the last few set another
-        yield return new WaitForSeconds(10.0f);
-        while (_stopSpawning == false)
-        {
-            Vector3 spawnPos = new Vector3(Random.Range(-8f, 8f), 7f, 0f);
-            int randomPowerUp = Random.Range(4, 7); //make more and change the value 
-                                                    //  int randomRarePowerUp = Random.Range(4, 6);
-            Instantiate(PowerUps[randomPowerUp], spawnPos, Quaternion.identity);
-            yield return new WaitForSeconds(20.0f);
-
-
-        }
-
-    }
+    
     public void OnPlayerDeath()
     {
         _stopSpawning = true;

@@ -48,8 +48,8 @@ public class BossFight : MonoBehaviour
         healthBar.SetMaxHealth(maxHealth);
 
         StartingPos = transform.position;
-        SpawnManager spawnManager = GetComponent<SpawnManager>();
-        spawnManager.EndEnemyWaves();
+
+        
 
     }
 
@@ -64,6 +64,11 @@ public class BossFight : MonoBehaviour
 
         }
         CheckPhases();
+        OmniShot omniShot = GetComponent<OmniShot>();
+        if (omniShot == null)
+        {
+            Debug.Log("The OmniShot Script is NULL!");//just testing, don't need to log error atm
+        }
 
         //Switch Boss Phase depending on HP Levels
 
@@ -89,6 +94,12 @@ public class BossFight : MonoBehaviour
       if(currentHealth > 50)
         {
             Debug.Log("This is phase 1");
+           /* OmniShot omniShot = GetComponent<OmniShot>();
+            if (omniShot != null)
+            {
+                omniShot.ActivateOmniShot();
+            }*/
+            
         }
       if(currentHealth <= 50)
         {
@@ -135,6 +146,7 @@ public class BossFight : MonoBehaviour
     {
         _isLongLaserActive = true;
     }
+
     
     //HOW THE BOSS PHASES WILL WORK:
     //Each phase will be a coroutine

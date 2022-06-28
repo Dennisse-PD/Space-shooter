@@ -13,6 +13,7 @@ TagManager:
   - PowerUp
   - puDestroyerLaser
   - AoE
+  - Deadzone
   layers:
   - Default
   - TransparentFX
