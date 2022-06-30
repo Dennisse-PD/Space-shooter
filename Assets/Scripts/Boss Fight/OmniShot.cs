@@ -4,26 +4,27 @@ using UnityEngine;
 
 public class OmniShot : MonoBehaviour
 {
+	//--------------------------------------------------------//
+	[SerializeField]
+	int numberOf_projectilePrefabs;//how many to instantiate 
 
 	[SerializeField]
-	int numberOfProjectiles;
+	GameObject _projectilePrefab;//to instatntiate 
 
 	[SerializeField]
-	GameObject projectile;
+	GameObject positionAnchor; //spawn point
 
-	[SerializeField]
-	GameObject positionAnchor;
+	Vector2 startPoint; //stores starting point variables
 
-	Vector2 startPoint;
+	//--------------------------------------------------------//
 
-	float radius, moveSpeed;
 
-	//OmniShot Courtoutine Control
-	private bool _isOmniShotActive = false;
 
-	//omnishot cooldown
-	private float _fireRate = 10.0f;
-	private float _canfire = -0.6f;
+	float radius, moveSpeed; //how fast the projectiles move
+
+	
+
+	
 
 	// Use this for initialization
 	void Start()
@@ -37,47 +38,45 @@ public class OmniShot : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		//OnBecameInvisible();
+		
+		
+
 	}
 	void FireOmniShot()
     {
-
+		
 		startPoint = positionAnchor.transform.position;
-		SpawnProjectiles(numberOfProjectiles);
+		Spawn_projectilePrefabs(numberOf_projectilePrefabs);
 		
 
 
 	}
-	void SpawnProjectiles(int numberOfProjectiles)
+	void Spawn_projectilePrefabs(int numberOf_projectilePrefabs)
 	{
-		float angleStep = 360f / numberOfProjectiles;
+		float angleStep = 360f / numberOf_projectilePrefabs;
 		float angle = 0f;
 
-		for (int i = 0; i <= numberOfProjectiles - 1; i++)
+		for (int i = 0; i <= numberOf_projectilePrefabs - 1; i++)
 		{
 
-			float projectileDirXposition = startPoint.x + Mathf.Sin((angle * Mathf.PI) / 180) * radius;
-			float projectileDirYposition = startPoint.y + Mathf.Cos((angle * Mathf.PI) / 180) * radius;
+			float _projectilePrefabDirXposition = startPoint.x + Mathf.Sin((angle * Mathf.PI) / 180) * radius;
+			float _projectilePrefabDirYposition = startPoint.y + Mathf.Cos((angle * Mathf.PI) / 180) * radius;
 
-			Vector2 projectileVector = new Vector2(projectileDirXposition, projectileDirYposition);
-			Vector2 projectileMoveDirection = (projectileVector - startPoint).normalized * moveSpeed;
+			Vector2 _projectilePrefabVector = new Vector2(_projectilePrefabDirXposition, _projectilePrefabDirYposition);
+			Vector2 _projectilePrefabMoveDirection = (_projectilePrefabVector - startPoint).normalized * moveSpeed;
 
-			var proj = Instantiate(projectile, startPoint, Quaternion.identity);
-			proj.GetComponent<Rigidbody2D>().velocity =
-		    new Vector2(projectileMoveDirection.x, projectileMoveDirection.y);
+			var proj = Instantiate(_projectilePrefab, startPoint, Quaternion.identity);
+			proj.GetComponent<Rigidbody2D>().velocity = new Vector2(_projectilePrefabMoveDirection.x, _projectilePrefabMoveDirection.y);
 
 			angle += angleStep;
 		}
 	}
 	IEnumerator OmniShotRoutine()
 	{
-		yield return new WaitForSeconds(2.0f);
+		yield return new WaitForSeconds(4.0f);
 		FireOmniShot();
 	}
-	public void ActivateOmniShot()
-    {
-		_isOmniShotActive = true;
-    }
+
 	void OmniMovement()
     {
 
@@ -97,7 +96,7 @@ public class OmniShot : MonoBehaviour
 		}
 		if (other.tag == "Deadzone")
 		{
-			Debug.Log("I hit a deadzone!");
+			Debug.Log("I hit a deadzone");
 			Destroy(this.gameObject);
 		}
 	}

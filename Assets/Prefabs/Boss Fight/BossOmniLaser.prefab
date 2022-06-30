@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 8300256197967809451}
   - component: {fileID: 4641647805330616606}
   - component: {fileID: 5839930763663181263}
-  - component: {fileID: 787054866708661625}
+  - component: {fileID: 2768424947078800038}
+  - component: {fileID: 1265536216}
   m_Layer: 11
   m_Name: BossOmniLaser
   m_TagString: enemyLaser
@@ -28,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 4860081587748144054}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 2.91, z: 0}
-  m_LocalScale: {x: 1.412742, y: 0.107156254, z: 1}
+  m_LocalScale: {x: 12.452596, y: 12.347523, z: 13.447602}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -73,8 +74,8 @@ SpriteRenderer:
   m_SortingLayerID: 1344379407
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: b030d335857201646be69703e678d6e5, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Sprite: {fileID: 21300000, guid: b4632570e919c6f459168cdf0a8c9a2a, type: 3}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -105,7 +106,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &787054866708661625
+--- !u!114 &2768424947078800038
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -114,9 +115,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 4860081587748144054}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c5c1fa6653ad41747872ae74c11beb87, type: 3}
+  m_Script: {fileID: 11500000, guid: 945c8749934d4b74ba30135f47315840, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numberOfProjectiles: 10
-  projectile: {fileID: 4860081587748144054}
-  positionAnchor: {fileID: 0}
+--- !u!58 &1265536216
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4860081587748144054}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.0027115848, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.044757634

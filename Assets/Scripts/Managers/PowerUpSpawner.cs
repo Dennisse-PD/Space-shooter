@@ -38,7 +38,7 @@ public class PowerUpSpawner : MonoBehaviour
         while (_stopSpawning == false)
         {
             Vector3 spawnPos = new Vector3(Random.Range(-8f, 8f), 7f, 0f);
-            int randomPowerUp = Random.Range(0, 3); //make more and change the value 
+            int randomPowerUp = Random.Range(0, 4); //make more and change the value 
                                                     //  int randomRarePowerUp = Random.Range(4, 6);
             Instantiate(PowerUps[randomPowerUp], spawnPos, Quaternion.identity);
             yield return new WaitForSeconds(3.0f);
@@ -54,7 +54,7 @@ public class PowerUpSpawner : MonoBehaviour
         while (_stopSpawning == false)
         {
             Vector3 spawnPos = new Vector3(Random.Range(-8f, 8f), 7f, 0f);
-            int randomPowerUp = Random.Range(4, 7); //make more and change the value 
+            int randomPowerUp = Random.Range(5, 7); //make more and change the value 
                                                     //  int randomRarePowerUp = Random.Range(4, 6);
             Instantiate(PowerUps[randomPowerUp], spawnPos, Quaternion.identity);
             yield return new WaitForSeconds(20.0f);

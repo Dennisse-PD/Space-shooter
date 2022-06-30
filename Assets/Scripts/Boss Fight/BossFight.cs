@@ -14,7 +14,7 @@ public class BossFight : MonoBehaviour
     private Vector3 endPosition = new Vector3(0, 3.95f, 0);
 
     //Boss Phases
-    private bool _isPhase1Started = false; 
+    private bool _isPhase1Started = false;
     private bool _isPhase2Started = false;
     private bool _isPhase3Started = false;
 
@@ -26,7 +26,7 @@ public class BossFight : MonoBehaviour
 
     // Side to Side Movement Variables
     private float _distance = 5f;
-    private Vector3 StartingPos;
+    //private Vector3 StartingPos; just used transform.position
     private float _laserAttackSpeed = 1f;// might or might not use
     private bool _isLongLaserActive = false;
 
@@ -40,22 +40,24 @@ public class BossFight : MonoBehaviour
     [SerializeField]
     private GameObject DamageRightVisualizer;
 
-    // Start is called before the first frame update
+
     void Start()
     {
-        
+       
         currentHealth = maxHealth;
         healthBar.SetMaxHealth(maxHealth);
-
-        StartingPos = transform.position;
-
-        
 
     }
 
     // Update is called once per frame
     void Update()
     {
+        OmniShot omniShot = GetComponent<OmniShot>();
+        if (omniShot == null)
+        {
+            Debug.Log("The OmniShot Script is NULL!");//just testing, don't need to log error atm
+        }
+
         //Boss entrance
         if (transform.position != endPosition)
         {
@@ -64,19 +66,25 @@ public class BossFight : MonoBehaviour
 
         }
         CheckPhases();
-        OmniShot omniShot = GetComponent<OmniShot>();
-        if (omniShot == null)
+        
+
+        //HERE FOR TESTING
+        if (currentHealth <= 30)
         {
-            Debug.Log("The OmniShot Script is NULL!");//just testing, don't need to log error atm
+            LongLaserAttack(); //This crashes with a while loop which means we'll be using a coroutine 
+        }
+        if(currentHealth <=30)
+        {
+            Debug.Log("The Long Laser Must stop");
         }
 
         //Switch Boss Phase depending on HP Levels
 
 
     }
-     public void DamageBoss(int damage)
+    public void DamageBoss(int damage)
     {
-       
+
         currentHealth -= damage;
         healthBar.SetHealth(currentHealth);
     }
@@ -84,29 +92,28 @@ public class BossFight : MonoBehaviour
     {
         if (other.tag == "Laser")
         {
-       
-          DamageBoss(5);
+
+            DamageBoss(5);
         }
-      
+
     }
     void CheckPhases()
     {
-      if(currentHealth > 50)
+        if (currentHealth > 50)
         {
             Debug.Log("This is phase 1");
-           /* OmniShot omniShot = GetComponent<OmniShot>();
-            if (omniShot != null)
-            {
-                omniShot.ActivateOmniShot();
-            }*/
-            
+            _isPhase1Started = true;
+
         }
-      if(currentHealth <= 50)
+        if (currentHealth <= 50)
         {
             Debug.Log("This is Phase 2");
             DamageLeftVisualizer.SetActive(true);
+            _isPhase1Started = false;
+            _isPhase2Started = true;
+
         }
-        if(currentHealth <= 30)
+        if (currentHealth <= 30)
         {
             Debug.Log("This is the Final Phase");
             DamageRightVisualizer.SetActive(true);
@@ -114,48 +121,31 @@ public class BossFight : MonoBehaviour
     }
     void FireLongLaser()
     {
-        // I can make the Boss flicker red before starting this attack as a warning
+        
         ActivateLongLaser(); //will change where it becomes true later, this is here for testing. 
         //this will become true in a coroutine or when the Boss HP % is below a certain value
-        if(_isLongLaserActive == true)
+        if (_isLongLaserActive == true)
         {
-         LaserVisualizer.SetActive(true);
+            LaserVisualizer.SetActive(true);
         }
 
     }
-    void MoveSideToSide()
+    void LongLaserAttack()
     {
-        Vector3 v = StartingPos;
+        Vector3 v = transform.position;
         v.x = _distance * Mathf.Sin(Time.time * _laserAttackSpeed);
         transform.position = v;
         FireLongLaser();//here for testing
     }
-    void OmniShot()
-    {
-      //Instantiate the projectile here. The actual object will hold the code
-    }
+
     void ExplosiveShot()
     {
-       //Only fires when health is critical.
-       //Here we have to use a logic that tracks health and if it's less or equal to a certain number, the AoE is activated once.
-       //use same logic as Player to set it active
-       //I could also instantiate it
+     
     }
-   
+
     void ActivateLongLaser()
     {
         _isLongLaserActive = true;
     }
 
-    
-    //HOW THE BOSS PHASES WILL WORK:
-    //Each phase will be a coroutine
-    //Each coroutine will be triggered by the HP % of the enemy
-    //I can do this with a switch statement that check how much HP the Boss has
-    //can set the coroutine condition to true on the switch statements? or just call the void methods? Need to experiment
-
-
-    //The boss will have three types of attacks: Regular Lasers(tripple Shot Style), a bomb AoE Attack, and a laser that has the boss moving side to side
-    //The phases could be diffrent coroutines or I could add them all to one?
-    //or maybe coroutine phase1 then phase2 and so on?
 }
