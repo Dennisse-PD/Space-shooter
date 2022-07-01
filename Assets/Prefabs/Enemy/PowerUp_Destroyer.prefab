@@ -43,6 +43,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: PowerupDestroyer_Enemy Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 3703067032468881005, guid: b166efe3d4d452542916dad2e53708f4,
+        type: 3}
+      propertyPath: _speed
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 3703067032468881007, guid: b166efe3d4d452542916dad2e53708f4,
         type: 3}
       propertyPath: m_RootOrder
@@ -97,6 +102,31 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 3703067032589925972, guid: b166efe3d4d452542916dad2e53708f4,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3703067032589925974, guid: b166efe3d4d452542916dad2e53708f4,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.11488909
+      objectReference: {fileID: 0}
+    - target: {fileID: 3703067032589925974, guid: b166efe3d4d452542916dad2e53708f4,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.08790431
+      objectReference: {fileID: 0}
+    - target: {fileID: 3703067032589925974, guid: b166efe3d4d452542916dad2e53708f4,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.004
+      objectReference: {fileID: 0}
+    - target: {fileID: 3703067032589925975, guid: b166efe3d4d452542916dad2e53708f4,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b166efe3d4d452542916dad2e53708f4, type: 3}

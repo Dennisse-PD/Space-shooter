@@ -6,9 +6,10 @@ using UnityEngine;
 public class Camera_shake : MonoBehaviour
 {
 
-    private bool _isShaking = false; //THIS COULD BE THE PROBLEM WITH THE SHAKE NOT GOING BACK DEFAULT POSITION. THIS IS NEVER USED.
+    private bool _isShaking = false; 
     private float duration = 0.5f;
     private float magnitude = 0.5f;
+    private Vector3 defaultPosition = new Vector3(0f, 1f, -10f);
 
 
     // Start is called before the first frame update
@@ -24,7 +25,7 @@ public class Camera_shake : MonoBehaviour
     }
     public IEnumerator CameraShakeRoutine()
     {
-        Vector3 defaultPosition = transform.position;
+         transform.position = defaultPosition;  
         float elapsed = 0f;
 
         while (elapsed < duration)  
@@ -36,6 +37,7 @@ public class Camera_shake : MonoBehaviour
             yield return null;
         }
         transform.position = defaultPosition;
+
     }
 
 public void startShaking()

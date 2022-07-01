@@ -62,13 +62,17 @@ public class UIManager : MonoBehaviour
 
     public void updateLives(int currentLives)
     {
+        
         _livesImg.sprite = _livesSprites[currentLives];
 
         if (currentLives < 1)
         {
             onPlayerDeath();
             GameOverSequence();
+            
+           
         }
+        
     }
     void onPlayerDeath()
     {
@@ -94,19 +98,7 @@ public class UIManager : MonoBehaviour
             }
         _gameOverText.enabled = false;
     }
-    //this [TEST] croutine plays for 5 seconds by controlling it with a counter.I can use it for the Wave Text Later
-    IEnumerator TickFiveSeconds()
-    {
-        var wait = new WaitForSeconds(1f);
-        int counter = 1;
-        while (counter < 5)
-        {
-            Debug.Log("Tick");
-            counter++;
-            yield return wait;
-        }
-        Debug.Log("I am done ticking");
-    }
+
 }
 
 

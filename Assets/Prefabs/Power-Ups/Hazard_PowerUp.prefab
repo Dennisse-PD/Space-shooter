@@ -121,7 +121,8 @@ MonoBehaviour:
   powerUpID: 6
   _PowerUpSound: {fileID: 8300000, guid: 9e3bade69fc385641a683c24d5b0023f, type: 3}
   _magnetspeed: 5
-  _explosionAnim: {fileID: 0}
+  _explosionAnim: {fileID: 5036604574257233973, guid: 453acf3f339a92148adce867788c1365,
+    type: 3}
 --- !u!61 &1486879620627412138
 BoxCollider2D:
   m_ObjectHideFlags: 0

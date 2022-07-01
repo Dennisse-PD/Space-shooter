@@ -311,7 +311,7 @@ MonoBehaviour:
   _laserPrefab: {fileID: 2106295022425389803, guid: 57a9c2eded5482f468ecfb111fef352c,
     type: 3}
   _nextShot: 0.5
-  _lives: 3
+  _lives: 4
   _shieldStrengh: 3
   _tripleShot: {fileID: 8081232757000738816, guid: cf9dd3bf206049a4ca1b2ff637f8a5ae,
     type: 3}
@@ -369,7 +369,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 75676f361bdfeaf41a46623e95df3dbc, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -636,7 +636,7 @@ GameObject:
   - component: {fileID: 3934953063146643420}
   m_Layer: 10
   m_Name: Shockwave
-  m_TagString: Untagged
+  m_TagString: AoE
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -218,7 +218,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5043188484993166440}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: a885c043fab7e46438bba03ba9dab6bc, type: 3}
@@ -319,7 +319,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b74130c4550bd14aa57719e136478c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 4
+  _speed: 0
   _enemyPrefab: {fileID: 5043188484993166440}
   _laserPrefab: {fileID: 6455117977347328754, guid: 9fb265b2c6e5b6944915e4f078fa3fdf,
     type: 3}

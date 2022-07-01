@@ -40,6 +40,10 @@ public class BossFight : MonoBehaviour
     [SerializeField]
     private GameObject DamageRightVisualizer;
 
+    //Sound Effects
+    [SerializeField]
+    AudioClip _explosionSound;
+
 
     void Start()
     {
@@ -62,25 +66,10 @@ public class BossFight : MonoBehaviour
         if (transform.position != endPosition)
         {
             transform.position = Vector3.MoveTowards(transform.position, endPosition, _speed * Time.deltaTime);
-            //start boss phases here
+          
 
         }
-        CheckPhases();
-        
-
-        //HERE FOR TESTING
-        if (currentHealth <= 30)
-        {
-            LongLaserAttack(); //This crashes with a while loop which means we'll be using a coroutine 
-        }
-        if(currentHealth <=30)
-        {
-            Debug.Log("The Long Laser Must stop");
-        }
-
-        //Switch Boss Phase depending on HP Levels
-
-
+        BossPhases();
     }
     public void DamageBoss(int damage)
     {
@@ -88,16 +77,40 @@ public class BossFight : MonoBehaviour
         currentHealth -= damage;
         healthBar.SetHealth(currentHealth);
     }
+    private void BossPhases()
+    {
+        if (currentHealth == 50)
+        {
+            // AudioSource.PlayClipAtPoint(_explosionSound, transform.position)
+            DamageLeftVisualizer.SetActive(true);
+
+        }
+        if (currentHealth <= 30)
+        {
+            LongLaserAttack();
+            Debug.Log("This is Phase 2");
+            DamageRightVisualizer.SetActive(true);
+            
+        }
+        if(currentHealth < 1)
+        {
+            Destroy(this.gameObject);
+        }
+    }
     public void OnTriggerEnter2D(Collider2D other)
     {
         if (other.tag == "Laser")
         {
 
-            DamageBoss(5);
+            DamageBoss(10);
+        }
+        else if(other.tag == "AoE")
+        {
+            DamageBoss(15);
         }
 
     }
-    void CheckPhases()
+   /* void CheckPhases()
     {
         if (currentHealth > 50)
         {
@@ -115,37 +128,32 @@ public class BossFight : MonoBehaviour
         }
         if (currentHealth <= 30)
         {
+            LongLaserAttack();
             Debug.Log("This is the Final Phase");
             DamageRightVisualizer.SetActive(true);
         }
-    }
-    void FireLongLaser()
-    {
-        
-        ActivateLongLaser(); //will change where it becomes true later, this is here for testing. 
-        //this will become true in a coroutine or when the Boss HP % is below a certain value
-        if (_isLongLaserActive == true)
+         if (currentHealth < 1)
         {
-            LaserVisualizer.SetActive(true);
+           // AudioSource.PlayClipAtPoint(_explosionSound, transform.position);
+            Destroy(this.gameObject);
         }
-
-    }
+    }*/
+   
     void LongLaserAttack()
     {
         Vector3 v = transform.position;
         v.x = _distance * Mathf.Sin(Time.time * _laserAttackSpeed);
         transform.position = v;
-        FireLongLaser();//here for testing
+        LaserVisualizer.SetActive(true);
     }
 
-    void ExplosiveShot()
+    IEnumerator LaserPowerDownRoutine()
     {
-     
-    }
+        yield return new WaitForSeconds(5.0f);
+        
 
-    void ActivateLongLaser()
-    {
-        _isLongLaserActive = true;
+
     }
+    
 
 }

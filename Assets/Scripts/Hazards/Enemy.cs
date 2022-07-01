@@ -68,11 +68,13 @@ public class Enemy : MonoBehaviour
     //Enemy Pick up
     private bool isPowerUpInRange = false;
 
+   
+
     // Start is called before the first frame update
     void Start()
     {
         //randomizez shiled here 0-5
-        _randomizeShield = Random.Range(0, 10);
+        _randomizeShield = Random.Range(0, 20);
 
         if (_randomizeShield == 1)
         {
@@ -218,14 +220,19 @@ public class Enemy : MonoBehaviour
             }
             if (_distance <= 1.1f) //is this what destroyes the enemy when they are out of bounds? If so,I might need to turn this into a function to call for all enemies
             {
-
-                Destroy(GetComponent<Collider2D>());
-                Destroy(this.gameObject);
+               
+                DestroyAltEnemies();
             }
         }
 
 
 
+    }
+    void DestroyAltEnemies()
+    {
+        _explosionSound.Play();
+        Destroy(GetComponent<Collider2D>());
+        Destroy(this.gameObject, 1f);
     }
     private void Dodge()//ENEMY AVOID LASER. MUST REVISE LATER
     {
@@ -328,7 +335,7 @@ public class Enemy : MonoBehaviour
                 _animator.SetTrigger("OnEnemyDeath");
                 _speed = 0;
                 _explosionSound.Play();
-                Destroy(this.gameObject, 2.6f);
+                Destroy(this.gameObject, 1f);
             }
 
             if (other.gameObject.CompareTag("Laser"))
@@ -359,7 +366,7 @@ public class Enemy : MonoBehaviour
             _cycleSpeed = 0f;
             _explosionSound.Play();
             Destroy(GetComponent<Collider2D>());
-            Destroy(this.gameObject, 2.6f);
+            Destroy(this.gameObject, 1f);
             _player.AddScore(10);
         }
         private void ActivateShield() //called on case 3
