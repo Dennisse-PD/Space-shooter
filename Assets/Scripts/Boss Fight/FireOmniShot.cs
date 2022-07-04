@@ -18,12 +18,6 @@ public class FireOmniShot : MonoBehaviour
     void Start()
     {
      InvokeRepeating("Fire", 0f, 2f);
-
-       
-
-
-        
-
     }
 
     // Update is called once per frame

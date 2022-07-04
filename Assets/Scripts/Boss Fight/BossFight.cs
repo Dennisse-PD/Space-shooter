@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class BossFight : MonoBehaviour
 {
@@ -35,15 +36,25 @@ public class BossFight : MonoBehaviour
     private GameObject DamageRightVisualizer;
     [SerializeField]
     private GameObject _explosionAnim;
+    private PowerUpSpawner _PowerUpSpawner;
+    private Canvas _canvas;
 
 
     //Sound Effects
     AudioSource _explosionSound;
 
+    //boss death
+    public bool _isBossAlive = true;
+    private MiscroGM _microGM;
+    private UIManager _UIManager;
+
+
+
 
     void Start()
     {
-       
+        _microGM = GameObject.Find("MicroGM").GetComponent<MiscroGM>();
+        _UIManager = GameObject.Find("Canvas").GetComponent<UIManager>();
         currentHealth = maxHealth;
         healthBar.SetMaxHealth(maxHealth);
         _explosionSound = GetComponent<AudioSource>();
@@ -51,23 +62,23 @@ public class BossFight : MonoBehaviour
         {
             Debug.LogError("The Explosion Audio Source is NULL!");
         }
-
     }
 
     // Update is called once per frame
     void Update()
     {
+       
         OmniShot omniShot = GetComponent<OmniShot>();
         if (omniShot == null)
         {
             Debug.Log("The OmniShot Script is NULL!");
         }
+      
 
         //Boss entrance
         if (transform.position != endPosition)
         {
             transform.position = Vector3.MoveTowards(transform.position, endPosition, _speed * Time.deltaTime);
-          
 
         }
         BossPhases();
@@ -82,7 +93,7 @@ public class BossFight : MonoBehaviour
     {
         if (currentHealth == 50)
         {
- 
+
             DamageLeftVisualizer.SetActive(true);
 
         }
@@ -90,13 +101,14 @@ public class BossFight : MonoBehaviour
         {
             LongLaserAttack();
             DamageRightVisualizer.SetActive(true);
-            
+
         }
-        if(currentHealth < 1)
+        if (currentHealth < 1)
         {
             DestroyBoss();
         }
     }
+    
     public void OnTriggerEnter2D(Collider2D other)
     {
         if (other.tag == "Laser")
@@ -104,21 +116,36 @@ public class BossFight : MonoBehaviour
 
             DamageBoss(10);
         }
-        else if(other.tag == "AoE")
+        else if (other.tag == "AoE")
         {
             DamageBoss(15);
         }
 
+    }
+    void UserInputOptions()
+    {
+        if (Input.GetKeyDown(KeyCode.R) && _isBossAlive == true)
+        {
+            SceneManager.LoadScene(1);
+        }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
     }
     void DestroyBoss()
     {
         
         _speed = 0;
         _explosionSound.Play();
+        _UIManager.GameWonSequence();
+        _microGM.GameOver();
         Instantiate(_explosionAnim, transform.position, Quaternion.identity);
+        //this.gameObject.SetActive(false);
         Destroy(this.gameObject, .20f);
-
+      
     }
+
     void LongLaserAttack()
     {
         Vector3 v = transform.position;
@@ -131,6 +158,10 @@ public class BossFight : MonoBehaviour
     {
         yield return new WaitForSeconds(5.0f);
     }
-    
+    public void BossIsDead()
+    {
+        _isBossAlive = false;
+    }
+
 
 }

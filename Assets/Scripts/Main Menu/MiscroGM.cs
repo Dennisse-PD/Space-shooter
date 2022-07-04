@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-public class GameManager : MonoBehaviour
+
+public class MiscroGM : MonoBehaviour
 {
     private bool _isGameOver = false;
     private BossFight _boss;
@@ -10,23 +11,23 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-      
+        _boss = GameObject.Find("Boss").GetComponent<BossFight>();
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        UserInputOptions(); 
+        UserInputOptions();
     }
     public void GameOver()
     {
-        
+
         _isGameOver = true;
     }
     void UserInputOptions()
     {
-        if (Input.GetKeyDown(KeyCode.R) && _isGameOver == false)
+        if (Input.GetKeyDown(KeyCode.R) && _isGameOver == false|| _boss._isBossAlive == false)
         {
             SceneManager.LoadScene(1);
         }
@@ -36,3 +37,4 @@ public class GameManager : MonoBehaviour
         }
     }
 }
+
