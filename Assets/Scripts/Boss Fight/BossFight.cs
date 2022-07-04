@@ -13,11 +13,6 @@ public class BossFight : MonoBehaviour
     //Boss entrance
     private Vector3 endPosition = new Vector3(0, 3.95f, 0);
 
-    //Boss Phases
-    private bool _isPhase1Started = false;
-    private bool _isPhase2Started = false;
-    private bool _isPhase3Started = false;
-
 
     //Prefab
     [SerializeField]
@@ -26,8 +21,7 @@ public class BossFight : MonoBehaviour
 
     // Side to Side Movement Variables
     private float _distance = 5f;
-    //private Vector3 StartingPos; just used transform.position
-    private float _laserAttackSpeed = 1f;// might or might not use
+    private float _laserAttackSpeed = 1f;
     private bool _isLongLaserActive = false;
 
     //Long Laser Variables
@@ -39,10 +33,12 @@ public class BossFight : MonoBehaviour
     private GameObject DamageLeftVisualizer;
     [SerializeField]
     private GameObject DamageRightVisualizer;
+    [SerializeField]
+    private GameObject _explosionAnim;
+
 
     //Sound Effects
-    [SerializeField]
-    AudioClip _explosionSound;
+    AudioSource _explosionSound;
 
 
     void Start()
@@ -50,6 +46,11 @@ public class BossFight : MonoBehaviour
        
         currentHealth = maxHealth;
         healthBar.SetMaxHealth(maxHealth);
+        _explosionSound = GetComponent<AudioSource>();
+        if (_explosionSound == null)
+        {
+            Debug.LogError("The Explosion Audio Source is NULL!");
+        }
 
     }
 
@@ -59,7 +60,7 @@ public class BossFight : MonoBehaviour
         OmniShot omniShot = GetComponent<OmniShot>();
         if (omniShot == null)
         {
-            Debug.Log("The OmniShot Script is NULL!");//just testing, don't need to log error atm
+            Debug.Log("The OmniShot Script is NULL!");
         }
 
         //Boss entrance
@@ -81,20 +82,19 @@ public class BossFight : MonoBehaviour
     {
         if (currentHealth == 50)
         {
-            // AudioSource.PlayClipAtPoint(_explosionSound, transform.position)
+ 
             DamageLeftVisualizer.SetActive(true);
 
         }
         if (currentHealth <= 30)
         {
             LongLaserAttack();
-            Debug.Log("This is Phase 2");
             DamageRightVisualizer.SetActive(true);
             
         }
         if(currentHealth < 1)
         {
-            Destroy(this.gameObject);
+            DestroyBoss();
         }
     }
     public void OnTriggerEnter2D(Collider2D other)
@@ -110,35 +110,15 @@ public class BossFight : MonoBehaviour
         }
 
     }
-   /* void CheckPhases()
+    void DestroyBoss()
     {
-        if (currentHealth > 50)
-        {
-            Debug.Log("This is phase 1");
-            _isPhase1Started = true;
+        
+        _speed = 0;
+        _explosionSound.Play();
+        Instantiate(_explosionAnim, transform.position, Quaternion.identity);
+        Destroy(this.gameObject, .20f);
 
-        }
-        if (currentHealth <= 50)
-        {
-            Debug.Log("This is Phase 2");
-            DamageLeftVisualizer.SetActive(true);
-            _isPhase1Started = false;
-            _isPhase2Started = true;
-
-        }
-        if (currentHealth <= 30)
-        {
-            LongLaserAttack();
-            Debug.Log("This is the Final Phase");
-            DamageRightVisualizer.SetActive(true);
-        }
-         if (currentHealth < 1)
-        {
-           // AudioSource.PlayClipAtPoint(_explosionSound, transform.position);
-            Destroy(this.gameObject);
-        }
-    }*/
-   
+    }
     void LongLaserAttack()
     {
         Vector3 v = transform.position;
@@ -150,9 +130,6 @@ public class BossFight : MonoBehaviour
     IEnumerator LaserPowerDownRoutine()
     {
         yield return new WaitForSeconds(5.0f);
-        
-
-
     }
     
 

@@ -148,12 +148,7 @@ public class Player : MonoBehaviour
             }   
 
         }
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            
-            //Debug.Log("The C Key is working");
-           // place attraction or movetowards here
-        }
+ 
 
         //THURSTING  INPUT LOGIC
         if (Input.GetKeyDown(KeyCode.LeftShift) && Time.time > _canThrust)
@@ -183,7 +178,7 @@ public class Player : MonoBehaviour
         {
            
             updateThrustGauge(+1 * Time.deltaTime * 50);
-            //_speed = 4;
+            
         }
 
     }
@@ -192,7 +187,7 @@ public class Player : MonoBehaviour
         if (_isThrusting == true)
         {
             updateThrustGauge(-2 * Time.deltaTime * 50);
-           // _speed = 8;
+           
         }
         
     }
@@ -246,7 +241,7 @@ public class Player : MonoBehaviour
         {
             Instantiate(_homingProjectile, transform.position, Quaternion.identity);
             StartCoroutine(HomingProjectilePowerDownRoutine());
-            //Play audio source?
+            
         }
         else
         {
@@ -446,10 +441,9 @@ public class Player : MonoBehaviour
     public void HomingProjectileEnabled()
     {
         _isHomingProjectileEnabled = true;
-        //StartCoroutine(HomingProjectilePowerDownRoutine());
+        
     }
 
-    //MIGHT DELETE LATER. Here to make it a one time shot power up only
     public void HomingProjectileDisabled()
     {
         _isHomingProjectileEnabled = false;

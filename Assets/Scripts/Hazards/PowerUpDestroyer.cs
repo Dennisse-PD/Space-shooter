@@ -2,37 +2,41 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AggressiveEnemy : MonoBehaviour
+public class PowerUpDestroyer : MonoBehaviour
 {
-    //Regular Movement Speed
-    private float _speed = 3.0f;
+    //Circle Cast
+    float _rayDistance = 8.0f;
+    [SerializeField]
+    float _rayCastRad = 0.5f;
 
-    //Ram Variables
+    //Power Up Destroyaer prefab
+    [SerializeField]
+    private GameObject _puDestroyerPrefab;
+
+    //Attack Variables
     private Player _player;
-    private float _distance;
-    [SerializeField]
-    private float _ramSpeed = 2.5f;
-    private float _attackRange = 4.0f;
-    private float _ramMultiplier = 2.0f;
+    private float _fireRate = 0.5f;
+    private float _canFire = -0.6f;
 
-    //Variables for Effects
-    [SerializeField]
-    private SpriteRenderer spriteRenderer;
-    private bool isFlickerEnabled = false;
+    //Effects
     AudioSource _explosionSound;
+    private bool _isPowerUpInRange = false;
     [SerializeField]
     private GameObject _explosionAnim;
+
+    //Movement
+    private float _speed = 4.0f;
 
     //Spawner
     [SerializeField]
     private int enemyID;
-
 
     // Start is called before the first frame update
     void Start()
     {
         _explosionSound = GetComponent<AudioSource>();
         if (_explosionSound == null)
+            if (_explosionSound == null)
         {
             Debug.LogError("The Explosion Audio Source is NULL!");
         }
@@ -43,16 +47,25 @@ public class AggressiveEnemy : MonoBehaviour
             Debug.LogError("The Player is NULL!");
         }
 
-
     }
 
     // Update is called once per frame
     void Update()
     {
-        RamPlayer();
         calculateMovement();
+        destroyPowerUp();
     }
-    public void calculateMovement()
+    private void fireAtPowerUp()
+    {
+        _fireRate = 3f;
+        _canFire = Time.time + _fireRate;
+        GameObject enemeyLaser = Instantiate(_puDestroyerPrefab, transform.position, Quaternion.Euler(transform.rotation.x, transform.rotation.y, 180.0f));
+    }
+    private void PowerUpInRange()
+    {
+        _isPowerUpInRange = true;
+    }
+    private void calculateMovement()
     {
         transform.position += Vector3.down * (_speed * Time.deltaTime);
 
@@ -63,54 +76,33 @@ public class AggressiveEnemy : MonoBehaviour
 
         }
     }
-    private void RamPlayer()
+    void DestroyEnemy()
     {
-        StartCoroutine(colorFlickerRoutine());
-        if (_player != null)
-        {
-            _distance = Vector3.Distance(_player.transform.position, this.transform.position);
-
-            if (_distance <= _attackRange)
-            {
-                EnableFlicker();
-                Vector3 direction = this.transform.position - _player.transform.position;
-                direction = direction.normalized;
-                this.transform.position -= direction * Time.deltaTime * (_ramSpeed * _ramMultiplier);
-            }
-            if (_distance <= 1.1f)
-            {
-
-                DestroyEnemy();
-            }
-        }
-    }
-        void DestroyEnemy()
-        {
-        _ramSpeed = 0;
         _speed = 0;
         _explosionSound.Play();
         Instantiate(_explosionAnim, transform.position, Quaternion.identity);
         Destroy(GetComponent<Collider2D>());
         Destroy(this.gameObject, .20f);
 
-        }
-
-    
-    IEnumerator colorFlickerRoutine()
+    }
+    private void destroyPowerUp()
     {
-        while (isFlickerEnabled == true)
+        _rayCastRad = 5.0f;
+        RaycastHit2D hit = Physics2D.CircleCast(transform.position, _rayCastRad, Vector2.down, _rayDistance, LayerMask.GetMask("collectible"));
+
+        Debug.DrawRay(transform.position, Vector3.down * _rayCastRad * _rayDistance, Color.red);
+
+        if (hit.collider != null)
         {
 
-            spriteRenderer.color = Color.red;
-            yield return new WaitForSeconds(0.5f);
-            spriteRenderer.color = Color.white;
-            yield return new WaitForSeconds(0.5f);
+            if (hit.collider.CompareTag("PowerUp") && Time.time > _canFire)
+            {
+
+                Debug.Log("PowerUp Detected");
+
+                fireAtPowerUp();
+            }
         }
-    }
-    
-    void EnableFlicker()
-    {
-        isFlickerEnabled = true;
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -139,8 +131,4 @@ public class AggressiveEnemy : MonoBehaviour
         }
 
     }
-
 }
-   
-
- 

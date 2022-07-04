@@ -51,7 +51,6 @@ public class SpawnManager : MonoBehaviour
     void Start()
     {    
         StartCoroutine(waveSpawner());
-        //StartCoroutine(WaveCountFlicker());
         StartCoroutine(SpawnPowerUpRoutine());
         StartCoroutine(RarePowerUpRoutine());
     }
@@ -64,12 +63,12 @@ public class SpawnManager : MonoBehaviour
     IEnumerator waveSpawner()
     {
 
-        while (isWaveDone == true && _isFinalWaveStarted == false)// waveCount < 5 )
+        while (isWaveDone == true && _isFinalWaveStarted == false)
         {
             
             Vector3 spawnPos = new Vector3(Random.Range(-9.3f, 9.3f), 7f, 0f);
             int randomEnemy = Random.Range(0, 5);
-            isWaveDone = false; //create a method for this called waveIsActive or something like that
+            isWaveDone = false; 
 
             for (int i = 0; i < enemyCount; i++)
             {
@@ -78,21 +77,18 @@ public class SpawnManager : MonoBehaviour
                     ActivateWaveText();
                     yield return new WaitForSeconds(waveTextTimer);
                     _waveCountTxt.gameObject.SetActive(false);
-                   // GameObject _enemyPrefab = Instantiate(enemies[randomEnemy], spawnPos, Quaternion.identity);
+                  
 
-                    GameObject enemyClone = Instantiate(enemies[randomEnemy], spawnPos, Quaternion.identity); //add spawnPos and Quaternion to it after first test
+                    GameObject enemyClone = Instantiate(enemies[randomEnemy], spawnPos, Quaternion.identity); 
                     yield return new WaitForSeconds(spawnRate);
                 }
                 if (waveCount >= 5)
                 {
-                    //instantiate boss here! The boss will have its own script which will start on instantate
-                    //instantate in position 0,11.22,0
+                    
 
-                    EndEnemyWaves(); //might remove this from here since it's being called from the next scene where the boss is
-                   
-
+                    EndEnemyWaves(); 
                     Debug.Log("Final Wave! Enter Boss Fight!");
-                    //boss starts
+                   
                 }
             }
                 spawnRate -= 1.0f;
@@ -110,7 +106,6 @@ public class SpawnManager : MonoBehaviour
     public void EndEnemyWaves()
     {
         _isFinalWaveStarted = true;
-       // _stopSpawning = true;
         isWaveDone = true;
         _waveCountTxt.gameObject.SetActive(false);
         enemyCount = 0;
@@ -129,12 +124,11 @@ public class SpawnManager : MonoBehaviour
         _waveCountTxt.text = "Wave: " + waveCount.ToString();
         
         _waveCountTxt.gameObject.SetActive(true);
-        // StartCoroutine(WaveCountFlicker());
         
     }
     IEnumerator WaveCountFlicker()
     {
-        while (isWaveDone == true) //check the condition 
+        while (isWaveDone == true)
         {
             
             _waveCountTxt.enabled = false;
@@ -148,33 +142,13 @@ public class SpawnManager : MonoBehaviour
 
     }
   
-    IEnumerator TickFiveSeconds()
-    {
-        var wait = new WaitForSeconds(1f);
-        int counter = 1;
-        while (counter < 5)
-        {
-            WaveCountFlicker();
-            counter++;
-            yield return wait;
-        }
-        _stopSpawning = true;
-        _waveCountTxt.enabled = false;
-    }
-
- /// <su
- /// </summary>
- /// <returns></returns>
-
     IEnumerator SpawnPowerUpRoutine()
     {
-        //set the rarity here so for the first few power ups set a random and then for the last few set another
         yield return new WaitForSeconds(5.0f);
         while (_stopSpawning == false)
         {
             Vector3 spawnPos = new Vector3(Random.Range(-8f, 8f), 7f, 0f);
-            int randomPowerUp = Random.Range(0, 3); //make more and change the value 
-          //  int randomRarePowerUp = Random.Range(4, 6);
+            int randomPowerUp = Random.Range(0, 3); 
             Instantiate(PowerUps[randomPowerUp], spawnPos, Quaternion.identity);
             yield return new WaitForSeconds(3.0f);
 
@@ -184,13 +158,12 @@ public class SpawnManager : MonoBehaviour
     }
     IEnumerator RarePowerUpRoutine()
     {
-        //set the rarity here so for the first few power ups set a random and then for the last few set another
+        
         yield return new WaitForSeconds(10.0f);
         while (_stopSpawning == false)
         {
             Vector3 spawnPos = new Vector3(Random.Range(-8f, 8f), 7f, 0f);
-            int randomPowerUp = Random.Range(4, 7); //make more and change the value 
-                                                    //  int randomRarePowerUp = Random.Range(4, 6);
+            int randomPowerUp = Random.Range(4, 7); 
             Instantiate(PowerUps[randomPowerUp], spawnPos, Quaternion.identity);
             yield return new WaitForSeconds(20.0f);
 
