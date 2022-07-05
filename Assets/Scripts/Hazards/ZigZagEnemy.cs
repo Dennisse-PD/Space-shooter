@@ -41,12 +41,9 @@ public class ZigZagEnemy : MonoBehaviour
         {
             Debug.LogError("The Explosion Audio Source is NULL!");
         }
-        _player = GameObject.Find("Player").GetComponent<Player>();
+        
 
-        if (_player == null)
-        {
-            Debug.LogError("The Player is NULL!");
-        }
+       
     }
 
     // Update is called once per frame
@@ -56,7 +53,6 @@ public class ZigZagEnemy : MonoBehaviour
         if (Time.time > _canfire)
         {
             FireLaser();
-
         }
     }
     void ZigZagMovement()
@@ -112,5 +108,12 @@ public class ZigZagEnemy : MonoBehaviour
             }
 
         }
+        if (other.gameObject.CompareTag("AoE"))
+        {
+
+            DestroyEnemy();
+
+
         }
+    }
     }

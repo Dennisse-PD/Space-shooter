@@ -42,9 +42,12 @@ public class SpawnManager : MonoBehaviour
     [SerializeField]
     private Text _waveCountTxt;
     private float waveTextTimer = 1.0f;
+    [SerializeField]
+    private Text _bossWaveIndicatorText;
 
     //Boss
     public bool _isFinalWaveStarted = false;
+    private Player _player;
 
 
     // Start is called before the first frame update
@@ -62,8 +65,8 @@ public class SpawnManager : MonoBehaviour
     }
     IEnumerator waveSpawner()
     {
-
-        while (isWaveDone == true && _isFinalWaveStarted == false)
+       
+        while (isWaveDone == true && _stopSpawning == false)
         {
             
             Vector3 spawnPos = new Vector3(Random.Range(-9.3f, 9.3f), 7f, 0f);
@@ -84,11 +87,10 @@ public class SpawnManager : MonoBehaviour
                 }
                 if (waveCount >= 5)
                 {
-                    
-
+                    _bossWaveIndicatorText.gameObject.SetActive(true);
                     EndEnemyWaves(); 
                     Debug.Log("Final Wave! Enter Boss Fight!");
-                   
+                    SceneManager.LoadScene(2);
                 }
             }
                 spawnRate -= 1.0f;
@@ -100,12 +102,12 @@ public class SpawnManager : MonoBehaviour
             
            
         }
-        SceneManager.LoadScene(2);
+       
     }
 
     public void EndEnemyWaves()
     {
-        _isFinalWaveStarted = true;
+        _stopSpawning = true;
         isWaveDone = true;
         _waveCountTxt.gameObject.SetActive(false);
         enemyCount = 0;
@@ -136,10 +138,7 @@ public class SpawnManager : MonoBehaviour
             _waveCountTxt.enabled = true;
             yield return new WaitForSeconds(0.5f);  
         }
-        
         _waveCountTxt.enabled = false;
-
-
     }
   
     IEnumerator SpawnPowerUpRoutine()
@@ -151,8 +150,6 @@ public class SpawnManager : MonoBehaviour
             int randomPowerUp = Random.Range(0, 3); 
             Instantiate(PowerUps[randomPowerUp], spawnPos, Quaternion.identity);
             yield return new WaitForSeconds(3.0f);
-
-
         }
 
     }
@@ -175,4 +172,5 @@ public class SpawnManager : MonoBehaviour
     {
         _stopSpawning = true;
     }
+   
 }

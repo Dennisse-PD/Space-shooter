@@ -311,7 +311,7 @@ MonoBehaviour:
   _laserPrefab: {fileID: 2106295022425389803, guid: 57a9c2eded5482f468ecfb111fef352c,
     type: 3}
   _nextShot: 0.5
-  _lives: 4
+  _lives: 3
   _shieldStrengh: 3
   _tripleShot: {fileID: 8081232757000738816, guid: cf9dd3bf206049a4ca1b2ff637f8a5ae,
     type: 3}
@@ -634,6 +634,7 @@ GameObject:
   - component: {fileID: 3934953063146643421}
   - component: {fileID: 3934953063146643419}
   - component: {fileID: 3934953063146643420}
+  - component: {fileID: 1452647790}
   m_Layer: 10
   m_Name: Shockwave
   m_TagString: AoE
@@ -725,6 +726,22 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!58 &1452647790
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3934953063146643422}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 2.56
 --- !u!1 &3934953063241478890
 GameObject:
   m_ObjectHideFlags: 0

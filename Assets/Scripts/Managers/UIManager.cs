@@ -71,8 +71,11 @@ public class UIManager : MonoBehaviour
 
     public void updateLives(int currentLives)
     {
-        
-        _livesImg.sprite = _livesSprites[currentLives];
+        if (currentLives > 0)
+        {
+            _livesImg.sprite = _livesSprites[currentLives];
+        }
+
 
         if (currentLives < 1)
         {

@@ -58,6 +58,7 @@ public class BossFight : MonoBehaviour
         currentHealth = maxHealth;
         healthBar.SetMaxHealth(maxHealth);
         _explosionSound = GetComponent<AudioSource>();
+
         if (_explosionSound == null)
         {
             Debug.LogError("The Explosion Audio Source is NULL!");

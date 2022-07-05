@@ -137,7 +137,7 @@ public class Enemy : MonoBehaviour
                 Destroy(this.gameObject, 1f);
             }
 
-            if (other.gameObject.CompareTag("Laser"))
+            if (other.gameObject.CompareTag("Laser")) 
             {
                 Destroy(other.gameObject);
 
@@ -148,6 +148,12 @@ public class Enemy : MonoBehaviour
                 }
 
             }
+            if (other.gameObject.CompareTag("AoE"))
+        {
+            {
+                EnemyDeath();
+            }
+        }
 
         }
         public void EnemyDeath()

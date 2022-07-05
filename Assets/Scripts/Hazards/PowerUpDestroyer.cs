@@ -40,12 +40,7 @@ public class PowerUpDestroyer : MonoBehaviour
         {
             Debug.LogError("The Explosion Audio Source is NULL!");
         }
-        _player = GameObject.Find("Player").GetComponent<Player>();
-
-        if (_player == null)
-        {
-            Debug.LogError("The Player is NULL!");
-        }
+       
 
     }
 
@@ -121,12 +116,11 @@ public class PowerUpDestroyer : MonoBehaviour
         if (other.gameObject.CompareTag("Laser"))
         {
             Destroy(other.gameObject);
-
-            if (_player != null)
-            {
-
-                DestroyEnemy();
-            }
+            DestroyEnemy();
+        }
+        if (other.gameObject.CompareTag("AoE"))
+        {
+            DestroyEnemy();
 
         }
 
