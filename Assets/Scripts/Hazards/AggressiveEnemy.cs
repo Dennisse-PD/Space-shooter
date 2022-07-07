@@ -123,13 +123,8 @@ public class AggressiveEnemy : MonoBehaviour
 
         if (other.gameObject.CompareTag("Laser"))
         {
-            Destroy(other.gameObject);
-
-            if (_player != null)
-            {
-
-                DestroyEnemy();
-            }
+           DestroyEnemy(); 
+           Destroy(other.gameObject);
 
         }
         if (other.gameObject.CompareTag("AoE"))

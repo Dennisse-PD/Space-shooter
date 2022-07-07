@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1165618649662466423}
   - component: {fileID: 861857188}
   - component: {fileID: 861857187}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: homing_projectile
   m_TagString: Laser
   m_Icon: {fileID: 0}
@@ -98,7 +98,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0f9622a3c5a7764d825b9b71faf7a38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Target: {fileID: 0}
   HomingProjectileRB: {fileID: 861857188}
 --- !u!50 &861857188
 Rigidbody2D:

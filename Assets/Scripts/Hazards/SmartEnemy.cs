@@ -113,14 +113,12 @@ public class SmartEnemy : MonoBehaviour
 
         if (other.gameObject.CompareTag("Laser"))
         {
+            
+
+            DestroyEnemy();
             Destroy(other.gameObject);
 
-            if (_player != null)
-            {
 
-                DestroyEnemy();
-            }
-          
         }
         if (other.gameObject.CompareTag("AoE"))
         {

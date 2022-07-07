@@ -1605,7 +1605,7 @@ RectTransform:
   - {fileID: 1881253296}
   - {fileID: 871528230}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1641,7 +1641,7 @@ Transform:
   m_Children:
   - {fileID: 1916309689}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1495672897
 GameObject:
@@ -1657,7 +1657,7 @@ GameObject:
   - component: {fileID: 1495672900}
   m_Layer: 0
   m_Name: Spawn_Manager
-  m_TagString: Untagged
+  m_TagString: PowerUp
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1685,17 +1685,14 @@ MonoBehaviour:
   - {fileID: 3550633067743409814, guid: 2f7592b6d06c7fd4ea66d7c779daada7, type: 3}
   - {fileID: 7291857818660062988, guid: 3577fd62018716e41994c89717ad48fb, type: 3}
   - {fileID: 5574463742666146265, guid: 3ebfbcf43c291a74dae65203f701c1c4, type: 3}
+  - {fileID: 466525191366623343, guid: ff441cb8028be9543a9277ef5a550a0d, type: 3}
   enemies:
   - {fileID: 8140381941795382254, guid: baec60ebf6bd1e84fa24498eaa2e3b87, type: 3}
   - {fileID: 3964577884905632702, guid: a386a39b2cb8683419a5a36147de8f24, type: 3}
   - {fileID: 5043188484993166440, guid: c008e3162a809d34e815036f2c0bfa20, type: 3}
   - {fileID: 7121120518601475343, guid: 3c5e6a1bf5a406345b91adb31b349db9, type: 3}
   - {fileID: 7714660566300277684, guid: 07be2746ee59a5a4a96b3ab2d68f0c6e, type: 3}
-  waveCountText: {fileID: 0}
   enemyCount: 0
-  enemyForWave: {fileID: 8140381941795382254, guid: baec60ebf6bd1e84fa24498eaa2e3b87,
-    type: 3}
-  enemyTotal: 3
   _waveCountTxt: {fileID: 1881253294}
   _bossWaveIndicatorText: {fileID: 871528228}
   _isFinalWaveStarted: 0
@@ -1712,7 +1709,7 @@ Transform:
   m_Children:
   - {fileID: 1271823788}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1495672900
 SpriteRenderer:
@@ -1921,7 +1918,7 @@ PrefabInstance:
     - target: {fileID: 3934953062356072423, guid: a0d76c4a7dec5824c867d48b004fdec8,
         type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 3934953062356072423, guid: a0d76c4a7dec5824c867d48b004fdec8,
         type: 3}
@@ -2036,7 +2033,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Wave 1
+  m_Text: 
 --- !u!222 &1881253295
 CanvasRenderer:
   m_ObjectHideFlags: 0

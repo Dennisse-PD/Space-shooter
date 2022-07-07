@@ -1,9 +1,7 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class SpawnManager : MonoBehaviour
 {
@@ -16,34 +14,26 @@ public class SpawnManager : MonoBehaviour
     [SerializeField]
     private GameObject[] enemies; //added for new enemy logic movement
 
-    //Added for the Wave System Logic
-    [SerializeField]
-    private TextMeshProUGUI waveCountText;
+    
+    
+
+    //Spawn Control
     private int waveCount;
     private float spawnRate = 1.0f; 
-    private float timesBetweenWaves = 5.0f;
+    private float timeBetweenWaves = 5.0f;
     [SerializeField]
     private int enemyCount;
-    bool isWaveDone = true;
-    [SerializeField]
-    private GameObject enemyForWave;
-    private int finalWave = 5;
-
-    // to control how many enemies can spawn in total
-    [SerializeField]
-    private int enemyTotal = 3;
-
-    //to destroy all enemies and make way for the boss
-    private  GameObject[] catchEnemies;
-
+    private bool _isWaveActive = true;
     private bool _stopSpawning = false;
 
-    //Flickering Wave Counter Text Variables
+
+    // Wave Counter Text Variables
     [SerializeField]
     private Text _waveCountTxt;
     private float waveTextTimer = 1.0f;
     [SerializeField]
     private Text _bossWaveIndicatorText;
+
 
     //Boss
     public bool _isFinalWaveStarted = false;
@@ -66,17 +56,16 @@ public class SpawnManager : MonoBehaviour
     IEnumerator waveSpawner()
     {
        
-        while (isWaveDone == true && _stopSpawning == false)
+        while (_isWaveActive == true && _stopSpawning == false)
         {
             
             Vector3 spawnPos = new Vector3(Random.Range(-9.3f, 9.3f), 7f, 0f);
             int randomEnemy = Random.Range(0, 5);
-            isWaveDone = false; 
+            _isWaveActive = false; 
 
             for (int i = 0; i < enemyCount; i++)
             {
-                if (enemyCount <= enemyTotal)
-                {
+               
                     ActivateWaveText();
                     yield return new WaitForSeconds(waveTextTimer);
                     _waveCountTxt.gameObject.SetActive(false);
@@ -84,21 +73,21 @@ public class SpawnManager : MonoBehaviour
 
                     GameObject enemyClone = Instantiate(enemies[randomEnemy], spawnPos, Quaternion.identity); 
                     yield return new WaitForSeconds(spawnRate);
-                }
-                if (waveCount >= 5)
+              
+                if (waveCount == 5)
                 {
                     _bossWaveIndicatorText.gameObject.SetActive(true);
-                    EndEnemyWaves(); 
+                    EndEnemyWaves();
+                    yield return new WaitForSeconds(3f);
                     Debug.Log("Final Wave! Enter Boss Fight!");
                     SceneManager.LoadScene(2);
                 }
             }
                 spawnRate -= 1.0f;
                 enemyCount += 1;
-                enemyTotal += 1;
-                yield return new WaitForSeconds(timesBetweenWaves);
+                yield return new WaitForSeconds(timeBetweenWaves);
                 waveCount += 1;
-                isWaveDone = true;
+                _isWaveActive = true;
             
            
         }
@@ -108,18 +97,11 @@ public class SpawnManager : MonoBehaviour
     public void EndEnemyWaves()
     {
         _stopSpawning = true;
-        isWaveDone = true;
-        _waveCountTxt.gameObject.SetActive(false);
-        enemyCount = 0;
-        enemyCount = 0;
-        spawnRate = 0;
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
         foreach (GameObject enemy in enemies)
         {
             GameObject.Destroy(enemy);
-        }
-
-       
+        }  
     }
     private void ActivateWaveText()
     {
@@ -130,7 +112,7 @@ public class SpawnManager : MonoBehaviour
     }
     IEnumerator WaveCountFlicker()
     {
-        while (isWaveDone == true)
+        while (_isWaveActive == true)
         {
             
             _waveCountTxt.enabled = false;
@@ -147,7 +129,7 @@ public class SpawnManager : MonoBehaviour
         while (_stopSpawning == false)
         {
             Vector3 spawnPos = new Vector3(Random.Range(-8f, 8f), 7f, 0f);
-            int randomPowerUp = Random.Range(0, 3); 
+            int randomPowerUp = Random.Range(0, 8); 
             Instantiate(PowerUps[randomPowerUp], spawnPos, Quaternion.identity);
             yield return new WaitForSeconds(3.0f);
         }
@@ -156,13 +138,13 @@ public class SpawnManager : MonoBehaviour
     IEnumerator RarePowerUpRoutine()
     {
         
-        yield return new WaitForSeconds(10.0f);
+        yield return new WaitForSeconds(7.0f);
         while (_stopSpawning == false)
         {
             Vector3 spawnPos = new Vector3(Random.Range(-8f, 8f), 7f, 0f);
-            int randomPowerUp = Random.Range(4, 7); 
+            int randomPowerUp = Random.Range(4, 8); 
             Instantiate(PowerUps[randomPowerUp], spawnPos, Quaternion.identity);
-            yield return new WaitForSeconds(20.0f);
+            yield return new WaitForSeconds(8.0f);
 
 
         }
@@ -171,6 +153,7 @@ public class SpawnManager : MonoBehaviour
     public void OnPlayerDeath()
     {
         _stopSpawning = true;
+        _isWaveActive = false;
     }
    
 }

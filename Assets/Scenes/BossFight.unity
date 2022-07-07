@@ -2057,7 +2057,7 @@ MonoBehaviour:
   - {fileID: 3550633067743409814, guid: 2f7592b6d06c7fd4ea66d7c779daada7, type: 3}
   - {fileID: 7291857818660062988, guid: 3577fd62018716e41994c89717ad48fb, type: 3}
   - {fileID: 5574463742666146265, guid: 3ebfbcf43c291a74dae65203f701c1c4, type: 3}
-  - {fileID: 3910870151901898583, guid: 6c5756703a6b5a14a907c00a771f614f, type: 3}
+  - {fileID: 466525191366623343, guid: ff441cb8028be9543a9277ef5a550a0d, type: 3}
   _stopSpawning: 0
 --- !u!4 &1495672899
 Transform:
@@ -2160,11 +2160,9 @@ MonoBehaviour:
   _enemyContainer: {fileID: 0}
   PowerUps: []
   enemies: []
-  waveCountText: {fileID: 0}
   enemyCount: 0
-  enemyForWave: {fileID: 0}
-  enemyTotal: 3
   _waveCountTxt: {fileID: 0}
+  _bossWaveIndicatorText: {fileID: 0}
   _isFinalWaveStarted: 0
 --- !u!1 &1540759596
 GameObject:
