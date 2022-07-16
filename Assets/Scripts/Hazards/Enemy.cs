@@ -39,7 +39,7 @@ public class Enemy : MonoBehaviour
     void Start()
     {
         
-        _randomizeShield = Random.Range(0, 10);
+        _randomizeShield = Random.Range(0, 8);
 
         if (_randomizeShield == 1)
         {

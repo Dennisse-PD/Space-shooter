@@ -118,7 +118,7 @@ public class SpawnManager : MonoBehaviour
         while (_stopSpawning == false)
         {
             Vector3 spawnPos = new Vector3(Random.Range(-8f, 8f), 7f, 0f);
-            int randomPowerUp = Random.Range(0, 8); 
+            int randomPowerUp = Random.Range(1, 3); 
             Instantiate(PowerUps[randomPowerUp], spawnPos, Quaternion.identity);
             yield return new WaitForSeconds(3.0f);
         }
