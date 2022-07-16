@@ -44,7 +44,7 @@ public class Enemy : MonoBehaviour
         if (_randomizeShield == 1)
         {
             ActivateShield();
-            _shieldRenderer.color = Color.yellow; //set this only when shield is active
+            _shieldRenderer.color = Color.yellow; 
         }
 
        
@@ -128,7 +128,7 @@ public class Enemy : MonoBehaviour
                 if (_isShieldActive == true)
                 {
                     _isShieldActive = false;
-                    shieldVisualizer.SetActive(false);//deatiaves shield after one hit so i don't need the strent variable
+                    shieldVisualizer.SetActive(false);
                     return;
                 }
                 _animator.SetTrigger("OnEnemyDeath");
@@ -161,7 +161,7 @@ public class Enemy : MonoBehaviour
             if (_isShieldActive == true)
             {
                 _isShieldActive = false;
-                shieldVisualizer.SetActive(false);//deatiaves shield after one hit so i don't need the strent variable
+                shieldVisualizer.SetActive(false);
                 return;
 
             }
@@ -173,7 +173,7 @@ public class Enemy : MonoBehaviour
             Destroy(this.gameObject, 1f);
             _player.AddScore(10);
         }
-        private void ActivateShield() //called on case 3
+        private void ActivateShield() 
         {
             _isShieldActive = true;
             shieldVisualizer.SetActive(true);
@@ -184,7 +184,7 @@ public class Enemy : MonoBehaviour
             if (_isShieldActive == true)
             {
                 _isShieldActive = false;
-                shieldVisualizer.SetActive(false);//deatiaves shield after one hit so i don't need the strent variable
+                shieldVisualizer.SetActive(false);
                 return;
             }
         }

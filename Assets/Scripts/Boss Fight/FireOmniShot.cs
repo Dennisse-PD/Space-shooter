@@ -6,11 +6,8 @@ public class FireOmniShot : MonoBehaviour
 {
     
     private int projectileAmount = 4;
-
-   
     private float startAngle = 110f, endAngle = 300f;
-
-    private Vector2 projectileMoveDirection;
+    
 
     
 
@@ -24,7 +21,7 @@ public class FireOmniShot : MonoBehaviour
     void Update()
     {
         BossFight boss = GetComponent<BossFight>();
-        if (boss.currentHealth <= 40)
+        if (boss.currentHealth <= 50)
         {
             projectileAmount = 5;
         }
@@ -44,9 +41,8 @@ public class FireOmniShot : MonoBehaviour
 
             GameObject proj = OmniShotPool.OmnishootPoolInstance.GetProjectile();
             proj.transform.position = transform.position;
-            proj.transform.rotation = transform.rotation;
             proj.SetActive(true);
-            proj.GetComponent<OmniShotMovement>().SetMoveDirection(projDir);
+            proj.GetComponent<OmniShotMovement>().SetMovementDirection(projDir);
 
             angle += angleStep;
 

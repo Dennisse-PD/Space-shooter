@@ -6,6 +6,7 @@ public class AltLaser : MonoBehaviour
 {
     [SerializeField]
     private float _speed = 8.0f;
+
     // Start is called before the first frame update
     void Start()
     {

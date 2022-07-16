@@ -35,14 +35,13 @@ public class UIManager : MonoBehaviour
     private Text _gameWonText;
     private bool _isBossAlive = true;
    
-    private BossFight _boss;
 
 
     // Start is called before the first frame update
     void Start()
     {
         _gameManager = GameObject.Find("Game_Manager").GetComponent<GameManager>();
-       // _boss = GameObject.Find("BossFight").GetComponent<BossFight>();
+       
        
 
 
@@ -71,7 +70,7 @@ public class UIManager : MonoBehaviour
 
     public void updateLives(int currentLives)
     {
-        if (currentLives > 0)
+        if (currentLives >= 0)
         {
             _livesImg.sprite = _livesSprites[currentLives];
         }

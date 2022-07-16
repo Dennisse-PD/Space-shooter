@@ -8,8 +8,7 @@ public class OmniShotPool : MonoBehaviour
 
     [SerializeField]
     private GameObject pooledOmniShot;
-    private bool notEnoughProjectilesInPool = true;
-
+    private bool needProjectiles = true;
     private List<GameObject> projectiles;
 
     private void Awake()
@@ -40,7 +39,7 @@ public class OmniShotPool : MonoBehaviour
                     }
                 }
         }
-        if (notEnoughProjectilesInPool)
+        if (needProjectiles)
         {
             GameObject proj = Instantiate(pooledOmniShot);
             proj.SetActive(false);

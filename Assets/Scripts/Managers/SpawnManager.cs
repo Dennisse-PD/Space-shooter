@@ -12,7 +12,7 @@ public class SpawnManager : MonoBehaviour
     [SerializeField]
     private GameObject[] PowerUps;
     [SerializeField]
-    private GameObject[] enemies; //added for new enemy logic movement
+    private GameObject[] enemies; 
 
     
     
@@ -110,18 +110,7 @@ public class SpawnManager : MonoBehaviour
         _waveCountTxt.gameObject.SetActive(true);
         
     }
-    IEnumerator WaveCountFlicker()
-    {
-        while (_isWaveActive == true)
-        {
-            
-            _waveCountTxt.enabled = false;
-            yield return new WaitForSeconds(0.5f);
-            _waveCountTxt.enabled = true;
-            yield return new WaitForSeconds(0.5f);  
-        }
-        _waveCountTxt.enabled = false;
-    }
+    
   
     IEnumerator SpawnPowerUpRoutine()
     {
@@ -138,13 +127,13 @@ public class SpawnManager : MonoBehaviour
     IEnumerator RarePowerUpRoutine()
     {
         
-        yield return new WaitForSeconds(7.0f);
+        yield return new WaitForSeconds(15.0f);
         while (_stopSpawning == false)
         {
             Vector3 spawnPos = new Vector3(Random.Range(-8f, 8f), 7f, 0f);
             int randomPowerUp = Random.Range(4, 8); 
             Instantiate(PowerUps[randomPowerUp], spawnPos, Quaternion.identity);
-            yield return new WaitForSeconds(8.0f);
+            yield return new WaitForSeconds(25.0f);
 
 
         }

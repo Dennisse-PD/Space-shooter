@@ -5,9 +5,10 @@ using UnityEngine;
 public class AggressiveEnemy : MonoBehaviour
 {
     //Regular Movement Speed
-    private float _speed = 3.0f;
+    private float _speed = 2.0f;
 
     //Ram Variables
+    [SerializeField]
     private Player _player;
     private float _distance;
     [SerializeField]
@@ -36,9 +37,6 @@ public class AggressiveEnemy : MonoBehaviour
         {
             Debug.LogError("The Explosion Audio Source is NULL!");
         }
-        
-
-
     }
 
     // Update is called once per frame
@@ -60,13 +58,17 @@ public class AggressiveEnemy : MonoBehaviour
     }
     private void RamPlayer()
     {
+
+     
         StartCoroutine(colorFlickerRoutine());
         if (_player != null)
         {
+            
             _distance = Vector3.Distance(_player.transform.position, this.transform.position);
 
             if (_distance <= _attackRange)
             {
+               
                 EnableFlicker();
                 Vector3 direction = this.transform.position - _player.transform.position;
                 direction = direction.normalized;
@@ -93,6 +95,7 @@ public class AggressiveEnemy : MonoBehaviour
     
     IEnumerator colorFlickerRoutine()
     {
+        Debug.Log("Flicker");
         while (isFlickerEnabled == true)
         {
 

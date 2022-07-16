@@ -34,13 +34,13 @@ public class PowerUpSpawner : MonoBehaviour
 
     IEnumerator SpawnPowerUpRoutine()
     {
-        //set the rarity here so for the first few power ups set a random and then for the last few set another
+        
         yield return new WaitForSeconds(5.0f);
         while (_stopSpawning == false)
         {
             Vector3 spawnPos = new Vector3(Random.Range(-8f, 8f), 7f, 0f);
-            int randomPowerUp = Random.Range(0, 4); //make more and change the value 
-                                                    //  int randomRarePowerUp = Random.Range(4, 6);
+            int randomPowerUp = Random.Range(0, 4); 
+                                                  
             Instantiate(PowerUps[randomPowerUp], spawnPos, Quaternion.identity);
             yield return new WaitForSeconds(3.0f);
 
@@ -50,13 +50,13 @@ public class PowerUpSpawner : MonoBehaviour
     }
     IEnumerator RarePowerUpRoutine()
     {
-        //set the rarity here so for the first few power ups set a random and then for the last few set another
+        
         yield return new WaitForSeconds(10.0f);
         while (_stopSpawning == false)
         {
             Vector3 spawnPos = new Vector3(Random.Range(-8f, 8f), 7f, 0f);
-            int randomPowerUp = Random.Range(5, 7); //make more and change the value 
-                                                    //  int randomRarePowerUp = Random.Range(4, 6);
+            int randomPowerUp = Random.Range(5, 7); 
+                                                    
             Instantiate(PowerUps[randomPowerUp], spawnPos, Quaternion.identity);
             yield return new WaitForSeconds(20.0f);
 

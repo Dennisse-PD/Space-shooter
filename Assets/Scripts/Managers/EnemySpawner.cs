@@ -28,16 +28,13 @@ public class EnemySpawner : MonoBehaviour
     bool isWaveDone = true;
     [SerializeField]
     private GameObject enemyForWave;
-    private int finalWave = 5;
+  
 
     // to control how many enemies can spawn in total
     [SerializeField]
     private int enemyTotal = 3;
 
-    //to destroy all enemies and make way for the boss
-    private GameObject[] catchEnemies;
-
-    private bool _stopSpawning = false;
+   private bool _stopSpawning = false;
 
     //Flickering Wave Counter Text Variables
     [SerializeField]
@@ -63,12 +60,12 @@ public class EnemySpawner : MonoBehaviour
     IEnumerator waveSpawner()
     {
 
-        while (isWaveDone == true && _isFinalWaveStarted == false)// waveCount < 5 )
+        while (isWaveDone == true && _isFinalWaveStarted == false)
         {
 
             Vector3 spawnPos = new Vector3(Random.Range(-9.3f, 9.3f), 7f, 0f);
             int randomEnemy = Random.Range(0, 5);
-            isWaveDone = false; //create a method for this called waveIsActive or something like that
+            isWaveDone = false; 
 
             for (int i = 0; i < enemyCount; i++)
             {
@@ -77,19 +74,13 @@ public class EnemySpawner : MonoBehaviour
                     ActivateWaveText();
                     yield return new WaitForSeconds(waveTextTimer);
                     _waveCountTxt.gameObject.SetActive(false);
-                    // GameObject _enemyPrefab = Instantiate(enemies[randomEnemy], spawnPos, Quaternion.identity);
+                    
 
-                    GameObject enemyClone = Instantiate(enemies[randomEnemy], spawnPos, Quaternion.identity); //add spawnPos and Quaternion to it after first test
-                    yield return new WaitForSeconds(spawnRate);
+                    GameObject enemyClone = Instantiate(enemies[randomEnemy], spawnPos, Quaternion.identity);
                 }
                 if (waveCount >= 5)
                 {
-                    //instantiate boss here! The boss will have its own script which will start on instantate
-                    //instantate in position 0,11.22,0
-
-                    EndEnemyWaves(); //might remove this from here since it's being called from the next scene where the boss is
-
-
+                    EndEnemyWaves(); 
                     Debug.Log("Final Wave! Enter Boss Fight!");
                     //boss starts
                 }
@@ -109,7 +100,7 @@ public class EnemySpawner : MonoBehaviour
     public void EndEnemyWaves()
     {
         _isFinalWaveStarted = true;
-        // _stopSpawning = true;
+       
         isWaveDone = true;
         _waveCountTxt.gameObject.SetActive(false);
         enemyCount = 0;
@@ -128,38 +119,10 @@ public class EnemySpawner : MonoBehaviour
         _waveCountTxt.text = "Wave: " + waveCount.ToString();
 
         _waveCountTxt.gameObject.SetActive(true);
-        // StartCoroutine(WaveCountFlicker());
+       
 
     }
-    IEnumerator WaveCountFlicker()
-    {
-        while (isWaveDone == true) //check the condition 
-        {
-
-            _waveCountTxt.enabled = false;
-            yield return new WaitForSeconds(0.5f);
-            _waveCountTxt.enabled = true;
-            yield return new WaitForSeconds(0.5f);
-        }
-
-        _waveCountTxt.enabled = false;
-
-
-    }
-
-    IEnumerator TickFiveSeconds()
-    {
-        var wait = new WaitForSeconds(1f);
-        int counter = 1;
-        while (counter < 5)
-        {
-            WaveCountFlicker();
-            counter++;
-            yield return wait;
-        }
-        _stopSpawning = true;
-        _waveCountTxt.enabled = false;
-    }
+    
 
     
     public void OnPlayerDeath()

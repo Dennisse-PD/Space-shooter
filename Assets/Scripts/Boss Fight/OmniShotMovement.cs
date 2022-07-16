@@ -4,27 +4,28 @@ using UnityEngine;
 
 public class OmniShotMovement : MonoBehaviour
 {
-    private Vector2 moveDirection;
-    private float moveSpeed;
+    private Vector2 _movementDirection;
+    private float _movementSpeed;
+
     // Start is called before the first frame update
     void Start()
     {
-        moveSpeed = 5f;
+        _movementSpeed = 5f;
     }
 
     // Update is called once per frame
     void Update()
     {
-        transform.Translate(moveDirection * moveSpeed * Time.deltaTime);
+        transform.Translate(_movementDirection * _movementSpeed * Time.deltaTime);
     }
     private void OnEnable()
     {
         Invoke("Destroy", 3f);
     }
     
-    public void SetMoveDirection(Vector2 dir)
+    public void SetMovementDirection(Vector2 dir)
     {
-        moveDirection = dir;
+        _movementDirection = dir;
     }
     private void Destroy()
     {

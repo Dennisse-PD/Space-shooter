@@ -23,7 +23,7 @@ public class BossFight : MonoBehaviour
     // Side to Side Movement Variables
     private float _distance = 5f;
     private float _laserAttackSpeed = 1f;
-    private bool _isLongLaserActive = false;
+    
 
     //Long Laser Variables
     [SerializeField]
@@ -36,8 +36,7 @@ public class BossFight : MonoBehaviour
     private GameObject DamageRightVisualizer;
     [SerializeField]
     private GameObject _explosionAnim;
-    private PowerUpSpawner _PowerUpSpawner;
-    private Canvas _canvas;
+    
 
 
     //Sound Effects
@@ -55,8 +54,11 @@ public class BossFight : MonoBehaviour
     {
         _microGM = GameObject.Find("MicroGM").GetComponent<MiscroGM>();
         _UIManager = GameObject.Find("Canvas").GetComponent<UIManager>();
+   
+
         currentHealth = maxHealth;
         healthBar.SetMaxHealth(maxHealth);
+
         _explosionSound = GetComponent<AudioSource>();
 
         if (_explosionSound == null)
@@ -68,14 +70,6 @@ public class BossFight : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       
-        OmniShot omniShot = GetComponent<OmniShot>();
-        if (omniShot == null)
-        {
-            Debug.Log("The OmniShot Script is NULL!");
-        }
-      
-
         //Boss entrance
         if (transform.position != endPosition)
         {
@@ -92,7 +86,7 @@ public class BossFight : MonoBehaviour
     }
     private void BossPhases()
     {
-        if (currentHealth == 50)
+        if (currentHealth <= 50)
         {
 
             DamageLeftVisualizer.SetActive(true);
@@ -115,11 +109,13 @@ public class BossFight : MonoBehaviour
         if (other.tag == "Laser")
         {
 
-            DamageBoss(10);
+            DamageBoss(8);
+            Destroy(other.gameObject);
         }
         else if (other.tag == "AoE")
         {
-            DamageBoss(15);
+            DamageBoss(10);
+            
         }
 
     }
@@ -149,9 +145,9 @@ public class BossFight : MonoBehaviour
 
     void LongLaserAttack()
     {
-        Vector3 v = transform.position;
-        v.x = _distance * Mathf.Sin(Time.time * _laserAttackSpeed);
-        transform.position = v;
+        Vector3 altMovement = transform.position;
+        altMovement.x = _distance * Mathf.Sin(Time.time * _laserAttackSpeed);
+        transform.position = altMovement;
         LaserVisualizer.SetActive(true);
     }
 

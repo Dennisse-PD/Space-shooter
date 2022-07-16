@@ -8,7 +8,7 @@ public class HomingProjectile : MonoBehaviour
     private Transform Target = null;
     private GameObject[] targets;
 
-    //Movemenet physics
+    //Movemenet physics 
     [SerializeField]
     private Rigidbody2D HomingProjectileRB;
     private float _distance;
